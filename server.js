@@ -12,7 +12,7 @@ config.plugins.push(
   new webpack.HotModuleReplacementPlugin(),
   new webpack.NoEmitOnErrorsPlugin()
 )
-config.entry.app = ['webpack-hot-middleware/client', './src/app.js']
+config.entry.app = ['webpack-hot-middleware/client', './app.js']
 
 var app = express()
 var compiler = webpack(config)
@@ -66,10 +66,10 @@ app.use('*', function (req, res, next) {
   })
 })
 
-app.listen(8888, function (err) {
+app.listen(9527, function (err) {
   if (err) {
     console.log(err)
     return
   }
-  console.log('Listening at http://localhost:8888')
+  console.log('Listening at http://localhost:9527')
 })

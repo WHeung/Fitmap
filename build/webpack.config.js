@@ -1,7 +1,6 @@
 const path = require('path')
 const vueConfig = require('./vue-loader.config')
 const HTMLPlugin = require('html-webpack-plugin')
-const HtmlStringReplacePlugin = require('html-string-replace-webpack-plugin')
 // const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const WebpackShellPlugin = require('webpack-shell-plugin')
@@ -10,14 +9,14 @@ const timeStamp = ((new Date()).getTime() + '').substring(8)
 const config = {
   devtool: '#source-map',
   entry: {
-    app: './src/app.js',
+    app: './app.js',
     vendor: [
       'object-assign-shim',
       'es6-promise',
       'vue',
       'vue-router',
       'vuex',
-      'axios',
+      'axios'
     ]
   },
   output: {
@@ -68,7 +67,7 @@ const config = {
   plugins: [
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest']
+      names: 'vendor'
     }),
     new webpack.NamedModulesPlugin()
   ]
@@ -104,21 +103,6 @@ if (process.env.NODE_ENV === 'test') {
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    }),
-    new HtmlStringReplacePlugin({
-      enable: true,
-      patterns: [
-        {
-          match: /src=\"[^\"]+\"/g,
-          replacement: function (match) {
-            if (match.indexOf('vendor') > -1) {
-              return `src="${vendorCDN}"`
-            } else {
-              return match
-            }
-          }
-        }
-      ]
     }),
     // generate output HTML
     new HTMLPlugin({
@@ -200,25 +184,10 @@ if (process.env.NODE_ENV === 'production') {
       filename: path.resolve(__dirname, `../static/index${version}.html`),
       env: process.env.NODE_ENV
     }),
-    new HtmlStringReplacePlugin({
-      enable: true,
-      patterns: [
-        {
-          match: /src=\"[^\"]+\"/g,
-          replacement: function (match) {
-            if (match.indexOf('vendor') > -1) {
-              return `src="${vendorCDN}"`
-            } else {
-              return match
-            }
-          }
-        }
-      ]
-    }),
     new WebpackShellPlugin({
-      onBuildStart: ['echo "Webpack Start PRO 😄 ' + timeStamp],
+      onBuildStart: ['echo "Webpack Start PRO 😂 ' + timeStamp],
       onBuildEnd: [
-        'echo "Webpack PRO End 😄 ' + timeStamp
+        'echo "Webpack PRO End 😂' + timeStamp
       ]
     })
   )
