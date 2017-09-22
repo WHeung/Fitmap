@@ -1,0 +1,6 @@
+{
+    "name": "m.dwfei.com",
+    "port": "3231",
+    "mockPath": "./mock-data",
+    "rootPath": "./dist"
+}
