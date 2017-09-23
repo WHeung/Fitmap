@@ -14,6 +14,10 @@ const userInfoView = resolve => require.ensure(
   [], () => resolve(require('~src//views/userCenter/baseInfoView/index.vue')),
   'ui'
 )
+const userfavoritesView = resolve => require.ensure(
+  [], () => resolve(require('~src//views/userCenter/favoritesView/index.vue')),
+  'uf'
+)
 
 Vue.use(Router)
 
@@ -21,6 +25,7 @@ const router = new Router({
   routes: [
     { path: '/user/:id', component: userView, name: 'userView' },
     { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
+    { path: '/user/:id/favor', component: userfavoritesView, name: 'userfavoritesView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]
