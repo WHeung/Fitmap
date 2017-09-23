@@ -1,12 +1,15 @@
 import Vue from 'vue'
 import App from './src/App.vue'
-// import store from './store'
-// import router from './router'
+import store from './src/store'
+import router from './src/router'
+import 'es6-promise/auto'
 import 'object-assign-shim'
+import './src/directives/iScroll'
+import './src/directives/pxToRem'
 
 const app = new Vue({
-  // router,
-  // store,
+  router,
+  store,
   ...App
 })
 

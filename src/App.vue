@@ -1,11 +1,29 @@
 <template>
-  <div>Fitmap</div>
+  <div id="app">
+    <transition name="view" mode="out-in">
+      <router-view :class="{ready: loading}"></router-view>
+    </transition>
+    <Toast></Toast>
+    <Loading></Loading>
+    <ApiLoading></ApiLoading>
+    <popUp></popUp>
+  </div>
 </template>
 
 <script>
+import * as Types from './store/types'
+import Toast from './components/Toast.vue'
+import Loading from './components/loading.vue'
+import ApiLoading from './components/ApiLoading.vue'
+import popUp from './components/popUp.vue'
+
 export default {
   name: 'app',
+  components: { Toast, Loading, ApiLoading, popUp },
   computed: {
+    loading () {
+      return this.$store.state.loading
+    }
   },
   methods: {
   },
@@ -54,9 +72,6 @@ input, button, textarea, select
 a
   text-decoration none
 
-.dwf-wrap
-  background-color #f7f7f7
-
 .view
   position relative
   max-width 540px
@@ -84,29 +99,7 @@ a
 
 .ready
   visibility hidden
-
-.left-enter-active
-   transition: all 1s ease-out;
-   transform: translateX(0)
-.left-leave-active
-   transition: all 1s ease-out;
-   transform: translateX(-100%)
-.left-enter
-   transform: translateX(100%)
-.left-leave
-   transform: translateX(0)
-.right-enter-active
-   transition: all 1s ease-out;
-   transform: translateX(0)
-.right-leave-active
-   transition: all 1s ease-out;
-   transform: translateX(100%)
-.right-enter
-   transform: translateX(-100%)
-.right-leave
-   transform: translateX(0)
 </style>
 
 <style lang="stylus" module>
-
 </style>
