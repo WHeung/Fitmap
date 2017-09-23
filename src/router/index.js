@@ -6,15 +6,16 @@ import { inRoute2outRoute, outRoute2inRoute, inRouteParamsInherit } from '~src/t
 import NoFoundView from '~src/views/NoFoundView.vue'
 import RedirectView from '~src/views/RedirectView.vue'
 
-// const CouponView = resolve => require.ensure(
-//   [], () => resolve(require('~src/views/coupons/index.vue')),
-//   'c'
-// )
+const baseInfoView = resolve => require.ensure(
+  [], () => resolve(require('~src//views/userCenter/baseInfoView/index.vue')),
+  'c'
+)
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+    { path: '/user/:id/info', component: baseInfoView, name: 'baseInfoView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]

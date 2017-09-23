@@ -43,7 +43,7 @@ export default {
 body,
 html
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  font-size 15px
+  font-size 14px
   background-color #f7f7f7
   margin 0
   padding 0
