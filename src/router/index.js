@@ -15,8 +15,16 @@ const userInfoView = resolve => require.ensure(
   'ui'
 )
 const userfavoritesView = resolve => require.ensure(
-  [], () => resolve(require('~src//views/userCenter/favoritesView/index.vue')),
+  [], () => resolve(require('~src/views/userCenter/favoritesView/index.vue')),
   'uf'
+)
+const mapView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/mapView/index.vue')),
+  'm'
+)
+const mapTestView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/mapView/test.vue')),
+  'mt'
 )
 
 Vue.use(Router)
@@ -26,6 +34,16 @@ const router = new Router({
     { path: '/user/:id', component: userView, name: 'userView' },
     { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/:id/favor', component: userfavoritesView, name: 'userfavoritesView' },
+    { 
+      path: '/map',
+      component: mapView,
+      name: 'mapView',
+      children: [{
+        path: '/map/test',
+        component: mapTestView,
+        name: 'mapTestView'
+      }]
+    },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]
