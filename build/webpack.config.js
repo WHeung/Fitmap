@@ -19,6 +19,9 @@ const config = {
       'axios'
     ]
   },
+  externals: {
+    'BMap': 'BMap'
+  },
   output: {
     path: path.resolve(__dirname, '../dist/'),
     publicPath: './',

@@ -1,12 +1,26 @@
 <template>
   <div :class="$style.main">
-    <router-view></router-view>
+    <BMap v-model="map"></BMap>
+    <transition name="view" mode="out-in">
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </transition>
   </div>
 </template>
 
 <script>
+import BMap from '~src/components/BMap.vue'
 import * as Types from '~src/store/types'
+
 export default {
+  name: 'map',
+  components: { BMap },
+  data () {
+    return {
+      map: null
+    }
+  },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
   }

@@ -19,11 +19,11 @@ const userfavoritesView = resolve => require.ensure(
   'uf'
 )
 const mapView = resolve => require.ensure(
-  [], () => resolve(require('~src/views/mapView/index.vue')),
+  [], () => resolve(require('~src/views/map/index.vue')),
   'm'
 )
 const mapTestView = resolve => require.ensure(
-  [], () => resolve(require('~src/views/mapView/test.vue')),
+  [], () => resolve(require('~src/views/map/test.vue')),
   'mt'
 )
 
@@ -34,7 +34,7 @@ const router = new Router({
     { path: '/user/:id', component: userView, name: 'userView' },
     { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/:id/favor', component: userfavoritesView, name: 'userfavoritesView' },
-    { 
+    {
       path: '/map',
       component: mapView,
       name: 'mapView',
@@ -51,8 +51,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   // 去掉继承会有其他问题,比如地址重定向会在每次刷新后回到初始页
+  const route = inRouteParamsInherit({ toRoute: to, fromRoute: from })
   if (to.query.type === Types.ROUTE_TYPE_REPLACE) {
-    const route = inRouteParamsInherit(to, from)
     if (route) {
       next({
         ...route,
@@ -66,7 +66,6 @@ router.beforeEach((to, from, next) => {
       })
     }
   } else {
-    const route = inRouteParamsInherit(to, from)
     if (route) {
       // 如果路径相等则使用replace
       if (to.path === from.path) {
@@ -89,13 +88,16 @@ router.afterEach((to, from, next) => {
 })
 
 let execCount = 1
-function setSearch (currentRouter) {
+function setSearch (route) {
   if (execCount === 0) {
     return
   }
   execCount--
-  const route = outRoute2inRoute(currentRouter)
-  if (route) {
+  const result = outRoute2inRoute({
+    inRoute: route,
+    urlSearch: window.location.search
+  })
+  if (result) {
     router.replace(route)
   }
 }

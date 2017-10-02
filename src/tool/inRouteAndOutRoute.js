@@ -3,27 +3,25 @@
 const REDIRECTED = 'redirected'
 const REDIRECT = 'redirect'
 
-export function inRoute2outRoute (route) {
-  const outParams = outRouteParams()
-  const inParams = Object.assign({}, route.query)
+export function inRoute2outRoute ({ inRoute, urlSearch }) {
+  const outParams = outRouteParams(urlSearch)
+  const inParams = Object.assign({}, inRoute.query)
   if (outParams[REDIRECT]) {
     delete outParams[REDIRECT]
   }
   if (inParams[REDIRECTED]) {
     delete inParams[REDIRECTED]
   }
-  inParams[REDIRECT] = route.path
+  inParams[REDIRECT] = inRoute.path
   const comboParams = Object.assign({}, outParams, inParams)
-  const search = paramsToSearch(comboParams)
-  return window.location.pathname + search
-  // /h5/?redirect=/index&owner_id=123
+  return paramsToSearch(comboParams)
 }
 
 // 将外路由替换成内路由
 // 如果内路由有参数redirected=1，则不做替换
-export function outRoute2inRoute (route) {
-  const outParams = outRouteParams()
-  const inParams = Object.assign({}, route.query)
+export function outRoute2inRoute ({ inRoute, urlSearch }) {
+  const outParams = outRouteParams(urlSearch)
+  const inParams = Object.assign({}, inRoute.query)
   let path = '/'
   if (outParams[REDIRECT]) {
     path = outParams[REDIRECT]
@@ -32,7 +30,7 @@ export function outRoute2inRoute (route) {
   if (inParams[REDIRECTED]) {
     return null
   }
-  if (!outRouteHasParams()) {
+  if (!outRouteHasParams(urlSearch)) {
     return null
   }
   outParams[REDIRECTED] = 1
@@ -41,39 +39,31 @@ export function outRoute2inRoute (route) {
     path: path,
     query: query
   }
-  /*
-  {
-    path: '/index',
-    query: {
-      redirected: 1
-    }
-  }
-  */
 }
 
 // 参数继承和添加
 // 添加apppullrefresh 用来关闭app下拉刷新
 // 继承redirected 用来标记已处理外路由转内路由
-export function inRouteParamsInherit (to, from) {
+export function inRouteParamsInherit ({ toRoute, fromRoute }) {
   // 清理type参数，type用一次就要销毁
   // type用来标记跳转类型，比如replaceState
-  if (to.query.type) {
-    delete to.query.type
+  if (toRoute.query.type) {
+    delete toRoute.query.type
   }
-  const path = to.path
-  const query = Object.assign({}, to.query)
+  const path = toRoute.path
+  const query = Object.assign({}, toRoute.query)
 
-  if (from.query.redirected) {
+  if (fromRoute.query.redirected) {
     query[REDIRECTED] = 1
   }
 
-  if (to.meta.appPullRefresh === 'disabled') {
+  if (toRoute.meta && toRoute.meta.appPullRefresh === 'disabled') {
     query['apppullrefresh'] = 0
   } else {
     delete query['apppullrefresh']
   }
 
-  if (JSON.stringify(query) === JSON.stringify(to.query)) {
+  if (JSON.stringify(query) === JSON.stringify(toRoute.query)) {
     return null
   }
 
@@ -81,8 +71,8 @@ export function inRouteParamsInherit (to, from) {
 }
 
 // 外路由参数转成对象
-export function outRouteParams () {
-  const search = window.location.search.replace('?', '')
+export function outRouteParams (urlSearch) {
+  const search = urlSearch.replace('?', '')
   if (search.indexOf('=') < 0) {
     return {}
   }
@@ -97,8 +87,8 @@ export function outRouteParams () {
   return params
 }
 
-export function outRouteHasParams () {
-  const params = outRouteParams()
+export function outRouteHasParams (urlSearch) {
+  const params = outRouteParams(urlSearch)
   if (Object.keys(params).length > 0 && params.constructor === Object) {
     return true
   } else {
@@ -107,7 +97,7 @@ export function outRouteHasParams () {
 }
 
 export function inRouteHasParams (route) {
-  if (Object.keys(route.query).length > 0 && route.query.constructor === Object) {
+  if (route.query && Object.keys(route.query).length > 0 && route.query.constructor === Object) {
     return true
   } else {
     return false
