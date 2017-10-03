@@ -49,39 +49,42 @@ export default {
 </script>
 
 <style lang="stylus">
-  .map-point
+.map-point
+  position absolute
+  z-index 1
+  background #f7f7f7
+  height 18px
+  line-height 18px
+  padding 5px
+  white-space nowrap
+  font-size 13px
+  border 1px solid #d8d8d8
+  border-radius 3px
+  color #675F6D
+  &:after
+    content ''
+    display table
     position absolute
-    z-index 1
-    background #f7f7f7
-    height 18px
-    line-height 18px
-    padding 5px
-    white-space nowrap
-    font-size 13px
+    bottom -6px
+    left 50%
+    transform translateX(-50%) rotate(45deg)
     border 1px solid #d8d8d8
-    border-radius 3px
-    color #675F6D
+    width: 10px;
+    height: 10px;
+    border-top: 0;
+    border-left: 0;
+    background #f7f7f7
+  &.active
+    background #32c47c
+    border 1px solid #32c47c
+    color #fff
+    z-index 2
     &:after
-      content ''
-      display table
-      position absolute
-      bottom -6px
-      left 50%
-      transform translateX(-50%) rotate(45deg)
-      border 1px solid #d8d8d8
-      width: 10px;
-      height: 10px;
-      border-top: 0;
-      border-left: 0;
-      background #f7f7f7
-    &.active
       background #32c47c
       border 1px solid #32c47c
-      color #fff
-      z-index 2
-      &:after
-        background #32c47c
-        border 1px solid #32c47c
+
+.anchorBL
+  display none
 
 
 </style>

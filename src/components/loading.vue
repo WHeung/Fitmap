@@ -37,7 +37,7 @@ export default {
   stroke-dasharray 90,150
   stroke-dashoffset 0
   stroke-width 2
-  stroke #32c47c
+  stroke #374AAB
   stroke-linecap round
 
 @keyframes loading-dash

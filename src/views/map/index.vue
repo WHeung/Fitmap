@@ -3,7 +3,7 @@
     <BMap v-model="map"></BMap>
     <transition name="view" mode="out-in">
       <keep-alive>
-        <router-view></router-view>
+        <router-view :class="$style.mapView"></router-view>
       </keep-alive>
     </transition>
   </div>
@@ -18,7 +18,17 @@ export default {
   components: { BMap },
   data () {
     return {
-      map: null
+    }
+  },
+  computed: {
+    map: {
+      get () {
+        return this.$store.state.map.map
+      },
+      set (val) {
+        console.log(val)
+        this.$store.commit(Types.SET_MAP, val)
+      }
     }
   },
   created () {
@@ -29,10 +39,19 @@ export default {
 
 <style lang="stylus" module>
 .main
-  background #bfa
   position fixed
   top 0
   left 0
   bottom 0
   right 0
+
+.mapView
+  position absolute
+  width 100%
+  height 100%
+  top 0
+  pointer-events none
+  z-index 1
+  >div
+    pointer-events visible
 </style>

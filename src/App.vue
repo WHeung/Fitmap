@@ -44,7 +44,8 @@ body,
 html
   font-family -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   font-size 14px
-  background-color #f7f7f7
+  background-color #F5F7FA
+  color #474C54
   margin 0
   padding 0
   overflow-y scroll
