@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>Images/fm_dropdown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Images/fm_dropdown" fill="#474C54">
+            <path d="M3.20710678,5 L12.7928932,5 L12.7928932,5 C13.0690356,5 13.2928932,5.22385763 13.2928932,5.5 C13.2928932,5.63260824 13.2402148,5.7597852 13.1464466,5.85355339 L8.35355339,10.6464466 L8.35355339,10.6464466 C8.15829124,10.8417088 7.84170876,10.8417088 7.64644661,10.6464466 L2.85355339,5.85355339 L2.85355339,5.85355339 C2.65829124,5.65829124 2.65829124,5.34170876 2.85355339,5.14644661 C2.94732158,5.05267842 3.07449854,5 3.20710678,5 Z" id="Rectangle"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.1 (44463) - http://www.bohemiancoding.com/sketch -->
+    <title>Images/fm_delete</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Images/fm_delete" fill="#474C54">
+            <path d="M1,4 L15,4 L15,5.5 L1,5.5 L1,4 Z M6.5,1 L9.5,1 C9.77614237,1 10,1.22385763 10,1.5 L10,2.5 L6,2.5 L6,1.5 C6,1.22385763 6.22385763,1 6.5,1 Z M12.5,13.5 L12.5,7 L14,7 L14,14.15 C14,14.619442 13.619442,15 13.15,15 L2.85,15 C2.38055796,15 2,14.619442 2,14.15 L2,7 L3.5,7 L3.5,13.5 L12.5,13.5 Z M7.25,8 L8.75,8 L8.75,12 L7.25,12 L7.25,8 Z" id="Combined-Shape"></path>
+        </g>
+    </g>
+</svg>
