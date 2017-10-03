@@ -8,7 +8,7 @@
         <input type="text" placeholder="搜索">
       </div>
     </div>
-    <div :class="$style.maskContent">
+    <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
         <div :class="[$style.classItem, $style.activeClass]">商家</div>
         <div :class="[$style.classItem]">帖子</div>
@@ -29,7 +29,7 @@ export default {
   name: 'map-filter',
   data () {
     return {
-      mask: true
+      mask: false
     }
   },
   methods: {
