@@ -64,7 +64,12 @@ export default {
 
 <style lang="stylus" module>
 $breakline = #E1E5EB
-$assistText = #9DA2AB = #9DA2AB
+$assistText = #9DA2AB
+
+.main
+  pointer-events none // 点击穿透属性，使地图可以拖到
+  >div
+    pointer-events visible // 之后的容器不需要继承点击穿透
 
 .bottom
   position absolute

@@ -18,17 +18,17 @@ const userfavoritesView = resolve => require.ensure(
   [], () => resolve(require('~src/views/userCenter/favoritesView/index.vue')),
   'uf'
 )
-const mapIndexView = resolve => require.ensure(
-  [], () => resolve(require('~src/views/map/indexView/index.vue')),
-  'mi'
-)
 const map = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/index.vue')),
   'm'
 )
-const mapTestView = resolve => require.ensure(
-  [], () => resolve(require('~src/views/map/test.vue')),
-  'mt'
+const mapIndexView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/map/indexView/index.vue')),
+  'm'
+)
+const mapSearchView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/map/searchView/index.vue')),
+  'm'
 )
 
 Vue.use(Router)
@@ -42,11 +42,18 @@ const router = new Router({
       path: '/map',
       name: 'mapView',
       component: map,
-      children: [{
-        path: '/map/index',
-        component: mapIndexView,
-        name: 'mapIndexView'
-      }]
+      children: [
+        {
+          path: '/map/index',
+          component: mapIndexView,
+          name: 'mapIndexView'
+        },
+        {
+          path: '/map/search',
+          component: mapSearchView,
+          name: 'mapSearchView'
+        }
+      ]
     },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }

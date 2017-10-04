@@ -50,8 +50,5 @@ export default {
   width 100%
   height 100%
   top 0
-  pointer-events none
   z-index 1
-  >div
-    pointer-events visible
 </style>
