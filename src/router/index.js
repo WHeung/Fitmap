@@ -30,6 +30,10 @@ const mapSearchView = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/searchView/index.vue')),
   'm'
 )
+const mapListView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/map/listView/index.vue')),
+  'm'
+)
 
 Vue.use(Router)
 
@@ -52,6 +56,11 @@ const router = new Router({
           path: '/map/search',
           component: mapSearchView,
           name: 'mapSearchView'
+        },
+        {
+          path: '/map/list',
+          component: mapListView,
+          name: 'mapListView'
         }
       ]
     },

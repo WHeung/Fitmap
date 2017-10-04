@@ -1,5 +1,5 @@
 <template>
-  <div :class="[$style.main, {[$style.maskLayer]: mask}]">
+  <div :class="[$style.main, {[$style.maskLayer]: mask}, {[$style.originList]: origin === 'list'}]">
     <div :class="$style.container">
       <div :class="$style.classifyGroup" @click="clickClassify">
         健身房
@@ -7,6 +7,7 @@
       <div :class="$style.searchGroup">
         <input type="text" placeholder="搜索">
       </div>
+      <div :class="$style.mapIcon" v-if="origin === 'list'"></div>
     </div>
     <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
@@ -32,6 +33,7 @@ export default {
       mask: false
     }
   },
+  props: ['origin'],
   methods: {
     clickClassify () {
 
@@ -44,6 +46,8 @@ export default {
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
+$white = #FFFFFF
+$border = #CBCED4
 
 .maskLayer
   position absolute
@@ -53,9 +57,23 @@ $mainText = #474C54
   z-index 3
 
 .container
-  padding 12px 12px 0
+  padding 12px 12px
   display flex
+  white-space nowrap
   justify-content space-between
+  align-items center
+.originList
+  position fixed
+  top 0
+  z-index 5
+  background $white
+  border-bottom 1px solid $breakline
+  .classifyGroup
+    box-shadow none
+    border 1px solid $border
+  .searchGroup
+    box-shadow none
+    border 1px solid $border
 
 .classifyGroup
   position relative
@@ -79,7 +97,7 @@ $mainText = #474C54
   position relative
   margin-left 6px
   padding 6px 28px 6px 40px 
-  flex-grow 1
+  flex 1 1 auto
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
   border-radius 100px
@@ -102,6 +120,13 @@ $mainText = #474C54
     background-size 100% 100%
   >input
     line-height 21px
+
+.mapIcon
+  margin-left 12px
+  width 28px
+  height 28px
+  background url('~src/public/fm_map.svg') no-repeat
+  background-size 100% 100%
 
 .maskContent
   position relative

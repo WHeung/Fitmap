@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-pxtorem>
     <transition name="view" mode="out-in">
       <router-view :class="{ready: loading}"></router-view>
     </transition>

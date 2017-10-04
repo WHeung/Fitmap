@@ -23,7 +23,7 @@ import Filters from '../components/filters.vue'
 import * as Types from '~src/store/types'
 
 export default {
-  name: 'map-index-view',
+  name: 'map-search-view',
   components: { Filters },
   data () {
     return {

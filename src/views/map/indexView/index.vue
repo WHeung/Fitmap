@@ -3,32 +3,8 @@
     <Filters></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="type">
-      <div :class="$style.business" v-if="type==='business'">
-        <div :class="$style.busImg">
-          <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg" alt="">
-        </div>
-        <div :class="$style.busCon">
-          <div :class="$style.busTitle">澳淋健身游泳俱乐部</div>
-          <div :class="$style.busTag">
-            <span>健身房</span>
-            <span>帖子</span>
-          </div>
-          <div :class="$style.busAddress">610米 东莞庄路120号</div>
-        </div>
-      </div>
-      <div :class="$style.post" v-if="type==='post'">
-        <div :class="$style.postTop">
-          <div :class="$style.postTitle">层高6米 天河花园式创意园 各种商业配.安抚水淀粉</div>
-          <div :class="$style.postTag"><span>场地租赁</span></div>
-        </div>
-        <div :class="$style.postSub">
-          裕晖创意产业园位于天河北商圈及天河智慧城核心区天河花园式创意园
-        </div>
-        <div :class="$style.posterMsg">
-          <div>天河-裕晖创意产业园</div>
-          <div>2017-09-26</div>
-        </div>
-      </div>
+      <BusItem v-if="type==='business'"></BusItem>
+      <PostItem v-if="type==='post'"></PostItem>
       <div :class="$style.showList">
         列表显示
       </div>
@@ -39,11 +15,13 @@
 <script>
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
+import BusItem from '../components/busItem.vue'
+import PostItem from '../components/postItem.vue'
 import * as Types from '~src/store/types'
 
 export default {
   name: 'map-index-view',
-  components: { Filters, Sacle },
+  components: { Filters, Sacle, BusItem, PostItem },
   data () {
     return {
       type: 'post'
@@ -75,74 +53,6 @@ $assistText = #9DA2AB
   position absolute
   bottom 0
   width 100%
-
-.business
-  display flex
-  background #FFFFFF
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
-.busImg
-  width 50%
-  img
-    position relative
-    display block
-    width 100%
-    top 50%
-    transform translateY(-50%)
-.busCon
-  position relative
-  padding 16px
-.busTitle
-  font-size 15px
-.busTag
-  margin-top 6px
-  display flex
-  font-size 12px
-  span
-    padding 1px 8px
-    margin-right 6px
-    background #474C54
-    color #fff
-    border-radius 10px
-.busAddress
-  position absolute
-  bottom 16px
-  font-size 12px
-  color #9DA2AB
-
-.post
-  padding 18px
-  background #FFFFFF
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
-.postTop
-  white-space nowrap
-.postTitle
-  margin-right 65px
-  font-size 15px
-  overflow hidden
-  text-overflow ellipsis
-.postTag
-  position absolute
-  top 18px
-  right -3px
-  font-size 12px
-  line-height 21px
-  span
-    padding 1px 8px
-    background #474C54
-    color #fff
-    border-radius 10px 0 0 10px
-.postSub
-  margin-top 6px
-  overflow hidden
-  text-overflow ellipsis
-  white-space nowrap
-  color $assistText
-.posterMsg
-  margin-top 18px
-  display flex
-  justify-content space-between
-  font-size 12px
-  color $assistText
 
 .showList
   box-sizing border-box
