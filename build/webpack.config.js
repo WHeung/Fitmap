@@ -35,7 +35,8 @@ const config = {
       // for css use
       '~public': path.resolve(__dirname, '../src/public'),
       // for import use
-      '~src': path.resolve(__dirname, '../src')
+      '~src': path.resolve(__dirname, '../src'),
+      'tool': path.resolve(__dirname, '../src/tool')
     }
   },
   module: {

@@ -5,22 +5,31 @@
         <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
       </div>
       <div :class="$style.name">用户昵称</div>
-      <button :class="$style.editBtn">编辑信息</button>
+      <button :class="$style.editBtn">个人信息</button>
     </div>
     <div :class="$style.list">
-      <div :class="$style.item">
+      <div :class="[$style.item, $style.store]">
         <div>我收藏的商品</div>
-        <div>12</div>
+        <div :class="$style.itemCon">
+          <span>12</span>
+          <i></i>
+        </div>
       </div>
       <div :class="$style.line"></div>
-      <div :class="$style.item">
+      <div :class="[$style.item, $style.business]">
         <div>我收藏的商家</div>
-        <div>14</div>
+        <div :class="$style.itemCon">
+          <span>14</span>
+          <i></i>
+        </div>
       </div>
       <div :class="$style.line"></div>
-      <div :class="$style.item">
+      <div :class="[$style.item, $style.post]">
         <div>我收藏的帖子</div>
-        <div>9</div>
+        <div :class="$style.itemCon">
+          <span>9</span>
+          <i></i>
+        </div>
       </div>
     </div>
   </div>
@@ -38,60 +47,80 @@ export default {
 </script>
 
 <style lang="stylus" module>
-$color = #000
-
-.main
-  color $color
+@import '~tool/vendor'
 
 .info
-  padding 40px 0 50px
+  padding (36/20)rem 0
   text-align center
+  background url('~public/fm_user_bg@2x.png') no-repeat
+  background-size 100% 100%
 
 .avatar
-  position relative
   margin 0 auto
-  width 100px
-  height 100px
+  width 96px
+  height 96px
   overflow hidden
   background #fff
-  border 4px solid #fff
-  box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
+  border 3px solid #fff
+  box-shadow 0 4px 12px 0 rgba(0,0,0,0.10)
   border-radius 100px
   img
+    position relative
     display block
-    position absolute
     width 100%
+    top 50%
+    transform translateY(-50%)
 
 .name
   margin 20px 0
-  font-size 18px
+  font-size 16px
 
 .editBtn
   padding 5px 20px
-  border 1px solid $color
   border-radius 100px
+  border 1px solid $mainText
 
 .list
-  padding 5px 0
+  margin-top 18px
 
 .item
   position relative
   display flex
-  padding 15px 10px 15px (10+30)px
   justify-content space-between
-  background #999
+  padding 16px 18px 16px 58px
+  font-size 16px
   &:before
     content ''
     position absolute
-    left 10px
+    left 18px
     top 50%
-    width 25px
-    height 25px
+    width 28px
+    height 28px
     transform translateY(-50%)
     background #abf
+.store:before
+  background url('~public/fm_list_favitem.svg') no-repeat
+  background-size 100% 100%
+.business:before
+  background url('~public/fm_list_favbusiness.svg') no-repeat
+  background-size 100% 100%
+.post:before
+  background url('~public/fm_list_favpost.svg') no-repeat
+  background-size 100% 100%
+
+.itemCon
+  display inline-flex
+  align-items center
+  color $assistText
+  >i
+    margin-left 6px
+    height 16px
+    width 16px
+    background url('~public/fm_goto.svg') no-repeat
+    background-size 100% 100%
 
 .line
   margin-left 10px
   height 1px
-  background $color
+  background $breakline
 </style>
