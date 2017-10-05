@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style lang="stylus" module>
+@import '~tool/vendor'
+
 .loading
   top 50%
   left 0
@@ -37,7 +39,7 @@ export default {
   stroke-dasharray 90,150
   stroke-dashoffset 0
   stroke-width 2
-  stroke #374AAB
+  stroke $mainBtn
   stroke-linecap round
 
 @keyframes loading-dash

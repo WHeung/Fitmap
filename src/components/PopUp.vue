@@ -1,10 +1,15 @@
 <template>
   <div :class="$style.popUpWp" v-show='popUp.show' @touchmove.prevent="">
     <div :class="$style.wp">
-      <p v-html="popUp.word"></p>
+      <div :class="$style.title" v-if="popUp.title">{{popUp.title}}</div>
+      <p :class="$style.word" v-html="popUp.word"></p>
       <div :class="$style.ensure" v-if="popUp.leftMsg || popUp.rightMsg">
-        <span :class="$style.leftBtn" @click.stop="cancel" v-if="popUp.leftMsg" v-html="popUp.leftMsg"></span>
-        <span :class="$style.rightBtn" @click.stop="ensure" v-if="popUp.rightMsg" v-html="popUp.rightMsg"></span>
+        <span
+        :class="[$style.leftBtn, {[$style.noRight]: !popUp.rightMsg}]" v-if="popUp.leftMsg"
+        v-html="popUp.leftMsg" @click.stop="cancel"></span>
+        <span
+        :class="$style.rightBtn" v-if="popUp.rightMsg"
+        v-html="popUp.rightMsg" @click.stop="ensure"></span>
       </div>
     </div>
   </div>
@@ -34,6 +39,8 @@
 
 
 <style lang="stylus" module>
+@import '~tool/vendor'
+
 .popUpWp
   position fixed
   width 100%
@@ -51,19 +58,23 @@
   transform translate(-50%, -50%)
   -webkit-transform translate(-50%, -50%)
   border-radius 10px
-  background-color #fff
+  background-color $white
   padding 0
-  p
-    text-align center
-    font-size 14px
-    line-height 26px
-    color #9B9B9B
-    &:first-child
-      margin 28px 10px 15px
+
+.title
+  text-align center
+  font-size 16px
+
+.word
+  margin 16px 12px 18px
+  text-align center
+  font-size 16px
+  line-height 24px
+  color $assistText
 
 .ensure
-  border-top 1px solid #eee
-  height 42px
+  border-top 1px solid $breakline
+  height 43px
   text-align center
 
 .rightBtn
@@ -73,11 +84,13 @@
   width 49%
   display inline-block
   font-size 13px
-  color #9b9b9b
   vertical-align top
 
+.noRight
+  color $link
+
 .rightBtn
-  color #32c47c
-  border-left 1px solid #eee
+  color $link
+  border-left 1px solid $link
 
 </style>

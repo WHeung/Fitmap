@@ -31,6 +31,8 @@ export default {
 </script>
 
 <style lang="stylus" module>
+@import '~tool/vendor'
+
 .toastWrap
   position fixed
   z-index 1000
@@ -47,7 +49,7 @@ export default {
   border-radius 8px
   height 40px
   line-height 40px
-  color #fff
+  color $white
   padding 0 25px
   white-space nowrap
 
