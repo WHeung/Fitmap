@@ -57,7 +57,7 @@
   width 280px
   transform translate(-50%, -50%)
   -webkit-transform translate(-50%, -50%)
-  border-radius 10px
+  border-radius 4px
   background-color $white
   padding 0
 

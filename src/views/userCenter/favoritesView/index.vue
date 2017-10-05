@@ -1,22 +1,39 @@
 <template>
-  <div v-pxtorem>
-    <ProductsView></ProductsView>
-    <BusinessView></BusinessView>
-    <PostsView></PostsView>
+  <div>
+    <template>
+      <StoreItem :class="$style.item"></StoreItem>
+    </template>
+    <template>
+      <BusItem :class="$style.item"></BusItem>
+    </template>
+    <template>
+      <PostItem :class="$style.item"></PostItem>
+    </template>
   </div>
 </template>
 
 <script>
 import * as Types from '~src/store/types'
-import ProductsView from './productsView.vue'
-import BusinessView from './businessView.vue'
-import PostsView from './postsView.vue'
+import StoreItem from './components/storeItem.vue'
+import BusItem from './components/busItem.vue'
+import PostItem from './components/postItem.vue'
 
 export default {
   name: 'favorites-View',
-  components: { ProductsView, BusinessView, PostsView },
+  components: { StoreItem, BusItem, PostItem },
+  computed: {
+    type () {
+      return this.$route.params.type
+    }
+  },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
   }
 }
 </script>
+
+<style lang="stylus" module>
+.item
+  margin-bottom 12px
+</style>
+

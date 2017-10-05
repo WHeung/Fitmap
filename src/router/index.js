@@ -41,7 +41,7 @@ const router = new Router({
   routes: [
     { path: '/user/:id', component: userView, name: 'userView' },
     { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
-    { path: '/user/:id/favor', component: userfavoritesView, name: 'userfavoritesView' },
+    { path: '/user/:id/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
     {
       path: '/map',
       name: 'mapView',
