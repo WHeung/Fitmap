@@ -1,44 +1,34 @@
 <template>
-  <div :class="$style.main" v-pxtorem>
-    <div :class="$style.avatar">
-      <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
-    </div>
-    <div :class="$style.form">
-      <Item title="昵称">
-        <input :class="$style.input" v-model="form.name" placeholder="叫爸爸">
-      </Item>
-      <Item title="性别">
-        <select :class="$style.input" v-model="form.gender">
-          <option value="Male">男</option>
-          <option value="Female">女</option>
-        </select>
-      </Item>
-      <Item title="城市">
-        <select :class="$style.areaSelect" v-model="form.provinceKey">
-          <option :value="key" v-for="(province,key) in provinces" :key="key">{{province}}</option>
-        </select>
-        <select :class="$style.areaSelect" v-model="form.cityKey">
-          <option :value="key" v-for="(city,key) in citys" :key="key">{{city}}</option>
-        </select>
-        <select :class="$style.areaSelect" v-model="form.districtKey">
-          <option :value="key" v-for="(district,key) in districts" :key="key">{{district}}</option>
-        </select>
-      </Item>
-      <Item title="公司名称">
-        <input :class="$style.input"  v-model="form.company" placeholder="叫爸爸">
-      </Item>
-      <Item title="手机号">
-        <input :class="$style.input"  v-model="form.mobile" placeholder="叫爸爸">
-      </Item>
-      <Item title="验证码">
-        <input :class="$style.input"  v-model="form.code" placeholder="叫爸爸">
-        <button :class="$style.btn">发送验证码</button>
-      </Item>
-      <div :class="$style.formBtn">
-        <button :class="$style.submit" @click="submit">提交</button>
-        <span :class="$style.skip">跳过</span>
+  <div :class="$style.main">
+    <div :class="$style.wechat">
+      <div :class="$style.wechatImg">
+        <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
+      </div>
+      <div :class="$style.wechatMsg">
+        <div>
+          <span>昵称</span>会飞的田鼠
+        </div>
+        <div>
+          <span>性别</span>不男不女
+        </div>
       </div>
     </div>
+    <Item :class="$style.group" title="手机号" content="15622188859" :arrow="true"></Item>
+    <div :class="$style.group">
+      <Item title="姓名" content="李四" @clickCon="clickCon"></Item>
+      <p :class="$style.line"></p>
+      <Item title="城市" content="广东-广州"></Item>
+    </div>
+    <div :class="$style.group">
+      <Item title="公司" content="广州某某投资有限公司"></Item>
+      <p :class="$style.line"></p>
+      <Item title="职务🌳" content="Boss"></Item>
+    </div>
+    <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog">
+      <div :class="$style.input">
+        <input type="text">
+      </div>
+    </DialogMask>
   </div>
 </template>
 
@@ -47,6 +37,7 @@ import * as Types from '~src/store/types'
 import area from 'china-area-data'
 import Item from './components/item.vue'
 import valid from '~src/tool/verification'
+import DialogMask from '~src/components/DialogMask.vue'
 
 const validConfig = [
   {
@@ -75,18 +66,20 @@ const mobileConfig = [
 
 export default {
   name: 'baseinfo-view',
-  components: { Item },
+  components: { Item, DialogMask },
   data () {
     return {
-      form: {
-        name: '',
-        gender: '',
-        company: '',
-        mobile: '',
-        code: '',
+      cityForm: {
         provinceKey: '',
         cityKey: '',
         districtKey: ''
+      },
+      dialog: {
+        title: '',
+        leftBtn: '取消',
+        rightBtn: '确定',
+        show: false,
+        type: ''
       }
     }
   },
@@ -95,10 +88,10 @@ export default {
       return area[86]
     },
     citys () {
-      return area[this.form.provinceKey]
+      return area[this.cityForm.provinceKey]
     },
     districts () {
-      return area[this.form.cityKey]
+      return area[this.cityForm.cityKey]
     }
   },
   created () {
@@ -106,79 +99,70 @@ export default {
     console.log(area)
   },
   methods: {
-    submit () {
-      const result = valid(this.form, validConfig)
-      console.log(result)
-      const province = area[86][this.form.provinceKey]
-      const city = area[this.form.provinceKey][this.cityKey]
-      const district = area[this.form.cityKey][this.districtKey]
-      const form = {
-        name: this.name,
-        gender: this.gender,
-        address: province + city + district,
-        company: this.company,
-        mobile: this.mobile,
-        code: this.code
+    clickCon () {
+       Object.assign(this.dialog, {
+        title: '请输入名字',
+        show: true
+      })
+    },
+    closeDialog () {
+      this.dialog = {
+        title: '',
+        leftBtn: '取消',
+        rightBtn: '确定',
+        show: false,
+        type: ''
       }
-      console.log(form)
     }
   }
 }
 </script>
 
 <style lang="stylus" module>
-.avatar
-  position relative
-  margin 15px auto 0 auto
-  width 74px
-  height 74px
-  overflow hidden
-  background #fff
-  border 2px solid #fff
-  box-shadow 0 2px 4px 0 rgba(0,0,0,.1)
-  border-radius 40px
-  img
-    position absolute
-    top -3px
-    left -3px
-    width 80px
-    height 80px
+@import '~tool/vendor'
 
-.form
-  margin 20px 44px 0
+.wechat
+  padding 18px 0 18px 18px
+  display flex
+  background $white
+.wechatImg
+  margin-right (23/20)rem
+  width 66px
+  height 66px
+  overflow hidden
+  background $white
+  border 3px solid $white
+  box-shadow 0 4px 12px 0 rgba(0,0,0,.1)
+  border-radius 100px
+  img
+    position relative
+    display block
+    top 0
+    left 50%
+    transform translateX(-50%)
+    height 100%
+.wechatMsg
+  line-height 36px
+  span
+    margin-right 12px
+    color $assistText
+
+.group
+  margin-top 12px
+  background $white
+.line
+  height 1px
+  margin-left 18px
+  background $breakline
 
 .input
-  border 1px solid #000
-
-.areaSelect
-  width (70/20)rem
-  border 1px solid #000
-
-.btn
-  padding 5px 10px
-  color #0094FF
-  &:active
-    opacity .7
-
-.formBtn
-  position relative
-  margin-top 20px
-  text-align center
-
-.submit
-  padding 8px 25px
-  color #FFFFFF
-  background #0094FF
-  border-radius 5px
-  &:active
-    opacity .7
-
-.skip
-  position absolute
-  bottom 0
-  color #3F51B5
-  margin-left 20px
-  &:active
-    opacity .7
+  margin 0 18px 18px
+  padding 6px 16px
+  border 1px solid $border
+  border-radius 100px
+  >input
+    font-size 16px
+    line-height 24px
+    width 100%
 
 </style>

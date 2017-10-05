@@ -62,6 +62,7 @@
   padding 0
 
 .title
+  padding 18px 0
   text-align center
   font-size 16px
 
@@ -91,6 +92,6 @@
 
 .rightBtn
   color $link
-  border-left 1px solid $link
+  border-left 1px solid $breakline
 
 </style>

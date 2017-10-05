@@ -21,6 +21,7 @@ const store = new Vuex.Store({
       type: ''
     },
     popUp: {
+      title: '',
       word: '',
       leftMsg: '',
       rightMsg: '',
@@ -61,7 +62,8 @@ const store = new Vuex.Store({
       commit(types.SET_POPUP, Object.assign({}, state.popUp, popUp, { show: true }))
     },
     [types.CLOSE_POPUP] ({ commit, state }) {
-      commit(types.SET_POPUP, Object.assign({}, state.popUp, {
+      commit(types.SET_POPUP, Object.assign({}, {
+        title: '',
         word: '',
         leftMsg: '',
         rightMsg: '',
