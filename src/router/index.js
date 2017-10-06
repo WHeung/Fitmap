@@ -22,6 +22,10 @@ const vaildPhoneView = resolve => require.ensure(
   [], () => resolve(require('~src/views/userCenter/registerView/vaildPhoneView.vue')),
   'u'
 )
+const coummateInfoView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/userCenter/registerView/coummateInfoView.vue')),
+  'u'
+)
 const map = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/index.vue')),
   'm'
@@ -43,11 +47,12 @@ Vue.use(Router)
 
 const router = new Router({
   routes: [
-    { path: '/user/:id', component: userView, name: 'userView' },
-    { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
+    { path: '/user/:id(\\d+)', component: userView, name: 'userView' },
+    { path: '/user/:id(\\d+)/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/:id/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
     { path: '/user/:id/vaildPhone', component: vaildPhoneView, name: 'userVaildPhoneView' },
     { path: '/user/register/phone', component: vaildPhoneView, name: 'registerPhoneView' },
+    { path: '/user/register/info', component: coummateInfoView, name: 'coummateInfoView' },
     {
       path: '/map',
       name: 'mapView',
