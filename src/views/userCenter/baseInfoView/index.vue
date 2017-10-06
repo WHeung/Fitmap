@@ -22,7 +22,7 @@
     <div :class="$style.group">
       <Item title="公司" content="广州某某投资有限公司"></Item>
       <p :class="$style.line"></p>
-      <Item title="职务🌳" content="Boss"></Item>
+      <Item title="职务" content="Boss"></Item>
     </div>
     <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog">
       <div :class="$style.input">

@@ -54,7 +54,7 @@
   position absolute
   top 40%
   left 50%
-  width 280px
+  width (318/20)rem
   transform translate(-50%, -50%)
   -webkit-transform translate(-50%, -50%)
   border-radius 4px
@@ -67,7 +67,7 @@
   font-size 16px
 
 .word
-  margin 16px 12px 18px
+  margin 0 12px 18px
   text-align center
   font-size 16px
   line-height 24px
@@ -84,7 +84,7 @@
   height 42px
   width 49%
   display inline-block
-  font-size 13px
+  font-size 16px
   vertical-align top
 
 .noRight

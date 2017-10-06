@@ -34,6 +34,7 @@ export default {
 .btn
   box-sizing border-box
   padding 12px 0
+  width 100%
   font-size 16px
   text-align center
   border-radius 100px
@@ -45,7 +46,7 @@ export default {
   border 1px solid $mainText
 .blueBtn
   color $white
-  background $mainBtn
+  background $blueBtn
   box-shadow 0 4px 12px 0 rgba(87,171,255,0.60)
 .disabled
   opacity .3

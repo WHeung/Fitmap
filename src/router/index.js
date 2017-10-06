@@ -12,11 +12,15 @@ const userView = resolve => require.ensure(
 )
 const userInfoView = resolve => require.ensure(
   [], () => resolve(require('~src//views/userCenter/baseInfoView/index.vue')),
-  'ui'
+  'u'
 )
 const userfavoritesView = resolve => require.ensure(
   [], () => resolve(require('~src/views/userCenter/favoritesView/index.vue')),
-  'uf'
+  'u'
+)
+const vaildPhoneView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/userCenter/registerView/vaildPhoneView.vue')),
+  'u'
 )
 const map = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/index.vue')),
@@ -42,6 +46,8 @@ const router = new Router({
     { path: '/user/:id', component: userView, name: 'userView' },
     { path: '/user/:id/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/:id/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
+    { path: '/user/:id/vaildPhone', component: vaildPhoneView, name: 'userVaildPhoneView' },
+    { path: '/user/register/phone', component: vaildPhoneView, name: 'registerPhoneView' },
     {
       path: '/map',
       name: 'mapView',
