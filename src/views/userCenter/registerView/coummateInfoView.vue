@@ -6,8 +6,13 @@
       </Item>
       <p :class="$style.line"></p>
       <Item title="城市">
-        <div :class="$style.select">
-          请选择
+        <div :class="$style.select" @click="openMask('area')">
+          <template v-if="!form.area">
+            请选择
+          </template>
+          <template v-else>
+            {{form.area}}
+          </template>
         </div>
       </Item>
     </div>
@@ -17,26 +22,36 @@
       </Item>
       <p :class="$style.line"></p>
       <Item title="职务">
-        <div :class="$style.select">
-          请选择
+        <div :class="$style.select" @click="openMask('job')">
+          <template v-if="!form.job">
+            请选择
+          </template>
+          <template v-else>
+            {{form.job}}
+          </template>
         </div>
       </Item>
     </div>
     <Btn :class="$style.btn" type="blue" title="提交"></Btn>
-    <div :class="$style.maskLayer">
+    <div :class="$style.maskLayer" v-if="mask">
       <div :class="$style.mask">
       </div>
       <div :class="$style.multiPicker">
         <div :class="$style.pickerBtns">
-          <button>取消</button>
-          <button>确定</button>
+          <button @click="closeMask">取消</button>
+          <button @click="selectArea">确定</button>
         </div>
-        <div :class="$style.pickerCon">
-          <swiper :options="provOption" ref="provSwiper">
+        <div :class="$style.pickerCon" v-if="mask === 'area'">
+          <swiper :class="$style.containerClass" :options="provOption" ref="provSwiper">
             <swiperSlide v-for="(province,key) in provinces" :key="key">{{province}}</swiperSlide>
           </swiper>
-          <swiper :options="cityOption" ref="citySwiper">
+          <swiper :class="$style.containerClass" :options="cityOption" ref="citySwiper">
             <swiperSlide v-for="(city,key) in citys" :key="key">{{city}}</swiperSlide>
+          </swiper>
+        </div>
+        <div :class="$style.pickerCon" v-if="mask === 'job'">
+          <swiper :class="$style.containerClass" :options="jobOption" ref="jobSwiper">
+            <swiperSlide v-for="(job, key) in jobs" :key="key">{{job}}</swiperSlide>
           </swiper>
         </div>
       </div>
@@ -55,8 +70,8 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 const mobileConfig = [
   {
     case: 'noBlank',
-    data: ['mobile'],
-    errorMsg: ['请填手机号码']
+    data: ['name', 'area' ],
+    errorMsg: ['请填姓名', '请填写城市']
   },
   {
     case: 'mobilePhone',
@@ -66,21 +81,16 @@ const mobileConfig = [
 ]
 
 export default {
-  name: 'baseinfo-view',
+  name: 'coummateInfo-view',
   components: { Item, Btn, swiper, swiperSlide },
   data () {
     return {
-      cityForm: {
-        provinceKey: '',
-        cityKey: ''
-      },
       form: {
         name: '',
-        city: '',
+        area: '',
         company: '',
         job: ''
       },
-      inSeconds: '',
       swiperOption: {
         notNextTick: true,
         initialSlide: 0,
@@ -92,16 +102,39 @@ export default {
       },
       provOption: {},
       cityOption: {},
-      provIndex: 0
+      jobOption: {},
+      selectedArea: {},
+      provIndex: 0,
+      cityIndex: 0,
+      jobIndex: 0,
+      mask: null,
+      jobs: ['Boss', '教练', '运营']
+    }
+  },
+  watch: {
+    selectedArea: {
+      handler (val) {
+        if (val.prov && val.city) {
+          this.form.area = `${val.prov.name}-${val.city.name}`
+        }
+      }
     }
   },
   computed: {
     provinces () {
       return area[86]
     },
+    provinceKey () {
+      const keys = Object.keys(area[86])
+      return keys[this.provIndex]
+    },
     citys () {
       const keys = Object.keys(area[86])
-      return area[keys[this.provIndex]]
+      return area[this.provinceKey]
+    },
+    cityKey () {
+      const keys = Object.keys(this.citys)
+      return keys[this.cityIndex]
     },
     provSwiper () {
       return this.$refs.provSwiper ? this.$refs.provSwiper.swiper : {}
@@ -110,43 +143,52 @@ export default {
       return this.$refs.citySwiper ? this.$refs.citySwiper.swiper : {}
     }
   },
-  watch: {
-    'provSwiper.activeIndex': (val) => {
-      console.log(val)
-    }
-  },
   created () {
     Object.assign(this.swiperOption, { // 需要用到this的属性
       slideClass: this.$style.slideClass,
       slideActiveClass: this.$style.slideActiveClass,
-      wrapperClass: this.$style.swiperWrapper
+      wrapperClass: this.$style.swiperWrapper,
+      containerModifierClass: this.$style.containerClass
     })
     Object.assign(this.provOption, this.swiperOption, {
       onSlideChangeEnd: (swiper) => {
         this.provIndex = swiper.activeIndex
       }
     })
-    Object.assign(this.cityOption, this.swiperOption)
+    Object.assign(this.cityOption, this.swiperOption, {
+      onSlideChangeEnd: (swiper) => {
+        this.cityIndex = swiper.activeIndex
+      }
+    })
+    Object.assign(this.jobOption, this.swiperOption, {
+      onSlideChangeEnd: (swiper) => {
+        this.jobIndex = swiper.activeIndex
+      }
+    })
     this.$store.dispatch(Types.CLOSE_LOADING)
-    console.log(Object.keys(area[86]))
   },
   methods: {
-    getCode () {
-      if (valid({mobile: this.dcellphone}, mobileConfig)) {
-        this.inSeconds = 60
-        let interval = setInterval(() => {
-          this.inSeconds--
-          if (this.inSeconds === 0) {
-            clearInterval(interval)
-            interval = null
+    openMask (type) {
+      this.mask = type
+    },
+    closeMask () {
+      this.mask = null
+    },
+    selectArea () {
+      if (this.mask === 'area') {
+        if (this.provinceKey && this.cityKey) {
+          this.selectedArea = {
+            prov: {key: this.provinceKey, name: area[86][this.provinceKey]},
+            city: {key: this.cityKey, name: area[this.provinceKey][this.cityKey]}
           }
-        }, 1000)
+          this.provOption.initialSlide = this.provIndex
+          this.cityOption.initialSlide = this.cityIndex
+        }
       }
-      this.$store.dispatch(Types.OPEN_POPUP, {
-        title: '验证码错误',
-        word: '您输入的验证码有误，请重新输入',
-        leftMsg: '确定'
-      })
+      if (this.mask === 'job') {
+        this.form.job = this.jobs[this.jobIndex]
+      }
+      this.closeMask()
     }
   }
 }
@@ -218,6 +260,8 @@ export default {
   >button
     color $link
     padding 13px 18px
+    &:active
+      opacity .6
 .pickerCon
   position relative
   display flex
@@ -233,8 +277,8 @@ export default {
     box-sizing border-box
     border-top 1px solid $breakline
     border-bottom 1px solid $breakline
-  >div
-    width 50%
+.containerClass
+  flex 1 1 0
 .slideClass
   text-align center
   line-height 36px
