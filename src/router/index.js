@@ -42,6 +42,10 @@ const mapListView = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/listView/index.vue')),
   'm'
 )
+const detailView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/detail/indexView/index.vue')),
+  'd'
+)
 
 Vue.use(Router)
 
@@ -49,8 +53,8 @@ const router = new Router({
   routes: [
     { path: '/user/:id(\\d+)', component: userView, name: 'userView' },
     { path: '/user/:id(\\d+)/info', component: userInfoView, name: 'userInfoView' },
-    { path: '/user/:id/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
-    { path: '/user/:id/vaildPhone', component: vaildPhoneView, name: 'userVaildPhoneView' },
+    { path: '/user/:id(\\d+)/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
+    { path: '/user/:id(\\d+)/vaildPhone', component: vaildPhoneView, name: 'userVaildPhoneView' },
     { path: '/user/register/phone', component: vaildPhoneView, name: 'registerPhoneView' },
     { path: '/user/register/info', component: coummateInfoView, name: 'coummateInfoView' },
     {
@@ -75,6 +79,7 @@ const router = new Router({
         }
       ]
     },
+    { path: '/detail/:id(\\d+)', component: detailView, name: 'detailView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]
