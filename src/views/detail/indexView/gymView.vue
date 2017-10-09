@@ -191,5 +191,3 @@ export default {
 .intr
   padding 36px 24px
 </style>
-    
-</style>
