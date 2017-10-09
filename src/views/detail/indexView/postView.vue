@@ -7,6 +7,16 @@
       </div>
       <div :class="$style.title">PumpFit泵感健PumpFit泵感健身PumpFit泵感健身（客村店）</div>
     </div>
+    <div :class="$style.productMsg">
+      <div :class="$style.productItem">
+        <div :class="$style.productName">面积</div>
+        <div :class="$style.productCon">200㎡</div>
+      </div>
+      <div :class="$style.productItem">
+        <div :class="$style.productName">位置</div>
+        <div :class="$style.productCon">广州-越秀</div>
+      </div>
+    </div>
     <div :class="$style.msg">
       <div :class="$style.msgItem">
         <div :class="[$style.msgIcon, $style.locationIcon]"></div>
@@ -78,6 +88,26 @@ export default {
 .title
   padding 18px
   font-size 16px
+
+.productMsg
+  margin-bottom 12px
+  padding 18px 0
+  display flex
+  justify-content space-around
+  background $white
+.productItem
+  flex 1 1 auto
+  display inline-flex
+  flex-direction column
+  align-items center
+  &:not(:first-child)
+    border-left 1px solid $breakline
+.productName
+  margin-bottom 8px
+  font-size 12px
+  color $assistText
+.productCon
+  font-size 14px
 
 .msg
   background $white

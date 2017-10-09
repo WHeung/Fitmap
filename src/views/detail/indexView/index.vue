@@ -21,7 +21,7 @@ export default {
   data () {
     return {
       style: null,
-      view: 'gym'
+      view: 'post'
     }
   },
   components: { GymView, PostView, Btn },
