@@ -1,7 +1,9 @@
 <template>
   <div :class="$style.main">
-    <BMap v-model="map"></BMap>
-    <transition name="view" mode="out-in">
+    <BMap v-model="map" @mapClick="mapClick"></BMap>
+    <transition
+    :name="$route.name === 'mapListView' ? 'trans' : 'view'"
+    :mode="$route.name === 'mapListView' ? 'in-out' : 'out-in'">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
       </keep-alive>
@@ -33,6 +35,11 @@ export default {
   },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+  },
+  methods: {
+    mapClick () {
+      this.$store.commit(Types.SET_MAP_SELECTED, {id: 1})
+    }
   }
 }
 </script>

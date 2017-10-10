@@ -98,6 +98,15 @@ a
   opacity 0.3
   transform scale(.99)
 
+.trans
+  position relative
+.trans-enter-active
+  transition all .3s ease
+.trans-enter
+  transform translateY(100%)
+.trans-enter-to
+  transform translateY(0%)
+
 .ready
   visibility hidden
 </style>

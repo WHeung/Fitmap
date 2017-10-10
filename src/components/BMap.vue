@@ -5,7 +5,7 @@
 
 <script>
 import BMap from 'BMap'
-import * as types from '~src/store/types'
+import * as Types from '~src/store/types'
 
 export default {
   data () {
@@ -36,12 +36,14 @@ export default {
     var myIcon = new BMap.Icon(iconImg, new BMap.Size(25,25), {
       imageSize: new BMap.Size(25,25)
     })
-    var marker2 = new BMap.Marker(pt,{icon:myIcon});  // 创建标注
-    map.addOverlay(marker2)
+    var marker = new BMap.Marker(pt, { icon: myIcon });  // 创建标注
+    var self = this
+    marker.addEventListener("click", function (e) {self.handleClick(e, this)})
+    map.addOverlay(marker)
   },
   methods: {
     handleClick (e, mrks) {
-      this.$store.dispatch(types.UPDATE_MAP_SELECTED, mrks.id)
+      this.$emit('mapClick')
     }
   }
 }

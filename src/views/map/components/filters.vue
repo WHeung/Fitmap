@@ -7,7 +7,7 @@
       <div :class="$style.searchGroup">
         <input type="text" placeholder="搜索">
       </div>
-      <div :class="$style.mapIcon" v-if="origin === 'list'"></div>
+      <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
     </div>
     <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
@@ -37,6 +37,9 @@ export default {
   methods: {
     clickClassify () {
 
+    },
+    toMap () {
+      this.$router.push({ name: 'mapIndexView' })
     }
   }
 }

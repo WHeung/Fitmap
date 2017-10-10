@@ -13,14 +13,13 @@
         </div>
       </Item>
     </div>
-    <div :class="$style.tips">请完善您的个人信息，以便获取更多内容。</div>
-    <Btn type="blue" title="下一步"></Btn>
+    <div :class="$style.tips" v-if="routeName === 'registerPhoneView'">请完善您的个人信息，以便获取更多内容。</div>
+    <Btn type="blue" title="下一步" @clickBtn="clickBtn"></Btn>
   </div>
 </template>
 
 <script>
 import * as Types from '~src/store/types'
-import area from 'china-area-data'
 import Item from './components/item.vue'
 import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
@@ -43,29 +42,14 @@ export default {
   components: { Item, Btn },
   data () {
     return {
-      cityForm: {
-        provinceKey: '',
-        cityKey: '',
-        districtKey: ''
-      },
       cellphone: '',
-      inSeconds: ''
-    }
-  },
-  computed: {
-    provinces () {
-      return area[86]
-    },
-    citys () {
-      return area[this.cityForm.provinceKey]
-    },
-    districts () {
-      return area[this.cityForm.cityKey]
+      inSeconds: '',
+      routeName: ''
     }
   },
   created () {
+    this.routeName = this.$route.name
     this.$store.dispatch(Types.CLOSE_LOADING)
-    console.log(area)
   },
   methods: {
     getCode () {
@@ -84,6 +68,14 @@ export default {
         word: '您输入的验证码有误，请重新输入',
         leftMsg: '确定'
       })
+    },
+    clickBtn () {
+      if (this.routeName === 'userChangePhoneView') {
+        this.$router.back()
+      }
+      if (this.routeName === 'registerPhoneView') {
+        this.$router.push({ name: 'coummateInfoView' })
+      }
     }
   }
 }

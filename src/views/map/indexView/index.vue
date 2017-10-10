@@ -2,10 +2,10 @@
   <div :class="$style.main">
     <Filters></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
-    <div :class="$style.bottom" v-if="type">
+    <div :class="$style.bottom" v-if="selectedItem && selectedItem.id">
       <BusItem v-if="type==='business'"></BusItem>
       <PostItem v-if="type==='post'"></PostItem>
-      <div :class="$style.showList">
+      <div :class="$style.showList" @click="toListView">
         列表显示
       </div>
     </div>
@@ -32,10 +32,18 @@ export default {
       get () {
         return this.$store.state.map.map
       }
+    },
+    selectedItem () {
+      return this.$store.state.map.selectedItem
     }
   },
   created () {
 
+  },
+  methods: {
+    toListView () {
+      this.$router.push({ name: 'mapListView' })
+    },
   }
 }
 </script>
@@ -62,6 +70,8 @@ $assistText = #9DA2AB
   color #57ABFF
   background #fff
   border-top 1px solid $breakline
+  &:active
+    opacity .6
 
 .transTop
   transform translateY(-300px)

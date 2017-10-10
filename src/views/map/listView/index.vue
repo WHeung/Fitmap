@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.main">
     <Filters origin="list"></Filters>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
+    <BusItem :class="$style.item" @click="toListView"></BusItem>
+    <PostItem :class="$style.item" @click="toListView"></PostItem>
+    <BusItem :class="$style.item" @click="toListView"></BusItem>
+    <PostItem :class="$style.item" @click="toListView"></PostItem>
+    <BusItem :class="$style.item" @click="toListView"></BusItem>
+    <PostItem :class="$style.item" @click="toListView"></PostItem>
+    <BusItem :class="$style.item" @click="toListView"></BusItem>
     <PostItem :class="$style.item"></PostItem>
     <BusItem :class="$style.item"></BusItem>
     <PostItem :class="$style.item"></PostItem>
@@ -45,6 +45,11 @@ export default {
   },
   created () {
 
+  },
+  methods: {
+    toDetailView () {
+      this.$router.push({ name: 'detailView', params: { id: 1 } })
+    }
   }
 }
 </script>

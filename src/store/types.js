@@ -8,6 +8,7 @@ export const SET_BUCKET = 'SET_BUCKET'
 
 // mutation
 export const SET_MAP = 'SET_MAP'
+export const SET_MAP_SELECTED = 'SET_MAP_SELECTED'
 
 // action global
 export const OPEN_TOAST = 'tOPEN_TOAST'

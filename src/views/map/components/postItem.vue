@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetailView">
     <div :class="$style.top">
       <div :class="$style.title">层高6米 天河花园式创意园 各种商业配.安抚水淀粉</div>
       <div :class="$style.tag"><span>场地租赁</span></div>
@@ -22,6 +22,9 @@ export default {
     }
   },
   methods: {
+    toDetailView () {
+      this.$router.push({ name: 'detailView', params: { id: 1 } })
+    }
   }
 }
 </script>

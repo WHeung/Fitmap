@@ -32,7 +32,7 @@
         </div>
       </Item>
     </div>
-    <Btn :class="$style.btn" type="blue" title="提交"></Btn>
+    <Btn :class="$style.btn" type="blue" title="提交" @clickBtn="clickBtn"></Btn>
     <div :class="$style.maskLayer" v-if="mask">
       <div :class="$style.mask">
       </div>
@@ -189,6 +189,9 @@ export default {
         this.form.job = this.jobs[this.jobIndex]
       }
       this.closeMask()
+    },
+    clickBtn () {
+      this.$router.push({ name: 'mapIndexView' })
     }
   }
 }

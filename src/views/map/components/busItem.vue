@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
       <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
     </div>
@@ -22,6 +22,9 @@ export default {
     }
   },
   methods: {
+    toDetailView () {
+      this.$router.push({ name: 'detailView', params: { id: 1 } })
+    }
   }
 }
 </script>
