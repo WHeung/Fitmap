@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <Filters></Filters>
+    <Filters @searchClick="searchClick"></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="selectedItem && selectedItem.id">
       <BusItem v-if="type==='business'"></BusItem>
@@ -44,6 +44,9 @@ export default {
     toListView () {
       this.$router.push({ name: 'mapListView' })
     },
+    searchClick () {
+      this.$router.push({ name: 'mapSearchView' })
+    }
   }
 }
 </script>

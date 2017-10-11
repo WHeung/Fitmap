@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <Filters></Filters>
+    <Filters origin="search"></Filters>
     <div :class="$style.histroy" v-if="true">
       <div :class="$style.hisTop">
         <div :class="$style.hisTitle">

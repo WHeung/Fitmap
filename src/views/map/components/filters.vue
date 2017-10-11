@@ -4,10 +4,12 @@
       <div :class="$style.classifyGroup" @click="clickClassify">
         健身房
       </div>
-      <div :class="$style.searchGroup">
-        <input type="text" placeholder="搜索">
+      <div :class="$style.searchGroup" @click="searchClick">
+        <input type="text" v-model="input" placeholder="搜索">
+        <i @click="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
+      <div :class="$style.searchIcon" v-if="origin === 'search'" @click="toList">搜索</div>
     </div>
     <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
@@ -30,7 +32,8 @@ export default {
   name: 'map-filter',
   data () {
     return {
-      mask: false
+      mask: false,
+      input: ''
     }
   },
   props: ['origin'],
@@ -40,17 +43,22 @@ export default {
     },
     toMap () {
       this.$router.push({ name: 'mapIndexView' })
+    },
+    searchClick () {
+      this.$emit('searchClick')
+    },
+    toList () {
+      this.$router.push({ name: 'mapListView' })
+    },
+    clearInput () {
+      this.input = ''
     }
   }
 }
 </script>
 
 <style lang="stylus" module>
-$breakline = #E1E5EB
-$assistText = #9DA2AB
-$mainText = #474C54
-$white = #FFFFFF
-$border = #CBCED4
+@import '~tool/vendor'
 
 .maskLayer
   position absolute
@@ -104,7 +112,7 @@ $border = #CBCED4
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
   border-radius 100px
-  &:before,&:after
+  &:before,>i
     content ''
     position absolute
     top 50%
@@ -115,7 +123,7 @@ $border = #CBCED4
     left 12px
     background url('~src/public/fm_search.svg') no-repeat
     background-size 100% 100%
-  &:after
+  >i
     width 16px
     height 16px
     right 12px
@@ -123,6 +131,8 @@ $border = #CBCED4
     background-size 100% 100%
   >input
     line-height 21px
+    width 100%
+
 
 .mapIcon
   margin-left 12px
@@ -130,6 +140,12 @@ $border = #CBCED4
   height 28px
   background url('~src/public/fm_map.svg') no-repeat
   background-size 100% 100%
+.searchIcon
+  margin-left 12px
+  font-size 16px
+  color $link
+  &:active
+    opacity .6
 
 .maskContent
   position relative

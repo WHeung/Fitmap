@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <Filters origin="list"></Filters>
+    <Filters origin="list" @searchClick="searchClick"></Filters>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
     <PostItem :class="$style.item" @click="toListView"></PostItem>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
