@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <Filters @searchClick="searchClick"></Filters>
+    <Filters @searchClick="searchClick" origin="index"></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="selectedItem && selectedItem.id">
       <BusItem v-if="type==='business'"></BusItem>

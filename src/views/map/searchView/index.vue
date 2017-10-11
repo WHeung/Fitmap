@@ -50,6 +50,7 @@ $mainText = #474C54
 
 .main
   background #F5F7FA
+  padding-top 60px
 
 .histroy
   margin-top 18px

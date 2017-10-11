@@ -1,8 +1,10 @@
 <template>
-  <div :class="[$style.main, {[$style.maskLayer]: mask}, {[$style.originList]: origin === 'list'}]">
+  <div :class="[$style.main, {[$style.originList]: origin !== 'index' }]">
     <div :class="$style.container">
-      <div :class="$style.classifyGroup" @click="clickClassify">
-        健身房
+      <div
+      :class="[$style.classifyGroup,{[$style.dropUp]:mask === true}]"
+      @click="clickClassify">
+        {{selectedCate.name}}
       </div>
       <div :class="$style.searchGroup" @click="searchClick">
         <input type="text" v-model="input" placeholder="搜索">
@@ -13,17 +15,19 @@
     </div>
     <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
-        <div :class="[$style.classItem, $style.activeClass]">商家</div>
-        <div :class="[$style.classItem]">帖子</div>
+        <div
+        :class="[$style.classItem, {[$style.activeClass]: selected[0] === index}]"
+        v-for="(type,index) in classTypes" :key="type.data"
+        @click="choiceType(index)">{{type.name}}</div>
       </div>
       <div :class="$style.classify">
-        <div :class="$style.classItem">健身房</div>
-        <div :class="[$style.classItem, $style.activeItem]">室内设计</div>
-        <div :class="$style.classItem">健身培训</div>
-        <div :class="$style.classItem">室内器材</div>
-        <div :class="$style.classItem">室内器材</div>
+        <div
+        :class="[$style.classItem, {[$style.activeItem]: selected[1] === index}]"
+        v-for="(cate,index) in categorys" :key="cate.data"
+        @click="choiceCate(index)">{{cate.name}}</div>
       </div>
     </div>
+    <div :class="$style.maskLayer" v-if="mask === true" @click="clickClassify"></div>
   </div>
 </template>
 
@@ -31,15 +35,74 @@
 export default {
   name: 'map-filter',
   data () {
+    const classTypes = [
+      {
+        name: '商家',
+        data: 'merchant'
+      }, {
+        name: '帖子',
+        data: 'post'
+      }
+    ]
+    const classCategorys = {
+      merchant: [
+        {
+          name: '健身房',
+          data: 'gym'
+        },
+        {
+          name: '室内设计',
+          data: 'design'
+        },
+        {
+          name: '健身培训',
+          data: 'train'
+        },
+        {
+          name: '室内器材',
+          data: 'equip'
+        }
+      ],
+      post: [
+        {
+          name: '场地租凭',
+          data: 'lease'
+        },
+        {
+          name: '转让信息',
+          data: 'transfer'
+        },
+        {
+          name: '人员招聘',
+          data: 'recruit'
+        },
+        {
+          name: '设计招标',
+          data: 'bid'
+        }
+      ]
+    }
     return {
       mask: false,
-      input: ''
+      input: '',
+      selected: [0, 0],
+      classTypes,
+      classCategorys
+    }
+  },
+  computed: {
+    categorys () {
+      const typeKey = this.classTypes[this.selected[0]].data
+      return this.classCategorys[typeKey]
+    },
+    selectedCate () {
+      return this.categorys[this.selected[1]]
     }
   },
   props: ['origin'],
   methods: {
     clickClassify () {
-
+      this.mask = !this.mask
     },
     toMap () {
       this.$router.push({ name: 'mapIndexView' })
@@ -52,6 +115,18 @@ export default {
     },
     clearInput () {
       this.input = ''
+    },
+    choiceType (index) {
+      if (this.selected[0] === index) {
+        return
+      }
+      this.selected = [index, 0]
+    },
+    choiceCate (index) {
+      if (this.selected[1] === index) {
+        return
+      }
+      this.$set(this.selected, 1, index)
     }
   }
 }
@@ -61,18 +136,21 @@ export default {
 @import '~tool/vendor'
 
 .maskLayer
-  position absolute
+  position fixed
+  top 0
   width 100%
   height 100%
   background rgba(0, 0, 0, .5)
   z-index 3
 
 .container
-  padding 12px 12px
+  position relative
+  padding 12px
   display flex
   white-space nowrap
   justify-content space-between
   align-items center
+  z-index 5
 .originList
   position fixed
   top 0
@@ -103,6 +181,9 @@ export default {
     top 50%
     right 10px
     transform translateY(-50%)
+    transition all .3s ease
+  &.dropUp:after
+    transform translateY(-50%) rotate(180deg)
 
 .searchGroup
   position relative
@@ -153,6 +234,7 @@ export default {
   background #fff
   border-radius 3px
   height 216px
+  z-index 5
   &:after
     content ''
     position absolute
