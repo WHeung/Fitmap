@@ -1,31 +1,14 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.info">
+    <div :class="$style.item">
       <div :class="$style.avatar">
         <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
-        <div :class="$style.moreImg">更多</div>
+        <div :class="$style.moreImg" v-if="merchantType !== 'equip'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">PumpFit泵感健PumpFit泵感健身PumpFit泵感健身（客村店）</div>
     </div>
-    <div :class="$style.msg">
-      <div :class="$style.msgItem">
-        <div :class="[$style.msgIcon, $style.locationIcon]"></div>
-        <div :class="$style.msgText">广东-广州-海珠-艺苑南路13号大院布衣港电商园11栋1楼（地铁站客村站D出口）</div>
-        <div :class="$style.msgArrow"></div>
-      </div>
-      <p :class="$style.line"></p>
-      <div :class="$style.msgItem">
-        <div :class="[$style.msgIcon, $style.phoneIcon]"></div>
-        <div :class="$style.msgText">
-          <span>87123458</span>,
-          <span>87123458</span>,
-          <span>87123458</span>,
-          <span>87123458</span>
-        </div>
-        <div :class="$style.msgArrow"></div>
-      </div>
-    </div>
-    <div :class="$style.products">
+    <ContactItem :class="$style.item"></ContactItem>
+    <div :class="$style.item" v-if="merchantType === 'equip'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
         <div :class="$style.productsMore">
@@ -59,17 +42,30 @@
         </div>
       </div>
     </div>
-    <div :class="$style.intr" v-html="`所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。 “泵感”是衡量健美训练是否有效的一个标志。`"></div>
+    <div :class="[$style.item, $style.intr]" v-html="`所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。 “泵感”是衡量健美训练是否有效的一个标志。`"></div>
   </div>
 </template>
 
 <script>
 import * as Types from '~src/store/types'
+import SwipeImg from '../components/swipeImg.vue'
+import ContactItem from '../components/contactItem.vue'
 
 export default {
-  name: 'user-View',
-  created() {
+  name: 'merchant-View',
+  components: { SwipeImg, ContactItem },
+  data () {
+    return {
+      merchantType: 'equip' // gym, design, train, equip
+    }
+  },
+  created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+  },
+  methods: {
+    seeMorePic () {
+      this.$router.push({ name: 'detailPicView', params: 1 })
+    }
   }
 }
 </script>
@@ -77,9 +73,10 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
-.info
-  background $white
+.item
   margin-bottom 12px
+  background $white
+
 .avatar
   position relative
   height (250/20)rem
@@ -113,43 +110,6 @@ export default {
   padding 18px
   font-size 16px
 
-.msg
-  background $white
-  margin-bottom 12px
-.msgItem
-  padding 12px 18px
-  display flex
-  align-items center
-  font-size 14px
-.msgIcon
-  flex 0 0 auto
-  margin-right (12/20)rem
-  width 28px
-  height 28px
-  background-repeat no-repeat
-  background-size 100% 100%
-  &.locationIcon
-    background-image url('~public/fm_list_locate.svg')
-  &.phoneIcon
-    background-image url('~public/fm_list_call.svg')
-.msgText
-  margin-right 12px
-  >span
-    white-space nowrap
-.msgArrow
-  flex 0 0 auto
-  height 16px
-  width 16px
-  background url('~public/fm_goto.svg') no-repeat
-  background-size 100% 100%
-.line
-  margin-left 18px
-  height 1px
-  background $breakline
-
-.products
-  background $white
-  margin-bottom 10px
 .productsTop
   padding 12px 18px
   display flex

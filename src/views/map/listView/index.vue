@@ -3,13 +3,13 @@
     <Filters
     :updateForm="updateForm" :form="classForm" origin="list"
     @searchClick="searchClick" @request="request"></Filters>
-    <BusItem :class="$style.item" @click="toListView"></BusItem>
-    <PostItem :class="$style.item" @click="toListView"></PostItem>
-    <BusItem :class="$style.item" @click="toListView"></BusItem>
-    <PostItem :class="$style.item" @click="toListView"></PostItem>
-    <BusItem :class="$style.item" @click="toListView"></BusItem>
-    <PostItem :class="$style.item" @click="toListView"></PostItem>
-    <BusItem :class="$style.item" @click="toListView"></BusItem>
+    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
+    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
+    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
+    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
+    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
+    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
+    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
     <PostItem :class="$style.item"></PostItem>
     <BusItem :class="$style.item"></BusItem>
     <PostItem :class="$style.item"></PostItem>
@@ -60,6 +60,9 @@ export default {
   methods: {
     toDetailView () {
       this.$router.push({ name: 'detailView', params: { id: 1 }})
+    },
+    searchClick () {
+      this.$router.push({ name: 'mapSearchView' })
     },
     request (form) {
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)

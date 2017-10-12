@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.main">
     <swiper :class="$style.containerClass" :options="swiperOption" ref="swiper">
-      <swiperSlide>
+      <swiperSlide :class="{[$style.square]: type === 'product'}">
         <img src="http://cdn01.dwfei.com/img/country/new/yuenan@2x.png" alt="">
       </swiperSlide>
-      <swiperSlide>
+      <swiperSlide :class="{[$style.square]: type === 'product'}">
         <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg" alt="">
       </swiperSlide>
-      <swiperSlide>
+      <swiperSlide :class="{[$style.square]: type === 'product'}">
         <img src="http://cdn01.dwfei.com/img/banner/02/bincheng1.jpg" alt="">
       </swiperSlide>
       <div :class="$style.swiperPagination" slot="pagination" id="pagination"></div>
@@ -21,6 +21,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'swipe-img',
   components: { swiper, swiperSlide },
+  props: ['type'],
   data () {
     return {
       swiperOption: {
@@ -34,7 +35,7 @@ export default {
     Object.assign(this.swiperOption, { // 需要用到this的属性
       slideClass: this.$style.slideClass,
       wrapperClass: this.$style.swiperWrapper,
-      paginationCurrentClass: this.$style.currentPagination,
+      paginationCurrentClass: this.$style.currentPagination
     })
   },
   methods: {
@@ -53,22 +54,23 @@ export default {
   
 .containerClass
   position relative
+  overflow hidden
 .swiperWrapper
   display flex
-  width 100%
-  height (250/20)rem
 .slideClass
   flex 0 0 auto
   position relative
   width 100%
   height (250/20)rem
   overflow hidden
+  &.square
+    height (375/20)rem
   img
     position absolute
     display block
-    width 100%
-    top 50%
-    transform translateY(-50%)
+    height 100%
+    left 50%
+    transform translateX(-50%)
 
 .swiperPagination
   display flex

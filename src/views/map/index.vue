@@ -1,9 +1,7 @@
 <template>
   <div :class="$style.main">
     <BMap v-model="map" @mapClick="mapClick"></BMap>
-    <transition
-    :name="$route.name === 'mapListView' ? 'trans' : 'view'"
-    :mode="$route.name === 'mapListView' ? 'in-out' : 'out-in'">
+    <transition :name="transName" :mode="transName === 'trans' ? 'in-out' : 'out-in'">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
       </keep-alive>
@@ -20,7 +18,15 @@ export default {
   components: { BMap },
   data () {
     return {
+      transName: 'view'
     }
+  },
+  beforeRouteUpdate (to, from, next) {
+    this.transName = 'view'
+    if (from.name === 'mapIndexView' && to.name === 'mapListView') {
+      this.transName = 'trans'
+    }
+    next()
   },
   computed: {
     map: {
