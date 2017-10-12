@@ -8,7 +8,7 @@
       </div>
       <div :class="$style.searchGroup" @click="searchClick">
         <input type="text" v-model="input" placeholder="搜索">
-        <i @click="clearInput"></i>
+        <i @click.stop="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
       <div :class="$style.searchIcon" v-if="origin === 'search'" @click="toList">搜索</div>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import * as Types from '~src/store/types'
 export default {
   name: 'map-filter',
   data () {
@@ -90,6 +91,18 @@ export default {
       classCategorys
     }
   },
+  props: ['origin', 'updateForm', 'form'],
+  created () {
+    console.log('created')
+  },
+  watch: {
+    updateForm: {
+      handler (val) {
+        this.input = this.form.input
+        this.selected = [].concat(this.form.selected)
+      }
+    }
+  },
   computed: {
     categorys () {
       const typeKey = this.classTypes[this.selected[0]].data
@@ -99,7 +112,6 @@ export default {
       return this.categorys[this.selected[1]]
     }
   },
-  props: ['origin'],
   methods: {
     clickClassify () {
       this.mask = !this.mask
@@ -111,10 +123,19 @@ export default {
       this.$emit('searchClick')
     },
     toList () {
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, {
+        input: this.input,
+        selected: this.selected
+      })
       this.$router.push({ name: 'mapListView' })
     },
     clearInput () {
       this.input = ''
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: this.input })
+      if (this.origin !== 'search') {
+        // 请求
+        this.$emit('request')
+      }
     },
     choiceType (index) {
       if (this.selected[0] === index) {
@@ -127,6 +148,11 @@ export default {
         return
       }
       this.$set(this.selected, 1, index)
+      this.mask = false
+      if (this.origin !== 'search') {
+        // 请求
+        this.$emit('request')
+      }
     }
   }
 }

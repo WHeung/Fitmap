@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <Filters origin="list" @searchClick="searchClick"></Filters>
+    <Filters :updateForm="updateForm" :form="classForm" origin="list" @searchClick="searchClick"></Filters>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
     <PostItem :class="$style.item" @click="toListView"></PostItem>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
@@ -33,14 +33,23 @@ export default {
   components: { Filters, BusItem, PostItem },
   data () {
     return {
-      type: 'post'
+      type: 'post',
+      updateForm: 0
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
+      vm.updateForm++
+    })
   },
   computed: {
     map: {
       get () {
         return this.$store.state.map.map
       }
+    },
+    classForm () {
+      return this.$store.state.map.filtersForm
     }
   },
   created () {

@@ -3,7 +3,11 @@ import CallApi from '~src/store/api'
 
 const State = {
   map: null,
-  selectedItem: null
+  selectedItem: null,
+  filtersForm: {
+    input: '',
+    selected: [0, 0]
+  }
 }
 
 const Mutations = {
@@ -14,6 +18,10 @@ const Mutations = {
   [Types.SET_MAP_SELECTED] (state, data) {
     console.log('mutation: set selectedItem')
     state.selectedItem = data
+  },
+  [Types.SET_MAP_FILTERS_FORM] (state, data) {
+    console.log('mutation: set filtersForm')
+    Object.assign(state.filtersForm, data)
   }
 }
 
