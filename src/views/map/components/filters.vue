@@ -151,7 +151,11 @@ export default {
       this.mask = false
       if (this.origin !== 'search') {
         // 请求
-        this.$emit('request')
+        const form = {
+          input: this.input,
+          selected: this.selected
+        }
+        this.$emit('request', form)
       }
     }
   }

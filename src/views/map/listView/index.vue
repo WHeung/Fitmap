@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.main">
-    <Filters :updateForm="updateForm" :form="classForm" origin="list" @searchClick="searchClick"></Filters>
+    <Filters
+    :updateForm="updateForm" :form="classForm" origin="list"
+    @searchClick="searchClick" @request="request"></Filters>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
     <PostItem :class="$style.item" @click="toListView"></PostItem>
     <BusItem :class="$style.item" @click="toListView"></BusItem>
@@ -57,7 +59,11 @@ export default {
   },
   methods: {
     toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: 1 } })
+      this.$router.push({ name: 'detailView', params: { id: 1 }})
+    },
+    request (form) {
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+      // 请求
     }
   }
 }

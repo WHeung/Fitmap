@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.main">
-    <Filters :updateForm="updateForm" :form="classForm" origin="index" @searchClick="searchClick"></Filters>
+    <Filters
+    :updateForm="updateForm" :form="classForm" origin="index"
+    @searchClick="searchClick" @request="request"></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="selectedItem && selectedItem.id">
       <BusItem v-if="type==='business'"></BusItem>
@@ -55,6 +57,10 @@ export default {
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
+    },
+    request (form) {
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+      // 请求
     }
   }
 }
