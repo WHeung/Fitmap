@@ -1,15 +1,14 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
+      <img :src="item.images[0]">
     </div>
     <div :class="$style.content">
-      <div :class="$style.title">澳淋健身游泳俱乐部</div>
+      <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
-        <span>健身房</span>
-        <span>帖子</span>
+        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
       </div>
-      <div :class="$style.address">610米 东莞庄路120号</div>
+      <div :class="$style.address">{{item.distance}} {{item.location}}</div>
     </div>
   </div>
 </template>
@@ -17,13 +16,10 @@
 <script>
 export default {
   name: 'map-bus-item',
-  data () {
-    return {
-    }
-  },
+  props: ['item'],
   methods: {
     toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: 1 } })
+      this.$router.push({ name: 'detailView', params: { id: 1 }})
     }
   }
 }
@@ -54,6 +50,7 @@ $white = #FFFFFF
 .content
   position relative
   padding 16px
+  flex 1 1 auto
 
 .title
   font-size 15px

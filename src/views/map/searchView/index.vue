@@ -1,18 +1,17 @@
 <template>
   <div :class="$style.main">
-    <Filters :updateForm="updateForm" :form="classForm" origin="search"></Filters>
-    <div :class="$style.histroy" v-if="true">
+    <Filters :updateForm="updateForm" :form="classForm" origin="search" @search="search"></Filters>
+    <div :class="$style.histroy">
       <div :class="$style.hisTop">
         <div :class="$style.hisTitle">
           搜索历史
         </div>
-        <div :class="$style.hisClean">
+        <div :class="$style.hisClean" @click="cleanHistory">
           清空
         </div>
       </div>
-      <div :class="$style.hisCon">
-        <span>健身房</span>
-        <span>帖子</span>
+      <div :class="$style.hisCon" v-if="history && history.length">
+        <span v-for="item in history" :key="item">{{item}}</span>
       </div>
     </div>
   </div>
@@ -22,13 +21,16 @@
 import Filters from '../components/filters.vue'
 import * as Types from '~src/store/types'
 
+const storageKey = 'search_history'
+
 export default {
   name: 'map-search-view',
   components: { Filters },
   data () {
     return {
       type: 'post',
-      updateForm: 0
+      updateForm: 0,
+      history: JSON.parse(window.localStorage[storageKey] || '[]')
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -46,8 +48,18 @@ export default {
       return this.$store.state.map.filtersForm
     }
   },
-  created () {
-
+  methods: {
+    search (form) {
+      if (this.history.indexOf(form.input) < 0) {
+        this.history.unshift(form.input)
+        window.localStorage[storageKey] = JSON.stringify(this.history)
+      }
+      this.$router.push({ name: 'mapListView' })
+    },
+    cleanHistory () {
+      this.history = []
+      window.localStorage[storageKey] = '[]'
+    }
   }
 }
 </script>

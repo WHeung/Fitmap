@@ -1,15 +1,17 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.top">
-      <div :class="$style.title">层高6米 天河花园式创意园 各种商业配.安抚水淀粉</div>
-      <div :class="$style.tag"><span>场地租赁</span></div>
+      <div :class="$style.title">{{item.title}}</div>
+      <div :class="$style.tag">
+        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
+      </div>
     </div>
     <div :class="$style.sub">
-      裕晖创意产业园位于天河北商圈及天河智慧城核心区天河花园式创意园
+      {{item.content}}
     </div>
     <div :class="$style.msg">
-      <div>天河-裕晖创意产业园</div>
-      <div>2017-09-26</div>
+      <div>{{item.location}}</div>
+      <div>{{item.created_time}}</div>
     </div>
   </div>
 </template>
@@ -17,13 +19,10 @@
 <script>
 export default {
   name: 'map-post-item',
-  data () {
-    return {
-    }
-  },
+  props: ['item'],
   methods: {
     toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: 1 } })
+      this.$router.push({ name: 'detailView', params: { id: 1 }})
     }
   }
 }

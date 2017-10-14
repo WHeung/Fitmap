@@ -3,24 +3,14 @@
     <Filters
     :updateForm="updateForm" :form="classForm" origin="list"
     @searchClick="searchClick" @request="request"></Filters>
-    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
-    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
-    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
-    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
-    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
-    <PostItem :class="$style.item" @click="toDetailView"></PostItem>
-    <BusItem :class="$style.item" @click="toDetailView"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
-    <BusItem :class="$style.item"></BusItem>
-    <PostItem :class="$style.item"></PostItem>
+    <div v-if="list && list.length">
+      <template v-if="classForm.selected[0] === 0">
+        <BusItem :class="$style.item" v-for="item in list" :key="item.id" :item="item"></BusItem>
+      </template>
+      <template v-if="classForm.selected[0] === 1">
+        <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item"></PostItem>
+      </template>
+    </div>
   </div>
 </template>
 
@@ -52,6 +42,9 @@ export default {
     },
     classForm () {
       return this.$store.state.map.filtersForm
+    },
+    list () {
+      return this.$store.state.map.list
     }
   },
   created () {

@@ -11,7 +11,7 @@
         <i @click.stop="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
-      <div :class="$style.searchIcon" v-if="origin === 'search'" @click="toList">搜索</div>
+      <div :class="$style.searchIcon" v-if="origin === 'search'" @click="search">搜索</div>
     </div>
     <div :class="$style.maskContent" v-if="mask">
       <div :class="$style.classify">
@@ -122,12 +122,13 @@ export default {
     searchClick () {
       this.$emit('searchClick')
     },
-    toList () {
-      this.$store.commit(Types.SET_MAP_FILTERS_FORM, {
+    search () {
+      const form = {
         input: this.input,
         selected: this.selected
-      })
-      this.$router.push({ name: 'mapListView' })
+      }
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+      this.$emit('search', form)
     },
     clearInput () {
       this.input = ''
