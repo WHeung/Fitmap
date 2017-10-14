@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <BMap v-model="map" @mapClick="mapClick"></BMap>
+    <AMap v-model="map" @mapClick="mapClick"></AMap>
     <transition :name="transName" :mode="transName === 'trans' ? 'in-out' : 'out-in'">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import BMap from '~src/components/BMap.vue'
+import AMap from '~src/components/AMap.vue'
 import * as Types from '~src/store/types'
 
 export default {
   name: 'map',
-  components: { BMap },
+  components: { AMap },
   data () {
     return {
       transName: 'view'
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     mapClick () {
-      this.$store.commit(Types.SET_MAP_SELECTED, {id: 1})
+      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
     }
   }
 }

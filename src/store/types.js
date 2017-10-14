@@ -8,7 +8,7 @@ export const SET_BUCKET = 'SET_BUCKET'
 
 // mutation
 export const SET_MAP = 'SET_MAP'
-export const SET_MAP_SELECTED = 'SET_MAP_SELECTED'
+export const SET_MAP_SELECTED_MARKER = 'SET_MAP_SELECTED_MARKER'
 export const SET_MAP_FILTERS_FORM = 'SET_MAP_FILTERS_FORM'
 
 // action global
@@ -24,6 +24,7 @@ export const FILL_BUCKET = 'FILL_BUCKET'
 export const FALL_BUCKET = 'FALL_BUCKET'
 
 // action
+export const ADD_MAP_MARKERS = 'ADD_MAP_MARKERS'
 
 // api
 export const FETCH_CODE_GET = 'FETCH_CODE_GET'

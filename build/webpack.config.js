@@ -20,7 +20,7 @@ const config = {
     ]
   },
   externals: {
-    'BMap': 'BMap'
+    'AMap': 'AMap'
   },
   output: {
     path: path.resolve(__dirname, '../dist/'),
@@ -78,7 +78,6 @@ const config = {
 }
 
 if (process.env.NODE_ENV === 'development') {
-  // 添加环境变量，比如安卓的webviewBridge
   config.entry.app = ['./src/env-mock/index.js', './src/app.js']
   config.plugins.push(
     new webpack.DefinePlugin({
