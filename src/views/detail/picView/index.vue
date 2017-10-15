@@ -1,10 +1,10 @@
 <template>
   <div :class="$style.main" :style="style">
-    <div :class="$style.item" v-for="pic in picList" :key="pic" @click="preview">
+    <div :class="$style.item" v-for="pic in picList" :key="pic" @click="preview" @animationend="animationend($event, pic)">
       <img :src="pic">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
-      <img :src="previewData.src" alt="">
+      <img :src="previewData.src">
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
         show: false,
         src: ''
       },
-      picList: []
+      picList: [],
+      lockPreview: false
     }
   },
   created () {
@@ -40,19 +41,21 @@ export default {
   },
   methods: {
     preview (e) {
-      const imgEl = e.path[0]
+      if (this.lockPreview) {
+        return
+      }
       const el = e.path[1]
-      const self = this
-      console.dir(imgEl.src)
-      el.addEventListener('animationend', (e) => {
-        console.log(e)
-        Object.assign(self.previewData, {
-          show: true,
-          src: imgEl.src
-        })
-        e.target.className = this.$style.item
-      })
       el.className += ' ' + this.$style.animat
+      this.lockPreview = true
+    },
+    animationend (e, pic) {
+      console.log(e)
+      Object.assign(this.previewData, {
+        show: true,
+        src: pic
+      })
+      e.target.className = this.$style.item
+      this.lockPreview = false
     },
     closeMask () {
       this.previewData = {
@@ -90,7 +93,8 @@ export default {
     position fixed
     top 50%
     left 50%
-    transform translateY(-50%,-50%)
+    width 0%
+    transform translateY(-50%)
     z-index 10
   to
     position fixed
