@@ -1,21 +1,20 @@
 <template>
-  <div :class="$style.main">
-    <div :class="$style.title">广州西适体健身服务有限公司</div>
+  <div :class="$style.main" @click="clickCon" v-if="data">
+    <div :class="$style.title">{{data.title}}</div>
     <div :class="$style.tag">
-      <span>健身房</span>
-      <span>帖子</span>
+      <span v-for="tag in data.tags" :key="tag">{{tag}}</span>
     </div>
-    <div :class="$style.address">610米 东莞庄路120号</div>
+    <div :class="$style.address">{{data.distance}} {{data.location}}</div>
   </div> 
 </template>
 
 <script>
 export default {
   name: 'item',
-  props: ['title', 'content'],
+  props: ['data'],
   methods: {
     clickCon () {
-      this.$emit('clickCon')
+      this.$router.push({ name: 'detailView', params: { type: 'merchant', id: this.data.id }})
     }
   }
 }
@@ -53,6 +52,7 @@ export default {
     border-radius 10px
     
 .address
+  max-width 90%
   margin-top 13px
   font-size 12px
   color $assistText

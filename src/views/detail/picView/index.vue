@@ -1,31 +1,7 @@
 <template>
   <div :class="$style.main" :style="style">
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/sell/2d23422254b14c56afd6eb70115dbb0b.jpg">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/banner/0559f573ef7f1af21ab5c894e7223450.jpg">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/website/wap/bg.png">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/sell/fbf5e96d58f04ccabbc9b93bec4887e9.png">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/banner/layout/dongjing003.jpg">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/banner/0559f573ef7f1af21ab5c894e7223450.jpg">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/website/wap/bg.png">
-    </div>
-    <div :class="$style.item">
-      <img src="http://cdn01.dwfei.com/img/banner/layout/mangu_04.png">
-    </div>
-    <div :class="$style.item" @click="preview">
-      <img src="http://cdn01.dwfei.com/img/sell/2d23422254b14c56afd6eb70115dbb0b.jpg">
+    <div :class="$style.item" v-for="pic in picList" :key="pic" @click="preview">
+      <img :src="pic">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
       <img :src="previewData.src" alt="">
@@ -44,14 +20,23 @@ export default {
       previewData: {
         show: false,
         src: ''
-      }
+      },
+      picList: []
     }
   },
-  created() {
+  created () {
     this.style = {
-      'min-height': window.innerHeight + 'px'  
+      'min-height': window.innerHeight + 'px'
     }
-    this.$store.dispatch(Types.CLOSE_LOADING)
+    this.$store.dispatch(Types.FALL_BUCKET, { id: 'MERCHANT_PIC' }).then(data => {
+      console.log(data)
+      if (data && data.length) {
+        this.picList = data
+        this.$store.dispatch(Types.CLOSE_LOADING)
+      } else {
+        this.$router.back()
+      }
+    })
   },
   methods: {
     preview (e) {

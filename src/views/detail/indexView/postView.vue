@@ -1,21 +1,22 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.item">
-      <SwipeImg type="post" v-if="postType !== 'bid'"></SwipeImg>
+      <SwipeImg type="post" v-if="data.label !== 'bid'"></SwipeImg>
       <div :class="$style.titleMsg">
-        <div :class="$style.title">PumpFit泵感健PumpFit泵感健身PumpFit泵感健身（客村店）</div>
-        <div :class="$style.date">2017-09-10</div>
+        <div :class="$style.title">{{data.title}}</div>
+        <div :class="$style.date">{{data.created_time}}</div>
       </div>
     </div>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>
-    <ContactItem :class="$style.item"></ContactItem>
-    <template v-if="postType === 'bid'">
-      <TextItem :class="$style.textItem" title="岗位介绍" content="所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。"></TextItem>
-      <TextItem :class="$style.textItem" title="公司介绍" content="所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。"></TextItem>
-      <CompanyCard :class="$style.companyCard"></CompanyCard>
+    <ContactItem :class="$style.item" :location="data.location" :telephones="data.telephones"></ContactItem>
+    <template v-if="data.label === 'bid'">
+      <TextItem :class="$style.textItem" title="岗位介绍" :content="data.job_content"></TextItem>
+      <TextItem :class="$style.textItem" title="任职要求" :content="data.job_content"></TextItem>
+      <TextItem :class="$style.textItem" title="公司介绍" :content="data.content"></TextItem>
+      <CompanyCard :class="$style.companyCard" :data="data.merchant"></CompanyCard>
     </template>
     <template v-else>
-      <div :class="$style.intr" v-html="`所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。 “泵感”是衡量健美训练是否有效的一个标志。`"></div>
+      <div :class="$style.intr" v-html="data.content"></div>
     </template>
   </div>
 </template>
@@ -31,26 +32,56 @@ import ContactItem from '../components/contactItem.vue'
 export default {
   name: 'bid-View',
   components: { TextItem, CompanyCard, SwipeImg, AroundMsg, ContactItem },
+  props: ['data'],
   data () {
     return {
-      postType: 'lease' // lease, transfer, recruit, bid
+      postType: '' // lease, transfer, recruit, bid
     }
   },
   computed: {
     aroundMsg () {
-      return [
-        {
-          name: '面积',
-          value: '100㎡'
-        }, {
-          name: '价格',
-          value: '¥ 10000/月',
-          color: 'red'
-        }, {
-          name: '位置',
-          value: '广州-番禺'
+      let msg = null
+      if (this.data) {
+        if (this.data.label === 'lease' || this.data.label === 'transfer') {
+          msg = [
+            {
+              name: '面积',
+              value: this.data.area
+            }, {
+              name: '价格',
+              value: this.data.price,
+              color: 'red'
+            }, {
+              name: '位置',
+              value: this.data.location
+            }
+          ]
         }
-      ]
+        if (this.data.label === 'recruit') {
+          msg = [
+            {
+              name: '面积',
+              value: this.data.area
+            }, {
+              name: '位置',
+              value: this.data.location
+            }
+          ]
+        }
+        if (this.data.label === 'bid') {
+          msg = [
+            {
+              name: '薪资',
+              value: this.data.price,
+              color: 'red'
+            }, {
+              name: '位置',
+              value: this.data.location
+            }
+          ]
+        }
+      }
+      return msg
     }
   },
   created () {

@@ -99,9 +99,6 @@ if (process.env.NODE_ENV === 'test') {
   // delete config.devtool
   config.output.path = path.resolve(__dirname, '../dist/')
   config.output.publicPath = './'
-  // 官网直销
-  // config.output.path = path.resolve(__dirname, '../dist/official-order')
-  // config.output.publicPath = '/dwf/public/official-order/'
 
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({

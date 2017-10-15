@@ -2,13 +2,13 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="$style.avatar">
-        <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
-        <div :class="$style.moreImg" v-if="merchantType !== 'equip'" @click="seeMorePic">更多</div>
+        <img :src="data.images[0]">
+        <div :class="$style.moreImg" v-if="data.label !== 'equip'" @click="seeMorePic">更多</div>
       </div>
-      <div :class="$style.title">PumpFit泵感健PumpFit泵感健身PumpFit泵感健身（客村店）</div>
+      <div :class="$style.title">{{data.title}}</div>
     </div>
-    <ContactItem :class="$style.item"></ContactItem>
-    <div :class="$style.item" v-if="merchantType === 'equip'">
+    <ContactItem :class="$style.item" :location="data.location" :telephones="data.telephones"></ContactItem>
+    <div :class="$style.item" v-if="data.label === 'equip'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
         <div :class="$style.productsMore">
@@ -18,31 +18,21 @@
       </div>
       <p :class="$style.line"></p>
       <div :class="$style.productCon">
-        <div :class="$style.productItem">
+        <div :class="$style.productItem" @click="toProduct(item.id)"
+        v-for="item in data.items.slice(0, 2)" :key="item.id">
           <div :class="$style.productImg">
-            <img src="http://cdn01.dwfei.com/img/sell/b5665652ea634ddd8a36d6f3142433ba.jpg">
+            <img :src="item.images[0]">
           </div>
           <div :class="$style.productTitle">
-            欧洲百年品牌 BH椭圆机欧洲百年品牌 BH椭圆机
+            {{item.title}}
           </div>
           <div :class="$style.productPrice">
-            ¥2880.00
-          </div>
-        </div>
-        <div :class="$style.productItem">
-          <div :class="$style.productImg">
-            <img src="http://cdn01.dwfei.com/img/banner/02/mangu2.jpg">
-          </div>
-          <div :class="$style.productTitle">
-            欧洲百年品牌 BH椭圆机欧洲百年品牌 BH椭圆机
-          </div>
-          <div :class="$style.productPrice">
-            ¥2880.00
+            {{item.price}}
           </div>
         </div>
       </div>
     </div>
-    <div :class="[$style.item, $style.intr]" v-html="`所谓泵感，就是目标肌肉在相当强度的抗阻力训练后，导致大量的血液涌向目标肌肉，此时，肌肉会产生膨胀的感觉，称为泵感，这个过程称为泵血。 “泵感”是衡量健美训练是否有效的一个标志。`"></div>
+    <div :class="[$style.item, $style.intr]" v-html="data.content"></div>
   </div>
 </template>
 
@@ -54,9 +44,10 @@ import ContactItem from '../components/contactItem.vue'
 export default {
   name: 'merchant-View',
   components: { SwipeImg, ContactItem },
+  props: ['data'],
   data () {
     return {
-      merchantType: 'equip' // gym, design, train, equip
+      merchantType: '' // gym, design, train, equip
     }
   },
   created () {
@@ -64,7 +55,14 @@ export default {
   },
   methods: {
     seeMorePic () {
-      this.$router.push({ name: 'detailPicView', params: 1 })
+      this.$store.dispatch(Types.FILL_BUCKET, {
+        id: 'MERCHANT_PIC',
+        data: this.data.images
+      })
+      this.$router.push({ name: 'detailPicView', params: { id: this.data.id, type: 'merchant' }})
+    },
+    toProduct (id) {
+      this.$router.push({ name: 'detailView', params: { type: 'product', id: id }})
     }
   }
 }
@@ -148,6 +146,16 @@ export default {
   font-size 15px
   color $price
 
+.msgArrow
+  flex 0 0 auto
+  height 16px
+  width 16px
+  background url('~public/fm_goto.svg') no-repeat
+  background-size 100% 100%
+.line
+  margin-left 18px
+  height 1px
+  background $breakline
 .intr
   padding 36px 24px
 </style>

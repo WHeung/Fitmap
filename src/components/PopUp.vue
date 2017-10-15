@@ -2,7 +2,7 @@
   <div :class="$style.popUpWp" v-show='popUp.show' @touchmove.prevent="">
     <div :class="$style.wp">
       <div :class="$style.title" v-if="popUp.title">{{popUp.title}}</div>
-      <p :class="$style.word" v-html="popUp.word"></p>
+      <div :class="$style.word" v-html="popUp.word"></div>
       <div :class="$style.ensure" v-if="popUp.leftMsg || popUp.rightMsg">
         <span
         :class="[$style.leftBtn, {[$style.noRight]: !popUp.rightMsg}]" v-if="popUp.leftMsg"

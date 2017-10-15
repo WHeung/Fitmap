@@ -2,17 +2,14 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="[$style.icon, $style.locationIcon]"></div>
-      <div :class="$style.text">广东-广州-海珠-艺苑南路13号大院布衣港电商园11栋1楼（地铁站客村站D出口）</div>
+      <div :class="$style.text">{{location}}</div>
       <div :class="$style.arrow"></div>
     </div>
     <p :class="$style.line"></p>
-    <div :class="$style.item">
+    <div :class="$style.item" @click="clickPhone">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
       <div :class="$style.text">
-        <span>87123458</span>,
-        <span>87123458</span>,
-        <span>87123458</span>,
-        <span>87123458</span>
+        <span v-for="phone in telephones" :key="phone"><i>, </i>{{phone}}</span>
       </div>
       <div :class="$style.arrow"></div>
     </div>
@@ -20,9 +17,29 @@
 </template>
 
 <script>
+import * as Types from '~src/store/types'
 export default {
   name: 'around-item',
-  props: ['aroundMsg']
+  props: ['location', 'telephones'],
+  methods: {
+    clickPhone () {
+      if (typeof this.telephones === 'object' && this.telephones.length) {
+        if (this.telephones.length === 1) {
+          window.location.href = 'tel:' + this.telephones[0]
+        } else {
+          let word = ''
+          for (let i = 0; i < this.telephones.length; i++) {
+            word += `<p onclick="window.location.href='tel:'${this.telephones[i]}">${this.telephones[i]}</p>`
+          }
+          this.$store.dispatch(Types.OPEN_POPUP, {
+            title: '拨打电话',
+            word: word,
+            leftMsg: '关闭'
+          })
+        }
+      }
+    }
+  }
 }
 </script>
 
@@ -47,8 +64,11 @@ export default {
     background-image url('~public/fm_list_call.svg')
 .text
   margin-right 12px
+  flex 1 1 auto
   >span
     white-space nowrap
+    &:first-child i
+      display none
 .arrow
   flex 0 0 auto
   height 16px

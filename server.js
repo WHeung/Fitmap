@@ -30,17 +30,6 @@ var devMiddleware = webpackDevMiddleware(compiler, {
 
 var hotMiddleware = webpackHotMiddleware(compiler)
 
-// 为了修改html文件也能实现热加载，使用webpack插件来监听html源文件改变事件
-/*
-compiler.plugin('compilation', function (compilation) {
-  compilation.plugin('html-webpack-plugin-after-emit', function (data, cb) {
-      // 发布事件
-    hotMiddleware.publish({ action: 'reload' })
-    cb()
-  })
-})
-*/
-
 app.use(devMiddleware)
 app.use(hotMiddleware)
 

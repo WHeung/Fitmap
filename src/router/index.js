@@ -83,8 +83,8 @@ const router = new Router({
         }
       ]
     },
-    { path: '/detail/:id(\\d+)', component: detailView, name: 'detailView' },
-    { path: '/detail/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' },
+    { path: '/detail/:type/:id(\\d+)', component: detailView, name: 'detailView' },
+    { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]

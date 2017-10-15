@@ -19,7 +19,7 @@ export default {
   props: ['item'],
   methods: {
     toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: 1 }})
+      this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
     }
   }
 }

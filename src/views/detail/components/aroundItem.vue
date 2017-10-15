@@ -22,10 +22,12 @@ export default {
   display flex
   justify-content space-around
 .item
-  flex 1 1 auto
+  padding 0 12px
+  flex 1 1
   display inline-flex
   flex-direction column
   align-items center
+  text-align center
   &:not(:first-child)
     border-left 1px solid $breakline
 .name

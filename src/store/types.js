@@ -26,6 +26,7 @@ export const FALL_BUCKET = 'FALL_BUCKET'
 // action
 export const UPDATE_MAP_MARKERS = 'UPDATE_MAP_MARKERS'
 export const UPDATE_MAP_SEARCH = 'UPDATE_MAP_SEARCH'
+export const UPDATE_DETAIL = 'UPDATE_DETAIL'
 
 // api
 export const FETCH_CODE_GET = 'FETCH_CODE_GET'
