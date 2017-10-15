@@ -32,7 +32,7 @@
         </div>
       </Item>
     </div>
-    <Btn :class="$style.btn" type="blue" title="提交" @clickBtn="clickBtn"></Btn>
+    <Btn :class="$style.btn" type="blue" title="提交" :disabled="disabled" @clickBtn="clickBtn"></Btn>
     <div :class="$style.maskLayer" v-if="mask">
       <div :class="$style.mask">
       </div>
@@ -67,16 +67,11 @@ import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
-const mobileConfig = [
+const validConfig = [
   {
-    case: 'noBlank',
-    data: ['name', 'area' ],
-    errorMsg: ['请填姓名', '请填写城市']
-  },
-  {
-    case: 'mobilePhone',
-    data: ['mobile'],
-    errorMsg: ['手机号码格式错误']
+    case: 'name',
+    data: ['name'],
+    errorMsg: ['姓名字符过长']
   }
 ]
 
@@ -98,7 +93,7 @@ export default {
         centeredSlides: true,
         slideToClickedSlide: true,
         debugger: true,
-        slidesPerView: 'auto',
+        slidesPerView: 'auto'
       },
       provOption: {},
       cityOption: {},
@@ -141,6 +136,13 @@ export default {
     },
     citySwiper () {
       return this.$refs.citySwiper ? this.$refs.citySwiper.swiper : {}
+    },
+    disabled () {
+      let disabled = true
+      if (this.form.name && this.form.area && this.form.company && this.form.job) {
+        disabled = false
+      }
+      return disabled
     }
   },
   created () {

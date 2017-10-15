@@ -16,11 +16,9 @@ example
 const caseMap = {}
 
 export default function valid (data, config) {
-  const result = {
-    error: {
-      count: 0,
-      msg: []
-    }
+  const error = {
+    count: 0,
+    msg: []
   }
 
   config.every(valid => {
@@ -28,8 +26,8 @@ export default function valid (data, config) {
       valid.data.every((key, i) => {
         const val = data[key]
         if (!caseMap[valid.case](val)) {
-          result.error.count += 1
-          result.error.msg.push(valid.errorMsg[i])
+          error.count += 1
+          error.msg.push(valid.errorMsg[i])
         }
         return true
       })
@@ -37,7 +35,7 @@ export default function valid (data, config) {
     return true
   })
 
-  return result
+  return error
 }
 
 caseMap.noBlank = function (str) {

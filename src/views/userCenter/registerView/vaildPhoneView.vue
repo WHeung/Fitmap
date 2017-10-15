@@ -7,14 +7,14 @@
       <p :class="$style.line"></p>
       <Item title="验证码">
         <div :class="$style.code">
-          <input type="text">
+          <input type="text" v-model="code">
           <button v-if="!inSeconds" @click="getCode">发送验证码</button>
           <button v-else :class="$style.notClick">{{inSeconds}}s</button>
         </div>
       </Item>
     </div>
     <div :class="$style.tips" v-if="routeName === 'registerPhoneView'">请完善您的个人信息，以便获取更多内容。</div>
-    <Btn type="blue" title="下一步" @clickBtn="clickBtn"></Btn>
+    <Btn type="blue" title="下一步" :disabled="disabled" @clickBtn="clickBtn"></Btn>
   </div>
 </template>
 
@@ -28,7 +28,7 @@ const mobileConfig = [
   {
     case: 'noBlank',
     data: ['mobile'],
-    errorMsg: ['请填手机号码']
+    errorMsg: ['请填写手机号码']
   },
   {
     case: 'mobilePhone',
@@ -43,8 +43,18 @@ export default {
   data () {
     return {
       cellphone: '',
+      code: '',
       inSeconds: '',
       routeName: ''
+    }
+  },
+  computed: {
+    disabled () {
+      let disabled = true
+      if (valid({ mobile: this.cellphone }, mobileConfig) && this.code) {
+        disabled = false
+      }
+      return disabled
     }
   },
   created () {
@@ -53,7 +63,8 @@ export default {
   },
   methods: {
     getCode () {
-      if (valid({mobile: this.dcellphone}, mobileConfig)) {
+      const errMsg = valid({ mobile: this.cellphone }, mobileConfig)
+      if (errMsg.count < 1) {
         this.inSeconds = 60
         let interval = setInterval(() => {
           this.inSeconds--
@@ -62,12 +73,14 @@ export default {
             interval = null
           }
         }, 1000)
+      } else {
+        console.log(errMsg)
+        this.$store.dispatch(Types.OPEN_POPUP, {
+          title: '手机号码错误',
+          word: errMsg.msg[0],
+          leftMsg: '确定'
+        })
       }
-      this.$store.dispatch(Types.OPEN_POPUP, {
-        title: '验证码错误',
-        word: '您输入的验证码有误，请重新输入',
-        leftMsg: '确定'
-      })
     },
     clickBtn () {
       if (this.routeName === 'userChangePhoneView') {

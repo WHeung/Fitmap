@@ -100,7 +100,7 @@ export default {
   },
   methods: {
     clickCon () {
-       Object.assign(this.dialog, {
+      Object.assign(this.dialog, {
         title: '请输入名字',
         show: true
       })
