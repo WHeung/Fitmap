@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.item">
+    <div :class="$style.item" @click="toMap">
       <div :class="[$style.icon, $style.locationIcon]"></div>
-      <div :class="$style.text">{{location}}</div>
+      <div :class="$style.text">{{location.location}}</div>
       <div :class="$style.arrow"></div>
     </div>
     <p :class="$style.line"></p>
@@ -29,7 +29,7 @@ export default {
         } else {
           let word = ''
           for (let i = 0; i < this.telephones.length; i++) {
-            word += `<p onclick="window.location.href='tel:'${this.telephones[i]}">${this.telephones[i]}</p>`
+            word += `<p onclick="window.location.href='tel:${this.telephones[i]}'">${this.telephones[i]}</p>`
           }
           this.$store.dispatch(Types.OPEN_POPUP, {
             title: '拨打电话',
@@ -38,6 +38,9 @@ export default {
           })
         }
       }
+    },
+    toMap () {
+      this.$emit('toMap')
     }
   }
 }

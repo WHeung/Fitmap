@@ -7,7 +7,8 @@
       </div>
       <div :class="$style.title">{{data.title}}</div>
     </div>
-    <ContactItem :class="$style.item" :location="data.location" :telephones="data.telephones"></ContactItem>
+    <ContactItem :class="$style.item" @toMap="toMap"
+    :location="data.location" :telephones="data.telephones"></ContactItem>
     <div :class="$style.item" v-if="data.label === 'equip'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
@@ -63,6 +64,13 @@ export default {
     },
     toProduct (id) {
       this.$router.push({ name: 'detailView', params: { type: 'product', id: id }})
+    },
+    toMap () {
+      this.$store.dispatch(Types.FILL_BUCKET, {
+        id: 'MAP_LOCATION',
+        data: this.data
+      })
+      this.$router.push({ name: 'mapIndexView' })
     }
   }
 }

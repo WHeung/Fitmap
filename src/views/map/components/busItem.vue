@@ -8,7 +8,7 @@
       <div :class="$style.tag">
         <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
       </div>
-      <div :class="$style.address">{{item.distance}} {{item.location}}</div>
+      <div :class="$style.address">{{item.distance}} {{item.location_obj.location}}</div>
     </div>
   </div>
 </template>

@@ -7,7 +7,7 @@
     <div :class="$style.bottom" v-if="item">
       <BusItem v-if="item.type==='merchant'" :item="item"></BusItem>
       <PostItem v-if="item.type==='post'" :item="item"></PostItem>
-      <div :class="$style.showList" @click="toListView">
+      <div :class="$style.showList" v-if="list && list.length" @click="toListView">
         列表显示
       </div>
     </div>
@@ -49,10 +49,20 @@ export default {
         console.log(this.$store.state.map.selectedItem.item)
         return this.$store.state.map.selectedItem.item
       }
+    },
+    list () {
+      return this.$store.state.map.list
     }
   },
   mounted () {
-    this.$store.dispatch(Types.UPDATE_MAP_SEARCH)
+    this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
+      console.log(data)
+      if (data) {
+        this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
+      } else {
+        this.$store.dispatch(Types.UPDATE_MAP_SEARCH)
+      }
+    })
   },
   methods: {
     toListView () {

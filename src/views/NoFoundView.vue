@@ -13,21 +13,21 @@ export default {
   },
   methods: {
     goIndex () {
-      this.$router.push('/')
+      this.$router.push('/map/index')
     }
   }
 }
 </script>
 <style lang="stylus" module>
+@import '~tool/vendor'
 .main
-  background #fff
+  background $white
   position absolute
   width 100%
   height 100%
 
 .tip
   padding 100px 0
-  color #32c47c
   text-align center
   font-size 14px
 
@@ -37,9 +37,9 @@ export default {
   margin-top 40px
   margin 0 auto
   width 150px
-  background #32c47c
+  background $blueBtn
   font-size 15px
-  color #fff
+  color $white
   text-align center
-  border-radius 10px
+  border-radius 24px
 </style>

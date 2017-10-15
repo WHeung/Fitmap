@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     search (form) {
-      if (this.history.indexOf(form.input) < 0) {
+      if (form.input && this.history.indexOf(form.input) < 0) {
         this.history.unshift(form.input)
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }

@@ -26,6 +26,8 @@ export function outRoute2inRoute ({ inRoute, urlSearch }) {
   if (outParams[REDIRECT]) {
     path = outParams[REDIRECT]
     delete outParams[REDIRECT]
+  } else {
+    path = inRoute.path
   }
   if (inParams[REDIRECTED]) {
     return null
@@ -42,7 +44,6 @@ export function outRoute2inRoute ({ inRoute, urlSearch }) {
 }
 
 // 参数继承和添加
-// 添加apppullrefresh 用来关闭app下拉刷新
 // 继承redirected 用来标记已处理外路由转内路由
 export function inRouteParamsInherit ({ toRoute, fromRoute }) {
   // 清理type参数，type用一次就要销毁
@@ -55,12 +56,6 @@ export function inRouteParamsInherit ({ toRoute, fromRoute }) {
 
   if (fromRoute.query.redirected) {
     query[REDIRECTED] = 1
-  }
-
-  if (toRoute.meta && toRoute.meta.appPullRefresh === 'disabled') {
-    query['apppullrefresh'] = 0
-  } else {
-    delete query['apppullrefresh']
   }
 
   if (JSON.stringify(query) === JSON.stringify(toRoute.query)) {

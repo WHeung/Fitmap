@@ -8,7 +8,8 @@
       </div>
     </div>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>
-    <ContactItem :class="$style.item" :location="data.location" :telephones="data.telephones"></ContactItem>
+    <ContactItem :class="$style.item" @toMap="toMap"
+    :location="data.location" :telephones="data.telephones"></ContactItem>
     <template v-if="data.label === 'bid'">
       <TextItem :class="$style.textItem" title="岗位介绍" :content="data.job_content"></TextItem>
       <TextItem :class="$style.textItem" title="任职要求" :content="data.job_content"></TextItem>
@@ -76,7 +77,7 @@ export default {
               color: 'red'
             }, {
               name: '位置',
-              value: this.data.location
+              value: this.data.position_content
             }
           ]
         }
@@ -86,6 +87,15 @@ export default {
   },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+  },
+  methods: {
+    toMap () {
+      this.$store.dispatch(Types.FILL_BUCKET, {
+        id: 'MAP_LOCATION',
+        data: this.data
+      })
+      this.$router.push({ name: 'mapIndexView' })
+    }
   }
 }
 </script>

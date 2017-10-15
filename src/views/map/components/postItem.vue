@@ -10,7 +10,7 @@
       {{item.content}}
     </div>
     <div :class="$style.msg">
-      <div>{{item.location}}</div>
+      <div>{{item.location_obj.location}}</div>
       <div>{{item.created_time}}</div>
     </div>
   </div>

@@ -19,6 +19,10 @@ const Mutations = {
     console.log('mutation: set map')
     state.map = data
   },
+  [Types.SET_MAP_LIST] (state, data) {
+    console.log('mutation: set selected list')
+    state.list = data
+  },
   [Types.SET_MAP_SELECTED_MARKER] (state, data) {
     console.log('mutation: set selected marker')
     state.selectedItem = data
@@ -30,9 +34,9 @@ const Mutations = {
 }
 
 const Actions = {
-  [Types.UPDATE_MAP_SEARCH] ({ state, dispatch }, data) {
+  [Types.UPDATE_MAP_SEARCH] ({ state, commit, dispatch }, data) {
     new Promise(resolve => {
-      state.list = [
+      const list = [
         {
           'id': 5,
           'title': '商家1',
@@ -157,6 +161,7 @@ const Actions = {
           'is_collected': 0
         }
       ]
+      commit(Types.SET_MAP_LIST, list)
       const location = state.list.map(item => {
         return item.location_obj
       })
@@ -203,6 +208,24 @@ const Actions = {
         store.commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
       }, arguments[0])
     }
+  },
+  [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
+    data['location_obj'] = Object.assign({}, data.location)
+    const location = data['location_obj']
+    const marker = new AMap.Marker({
+      map: state.map,
+      icon: Icon({
+        icon: onIcon,
+        size: size(44, 62)
+      }),
+      clickable: true,
+      topWhenClick: true,
+      offset: pixel(-22, -57),
+      position: LngLat(location.lng, location.lat),
+      extData: { id: location.id }
+    })
+    state.map.setCenter(marker.getPosition())
+    commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   }
 }
 
