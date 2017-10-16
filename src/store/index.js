@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as types from './types'
+import * as Types from './Types'
+import CallApi from '~src/store/api'
 import mapModule from './modules/map'
 import detailModule from './modules/detail'
 
@@ -32,38 +33,64 @@ const store = new Vuex.Store({
     },
     loading: true,
     apiLoading: false,
+    user: {
+      token: ''
+    },
     bucket: {}
   },
   actions: {
-    [types.OPEN_TOAST] ({ commit, state }, { content, type }) {
+    [Types.USER_LOGIN] ({ commit, state, dispatch }, { callback }) {
+      return new Promise(resolve => {
+        CallApi(Types.FETCH_USERS_GET).then(res => {
+          const info = res.data.data
+          commit(Types.SET_USER, {
+            info: info
+          })
+          callback()
+          resolve()
+        })
+      })
+    },
+    [Types.UPDATE_LOGIN_OAUTH] ({ commit, state, dispatch }, { code }) {
+      return new Promise((resolve, reject) => {
+        CallApi(Types.FETCH_USERS_OAUTH).then(res => {
+          const info = res.data.data
+          commit(Types.SET_USER, info)
+          resolve()
+        }).catch(() => {
+          reject()
+        })
+      })
+    },
+    [Types.OPEN_TOAST] ({ commit, state }, { content, type }) {
       if (typeof type !== 'string') {
         type = ''
       }
-      commit(types.SET_TOAST, { content, type, show: true })
+      commit(Types.SET_TOAST, { content, type, show: true })
       setTimeout(() => {
-        commit(types.SET_TOAST, { content: '', type: '', show: false })
+        commit(Types.SET_TOAST, { content: '', type: '', show: false })
       }, state.toast.liveTime)
     },
-    [types.OPEN_LOADING] ({ commit }) {
-      commit(types.SET_LOADING, true)
+    [Types.OPEN_LOADING] ({ commit }) {
+      commit(Types.SET_LOADING, true)
     },
-    [types.CLOSE_LOADING] ({ commit }) {
-      commit(types.SET_LOADING, false)
+    [Types.CLOSE_LOADING] ({ commit }) {
+      commit(Types.SET_LOADING, false)
     },
-    [types.OPEN_API_LOADING] ({ commit }) {
-      commit(types.SET_API_LOADING, true)
+    [Types.OPEN_API_LOADING] ({ commit }) {
+      commit(Types.SET_API_LOADING, true)
     },
-    [types.CLOSE_API_LOADING] ({ commit }) {
-      commit(types.SET_API_LOADING, false)
+    [Types.CLOSE_API_LOADING] ({ commit }) {
+      commit(Types.SET_API_LOADING, false)
     },
-    [types.CHANGE_NAV] ({ commit, state }, navData) {
-      commit(types.SET_NAV, Object.assign({ title: 'Fitmap' }, navData))
+    [Types.CHANGE_NAV] ({ commit, state }, navData) {
+      commit(Types.SET_NAV, Object.assign({ title: 'Fitmap' }, navData))
     },
-    [types.OPEN_POPUP] ({ commit, state }, popUp) {
-      commit(types.SET_POPUP, Object.assign({}, state.popUp, popUp, { show: true }))
+    [Types.OPEN_POPUP] ({ commit, state }, popUp) {
+      commit(Types.SET_POPUP, Object.assign({}, state.popUp, popUp, { show: true }))
     },
-    [types.CLOSE_POPUP] ({ commit, state }) {
-      commit(types.SET_POPUP, Object.assign({}, {
+    [Types.CLOSE_POPUP] ({ commit, state }) {
+      commit(Types.SET_POPUP, Object.assign({}, {
         title: '',
         word: '',
         leftMsg: '',
@@ -73,39 +100,43 @@ const store = new Vuex.Store({
         show: false
       }))
     },
-    [types.FILL_BUCKET] ({ commit, state, dispatch }, { id, data }) {
-      commit(types.SET_BUCKET, { id, data, type: 'fill' })
+    [Types.FILL_BUCKET] ({ commit, state, dispatch }, { id, data }) {
+      commit(Types.SET_BUCKET, { id, data, type: 'fill' })
     },
-    [types.FALL_BUCKET] ({ commit, state, dispatch }, { id }) {
+    [Types.FALL_BUCKET] ({ commit, state, dispatch }, { id }) {
       return new Promise(resolve => {
         const data = state.bucket[id]
-        commit(types.SET_BUCKET, { id, type: 'fall' })
+        commit(Types.SET_BUCKET, { id, type: 'fall' })
         resolve(data)
       })
     }
   },
   mutations: {
-    [types.SET_TOAST] (state, { content, show, type }) {
+    [Types.SET_USER] (state, data) {
+      console.log('mutation: set user info')
+      state.data = Object.assign({}, state.data, data)
+    },
+    [Types.SET_TOAST] (state, { content, show, type }) {
       state.toast.content = content
       state.toast.show = show
       state.toast.type = type
     },
-    [types.SET_API_LOADING] (state, val) {
+    [Types.SET_API_LOADING] (state, val) {
       state.apiLoading = val
     },
-    [types.SET_LOADING] (state, val) {
+    [Types.SET_LOADING] (state, val) {
       state.loading = val
     },
-    [types.SET_NAV] (state, val) {
+    [Types.SET_NAV] (state, val) {
       Object.assign(state.nav, val)
       if (state.nav.title !== window.document.title) {
         window.document.title = state.nav.title
       }
     },
-    [types.SET_POPUP] (state, popUp) {
+    [Types.SET_POPUP] (state, popUp) {
       state.popUp = Object.assign({}, state.popUp, popUp)
     },
-    [types.SET_BUCKET] (state, { id, data, type }) {
+    [Types.SET_BUCKET] (state, { id, data, type }) {
       if (type === 'fill') {
         state.bucket[id] = data
       }

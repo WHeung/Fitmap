@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import * as Types from '~src/store/types'
 import { inRoute2outRoute, outRoute2inRoute, inRouteParamsInherit } from '~src/tool/inRouteAndOutRoute'
-
+import Store from '~src/store'
+import { isWeixin } from '~src/tool/containerDetect.js'
 import NoFoundView from '~src/views/NoFoundView.vue'
 import RedirectView from '~src/views/RedirectView.vue'
 
@@ -91,6 +92,30 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
+  /*
+  * 平时不能使用code 或者state来作为参数，微信授权登陆会自带
+  */
+  if (to.query.code) {
+    const route = {
+      path: to.path,
+      query: Object.assign({}, to.query)
+    }
+    route.query.code = undefined
+    router.replace(route)
+  }
+  if (isWeixin() && to.path !== '/' && false) {
+    if (window.document.cookie.indexOf('token=') < 0) {
+      if (to.query.code) {
+        Store.dispatch(Types.UPDATE_LOGIN_OAUTH, { code: to.query.code }).then(() => {
+        }).catch(() => {
+          getOauth({ to })
+        })
+      } else {
+        getOauth({ to })
+      }
+      return
+    }
+  }
   // 去掉继承会有其他问题,比如地址重定向会在每次刷新后回到初始页
   const route = inRouteParamsInherit({ toRoute: to, fromRoute: from })
   if (to.query.type === Types.ROUTE_TYPE_REPLACE) {
@@ -125,22 +150,39 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, next) => {
   window.document.body.scrollTop = 0
-  setSearch(to)
+  // 进入内路由状态
+  if (from.query.redirected || to.query.redirected) {
+  } else {
+    // 外路由进入内路由
+    setSearch(to)
+  }
 })
 
-let execCount = 1
 function setSearch (route) {
-  if (execCount === 0) {
-    return
-  }
-  execCount--
   const result = outRoute2inRoute({
     inRoute: route,
     urlSearch: window.location.search
   })
   if (result) {
-    router.replace(route)
+    router.replace(result)
   }
+}
+
+function getOauth ({ to }) { // 跳转微信授权
+  const outQuery = inRoute2outRoute({
+    inRoute: to,
+    urlSearch: window.location.search
+  })
+  const callbackURL = window.location.origin + window.location.pathname + outQuery
+  // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+  window.location.href =
+    'https://open.weixin.qq.com/connect/oauth2/authorize?' +
+    'appid=xxx' +
+    '&redirect_uri=' + encodeURIComponent(callbackURL) +
+    '&response_type=code' +
+    '&scope=snsapi_userinfo' +
+    '&state=STATE#wechat_redirect'
+  return
 }
 
 export default router
