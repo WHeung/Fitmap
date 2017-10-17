@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as Types from './Types'
+import * as Types from './types'
 import CallApi from '~src/store/api'
 import mapModule from './modules/map'
 import detailModule from './modules/detail'

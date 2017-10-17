@@ -9,18 +9,18 @@
           <span>昵称</span>会飞的田鼠
         </div>
         <div>
-          <span>性别</span>不男不女
+          <span>性别</span>男
         </div>
       </div>
     </div>
-    <Item :class="$style.group" title="手机号" content="15622188859" :arrow="true"></Item>
+    <Item :class="$style.group" title="手机号" content="15622188859" :arrow="true" @clickCon="clickPhone"></Item>
     <div :class="$style.group">
       <Item title="姓名" content="李四" @clickCon="clickCon"></Item>
       <p :class="$style.line"></p>
       <Item title="城市" content="广东-广州"></Item>
     </div>
     <div :class="$style.group">
-      <Item title="公司" content="广州某某投资有限公司"></Item>
+      <Item title="公司" content="广州某某投资有限公司" @clickCon="clickCon"></Item>
       <p :class="$style.line"></p>
       <Item title="职务" content="Boss"></Item>
     </div>
@@ -113,6 +113,9 @@ export default {
         show: false,
         type: ''
       }
+    },
+    clickPhone () {
+      this.$router.push({ name: 'userChangePhoneView', params: { id: this.$route.params.id }})
     }
   }
 }

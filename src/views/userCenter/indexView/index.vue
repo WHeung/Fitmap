@@ -5,7 +5,7 @@
         <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
       </div>
       <div :class="$style.name">用户昵称</div>
-      <button :class="$style.editBtn">个人信息</button>
+      <button :class="$style.editBtn" @click="toInfo">个人信息</button>
     </div>
     <div :class="$style.list">
       <div :class="[$style.item, $style.store]" @click="clickCon('item')">
@@ -43,8 +43,13 @@ export default {
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
-  clickCon (type) {
-    this.$router.push({ name: 'userfavoritesView', params: { type, id: this.$route.id }})
+  methods: {
+    toInfo () {
+      this.$router.push({name: 'userInfoView', params: { id: parseInt(this.$route.params.id) }})
+    },
+    clickCon (type) {
+      this.$router.push({ name: 'userfavoritesView', params: { type, id: parseInt(this.$route.params.id) }})
+    }
   }
 }
 </script>

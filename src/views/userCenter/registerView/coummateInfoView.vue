@@ -66,6 +66,8 @@ import Item from './components/item.vue'
 import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
+import routerReplace from '~src/tool/routerReplace.js'
+
 
 const validConfig = [
   {
@@ -180,8 +182,8 @@ export default {
       if (this.mask === 'area') {
         if (this.provinceKey && this.cityKey) {
           this.selectedArea = {
-            prov: {key: this.provinceKey, name: area[86][this.provinceKey]},
-            city: {key: this.cityKey, name: area[this.provinceKey][this.cityKey]}
+            prov: { key: this.provinceKey, name: area[86][this.provinceKey] },
+            city: { key: this.cityKey, name: area[this.provinceKey][this.cityKey] }
           }
           this.provOption.initialSlide = this.provIndex
           this.cityOption.initialSlide = this.cityIndex
@@ -195,10 +197,10 @@ export default {
     clickBtn () {
       if (this.$route.query.detail) {
         const detail = JSON.parse(this.$route.query.detail)
-        this.$router.push({ name: 'detailView', params: { type: detail.type, id: detail.id }})
+        routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})
         return
       }
-      this.$router.push({ name: 'mapIndexView' })
+      routerReplace(this, { name: 'mapIndexView' })
     }
   }
 }

@@ -5,12 +5,10 @@
         <input :class="$style.phone" v-model="cellphone" type="text">
       </Item>
       <p :class="$style.line"></p>
-      <Item title="验证码">
-        <div :class="$style.code">
-          <input type="text" v-model="code">
-          <button v-if="!inSeconds" @click="getCode">发送验证码</button>
-          <button v-else :class="$style.notClick">{{inSeconds}}s</button>
-        </div>
+      <Item title="验证码":class="$style.code">
+        <input type="text" v-model="code">
+        <button v-if="!inSeconds" @click="getCode">发送验证码</button>
+        <button v-else :class="$style.notClick">{{inSeconds}}s</button>
       </Item>
     </div>
     <div :class="$style.tips" v-if="routeName === 'registerPhoneView'">请完善您的个人信息，以便获取更多内容。</div>
@@ -23,6 +21,7 @@ import * as Types from '~src/store/types'
 import Item from './components/item.vue'
 import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
+import routerReplace from '~src/tool/routerReplace.js'
 
 const mobileConfig = [
   {
@@ -38,7 +37,7 @@ const mobileConfig = [
 ]
 
 export default {
-  name: 'baseinfo-view',
+  name: 'vaildPhone-view',
   components: { Item, Btn },
   data () {
     return {
@@ -51,7 +50,8 @@ export default {
   computed: {
     disabled () {
       let disabled = true
-      if (valid({ mobile: this.cellphone }, mobileConfig) && this.code) {
+      const err = valid({ mobile: this.cellphone }, mobileConfig)
+      if (err.count === 0 && this.code) {
         disabled = false
       }
       return disabled
@@ -91,7 +91,7 @@ export default {
         if (this.$route.query.detail) {
           query.detail = this.$route.query.detail
         }
-        this.$router.push({ name: 'coummateInfoView', query })
+        routerReplace(this, { name: 'coummateInfoView', query })
       }
     }
   }
@@ -113,7 +113,7 @@ export default {
 .code
   display inline-flex
   justify-content space-between
-  >button
+  button
     padding 5px 0
     width (96/20)rem
     font-size 12px
