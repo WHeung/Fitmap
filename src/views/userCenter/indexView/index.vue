@@ -8,7 +8,7 @@
       <button :class="$style.editBtn">个人信息</button>
     </div>
     <div :class="$style.list">
-      <div :class="[$style.item, $style.store]">
+      <div :class="[$style.item, $style.store]" @click="clickCon('item')">
         <div>我收藏的商品</div>
         <div :class="$style.itemCon">
           <span>12</span>
@@ -16,7 +16,7 @@
         </div>
       </div>
       <div :class="$style.line"></div>
-      <div :class="[$style.item, $style.business]">
+      <div :class="[$style.item, $style.business]" @click="clickCon('merchant')">
         <div>我收藏的商家</div>
         <div :class="$style.itemCon">
           <span>14</span>
@@ -24,7 +24,7 @@
         </div>
       </div>
       <div :class="$style.line"></div>
-      <div :class="[$style.item, $style.post]">
+      <div :class="[$style.item, $style.post]" @click="clickCon('post')">
         <div>我收藏的帖子</div>
         <div :class="$style.itemCon">
           <span>9</span>
@@ -40,8 +40,11 @@ import * as Types from '~src/store/types'
 
 export default {
   name: 'user-View',
-  created() {
+  created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+  },
+  clickCon (type) {
+    this.$router.push({ name: 'userfavoritesView', params: { type, id: this.$route.id }})
   }
 }
 </script>
