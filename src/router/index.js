@@ -95,18 +95,18 @@ router.beforeEach((to, from, next) => {
   /*
   * 平时不能使用code 或者state来作为参数，微信授权登陆会自带
   */
-  if (to.query.code) {
-    const route = {
-      path: to.path,
-      query: Object.assign({}, to.query)
-    }
-    route.query.code = undefined
-    router.replace(route)
-  }
   if (isWeixin() && to.path !== '/' && false) {
     if (window.document.cookie.indexOf('token=') < 0) {
       if (to.query.code) {
         Store.dispatch(Types.UPDATE_LOGIN_OAUTH, { code: to.query.code }).then(() => {
+          if (to.query.code) {
+            const route = {
+              path: to.path,
+              query: Object.assign({}, to.query)
+            }
+            route.query.code = undefined
+            router.replace(route)
+          }
         }).catch(() => {
           getOauth({ to })
         })

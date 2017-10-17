@@ -193,6 +193,11 @@ export default {
       this.closeMask()
     },
     clickBtn () {
+      if (this.$route.query.detail) {
+        const detail = JSON.parse(this.$route.query.detail)
+        this.$router.push({ name: 'detailView', params: { type: detail.type, id: detail.id }})
+        return
+      }
       this.$router.push({ name: 'mapIndexView' })
     }
   }

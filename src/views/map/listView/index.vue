@@ -5,10 +5,10 @@
     @searchClick="searchClick" @request="request"></Filters>
     <div v-if="list && list.length">
       <template v-if="classForm.selected[0] === 0">
-        <BusItem :class="$style.item" v-for="item in list" :key="item.id" :item="item"></BusItem>
+        <BusItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></BusItem>
       </template>
       <template v-if="classForm.selected[0] === 1">
-        <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item"></PostItem>
+        <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></PostItem>
       </template>
     </div>
   </div>
@@ -51,8 +51,10 @@ export default {
 
   },
   methods: {
-    toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: 1 }})
+    toDetail ({ id, type }) {
+      const detail = JSON.stringify({ id, type })
+      this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      // this.$router.push({ name: 'detailView', params: { id, type }})
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })

@@ -5,8 +5,8 @@
     @searchClick="searchClick" @request="request"></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="item">
-      <BusItem v-if="item.type==='merchant'" :item="item"></BusItem>
-      <PostItem v-if="item.type==='post'" :item="item"></PostItem>
+      <BusItem v-if="item.type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
+      <PostItem v-if="item.type==='post'" :item="item" @toDetail="toDetail"></PostItem>
       <div :class="$style.showList" v-if="list && list.length" @click="toListView">
         列表显示
       </div>
@@ -67,6 +67,11 @@ export default {
   methods: {
     toListView () {
       this.$router.push({ name: 'mapListView' })
+    },
+    toDetail ({ id, type }) {
+      const detail = JSON.stringify({ id, type })
+      this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      // this.$router.push({ name: 'detailView', params: { id, type }})
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })

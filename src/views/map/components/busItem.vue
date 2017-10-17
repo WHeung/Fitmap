@@ -19,7 +19,8 @@ export default {
   props: ['item'],
   methods: {
     toDetailView () {
-      this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
+      this.$emit('toDetail', { type: 'merchant', id: this.item.id })
+      // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
     }
   }
 }

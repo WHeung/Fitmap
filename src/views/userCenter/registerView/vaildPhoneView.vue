@@ -87,7 +87,11 @@ export default {
         this.$router.back()
       }
       if (this.routeName === 'registerPhoneView') {
-        this.$router.push({ name: 'coummateInfoView' })
+        const query = {}
+        if (this.$route.query.detail) {
+          query.detail = this.$route.query.detail
+        }
+        this.$router.push({ name: 'coummateInfoView', query })
       }
     }
   }
