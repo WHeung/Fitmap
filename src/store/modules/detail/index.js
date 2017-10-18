@@ -168,6 +168,11 @@ const Mutations = {}
 const Actions = {
   [Types.UPDATE_DETAIL] ({ state }, { type, id }) {
     return new Promise(resolve => {
+      /*
+       CallApi(Types.FETCH_DETAIL, { type: type + 's', id }).then(res => {
+         const data = res.data.data
+       })
+      */
       switch (type) {
       case 'merchant':
         resolve(dataList[0])

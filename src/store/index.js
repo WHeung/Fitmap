@@ -4,6 +4,7 @@ import * as Types from './types'
 import CallApi from '~src/store/api'
 import mapModule from './modules/map'
 import detailModule from './modules/detail'
+import userModule from './modules/user'
 
 Vue.use(Vuex)
 
@@ -33,35 +34,9 @@ const store = new Vuex.Store({
     },
     loading: true,
     apiLoading: false,
-    user: {
-      token: ''
-    },
     bucket: {}
   },
   actions: {
-    [Types.USER_LOGIN] ({ commit, state, dispatch }, { callback }) {
-      return new Promise(resolve => {
-        CallApi(Types.FETCH_USERS_GET).then(res => {
-          const info = res.data.data
-          commit(Types.SET_USER, {
-            info: info
-          })
-          callback()
-          resolve()
-        })
-      })
-    },
-    [Types.UPDATE_LOGIN_OAUTH] ({ commit, state, dispatch }, { code }) {
-      return new Promise((resolve, reject) => {
-        CallApi(Types.FETCH_USERS_OAUTH).then(res => {
-          const info = res.data.data
-          commit(Types.SET_USER, info)
-          resolve()
-        }).catch(() => {
-          reject()
-        })
-      })
-    },
     [Types.OPEN_TOAST] ({ commit, state }, { content, type }) {
       if (typeof type !== 'string') {
         type = ''
@@ -112,10 +87,6 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
-    [Types.SET_USER] (state, data) {
-      console.log('mutation: set user info')
-      state.data = Object.assign({}, state.data, data)
-    },
     [Types.SET_TOAST] (state, { content, show, type }) {
       state.toast.content = content
       state.toast.show = show
@@ -147,7 +118,8 @@ const store = new Vuex.Store({
   },
   modules: {
     map: mapModule,
-    detail: detailModule
+    detail: detailModule,
+    user: userModule
   }
 })
 

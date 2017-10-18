@@ -32,6 +32,8 @@ export const UPDATE_MAP_LOCATION = 'UPDATE_MAP_LOCATION'
 export const UPDATE_DETAIL = 'UPDATE_DETAIL'
 export const USER_LOGIN = 'USER_LOGIN'
 export const UPDATE_LOGIN_OAUTH = 'UPDATE_LOGIN_OAUTH'
+export const UPDATE_CODE = 'UPDATE_CODE'
+export const UPDATE_USER = 'UPDATE_USER'
 
 // api
 export const FETCH_CODE_GET = 'FETCH_CODE_GET'

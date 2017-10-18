@@ -84,7 +84,12 @@ export default {
     },
     clickBtn () {
       if (this.routeName === 'userChangePhoneView') {
-        this.$router.back()
+        const data = {
+          cellphone: this.cellphone
+        }
+        this.$store.dispatch(Types.UPDATE_USER, { data: data }).then(() => {
+          this.$router.back()
+        })
       }
       if (this.routeName === 'registerPhoneView') {
         const query = {}

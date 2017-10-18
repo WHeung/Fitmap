@@ -6,29 +6,33 @@
       </div>
       <div :class="$style.wechatMsg">
         <div>
-          <span>昵称</span>会飞的田鼠
+          <span>昵称</span>{{user.nickname}}
         </div>
         <div>
-          <span>性别</span>男
+          <span>性别</span>{{user.gender}}
         </div>
       </div>
     </div>
-    <Item :class="$style.group" title="手机号" content="15622188859" :arrow="true" @clickCon="clickPhone"></Item>
+    <Item :class="$style.group" title="手机号" :content="user.cellphone" :arrow="true" @clickCon="clickPhone"></Item>
     <div :class="$style.group">
-      <Item title="姓名" content="李四" @clickCon="clickCon"></Item>
+      <Item title="姓名" :content="user.realname" @clickCon="openDialog({ name: '姓名', val: 'realname'})"></Item>
       <p :class="$style.line"></p>
-      <Item title="城市" content="广东-广州"></Item>
+      <Item title="城市" :content="positionData" @clickCon="openMask('area')"></Item>
     </div>
     <div :class="$style.group">
-      <Item title="公司" content="广州某某投资有限公司" @clickCon="clickCon"></Item>
+      <Item title="公司" :content="user.company" @clickCon="openDialog({ name: '公司名称', val: 'company'})"></Item>
       <p :class="$style.line"></p>
-      <Item title="职务" content="Boss"></Item>
+      <Item title="职务" :content="user.role" @clickCon="openMask('job')"></Item>
     </div>
-    <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog">
+    <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog" @ensure="dialogEnsure">
       <div :class="$style.input">
-        <input type="text">
+        <input type="text" v-model="input">
       </div>
     </DialogMask>
+    <BottomMask v-if="user.id"
+      :province="user.province" :city="user.city"
+      :role="user.role" @maskClose="maskClose" :mask="mask"
+      @maskEnsure="maskEnsure"></BottomMask>
   </div>
 </template>
 
@@ -36,76 +40,53 @@
 import * as Types from '~src/store/types'
 import area from 'china-area-data'
 import Item from './components/item.vue'
-import valid from '~src/tool/verification'
 import DialogMask from '~src/components/DialogMask.vue'
-
-const validConfig = [
-  {
-    case: 'noBlank',
-    data: ['name', 'gender', 'provinceKey', 'cityKey', 'districtKey', 'mobile', 'code'],
-    errorMsg: ['请填写昵称', '请选择性别', '请选择省份', '请选择城市', '请选择区/县', '请填手机号码', '请填验证码']
-  },
-  {
-    case: 'mobilePhone',
-    data: ['mobile'],
-    errorMsg: ['手机号码格式错误']
-  }
-]
-const mobileConfig = [
-  {
-    case: 'noBlank',
-    data: ['mobile'],
-    errorMsg: ['请填手机号码']
-  },
-  {
-    case: 'mobilePhone',
-    data: ['mobile'],
-    errorMsg: ['手机号码格式错误']
-  }
-]
+import BottomMask from '../components/bottomMask.vue'
 
 export default {
   name: 'baseinfo-view',
-  components: { Item, DialogMask },
+  components: { Item, DialogMask, BottomMask },
   data () {
     return {
-      cityForm: {
-        provinceKey: '',
-        cityKey: '',
-        districtKey: ''
-      },
       dialog: {
         title: '',
         leftBtn: '取消',
         rightBtn: '确定',
         show: false,
         type: ''
-      }
+      },
+      input: '',
+      mask: ''
     }
   },
   computed: {
-    provinces () {
-      return area[86]
+    user () {
+      return this.$store.state.user.user
     },
-    citys () {
-      return area[this.cityForm.provinceKey]
-    },
-    districts () {
-      return area[this.cityForm.cityKey]
+    positionData () {
+      if (this.user.province && this.user.city) {
+        return `${this.user.province}-${this.user.city}`
+      } else {
+        return ''
+      }
     }
   },
   created () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
-    console.log(area)
+    this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
+      this.$store.dispatch(Types.CLOSE_LOADING)
+    })
   },
   methods: {
-    clickCon () {
+    openDialog ({ name, val }) {
+      this.input = this.user[val]
       Object.assign(this.dialog, {
-        title: '请输入名字',
+        title: '请输入' + name,
+        type: val,
         show: true
       })
     },
     closeDialog () {
+      this.input = ''
       this.dialog = {
         title: '',
         leftBtn: '取消',
@@ -116,6 +97,25 @@ export default {
     },
     clickPhone () {
       this.$router.push({ name: 'userChangePhoneView', params: { id: this.$route.params.id }})
+    },
+    openMask (type) {
+      this.mask = type
+    },
+    maskClose () {
+      this.mask = ''
+    },
+    maskEnsure ({ type, data }) {
+      if (type === 'role') {
+      }
+      if (type === 'area') {
+      }
+      this.$store.dispatch(Types.UPDATE_USER, { data: data })
+    },
+    dialogEnsure (type) {
+      const data = {}
+      data[type] = this.input
+      this.$store.dispatch(Types.UPDATE_USER, { data: data })
+      this.closeDialog()
     }
   }
 }

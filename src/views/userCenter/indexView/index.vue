@@ -2,16 +2,16 @@
   <div :class="$style.main">
     <div :class="$style.info">
       <div :class="$style.avatar">
-        <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
+        <img :src="user.avatar">
       </div>
-      <div :class="$style.name">用户昵称</div>
+      <div :class="$style.name">{{user.nickname}}</div>
       <button :class="$style.editBtn" @click="toInfo">个人信息</button>
     </div>
     <div :class="$style.list">
       <div :class="[$style.item, $style.store]" @click="clickCon('item')">
         <div>我收藏的商品</div>
         <div :class="$style.itemCon">
-          <span>12</span>
+          <span>{{user.items_collect}}</span>
           <i></i>
         </div>
       </div>
@@ -19,7 +19,7 @@
       <div :class="[$style.item, $style.business]" @click="clickCon('merchant')">
         <div>我收藏的商家</div>
         <div :class="$style.itemCon">
-          <span>14</span>
+          <span>{{user.merchants_collect}}</span>
           <i></i>
         </div>
       </div>
@@ -27,7 +27,7 @@
       <div :class="[$style.item, $style.post]" @click="clickCon('post')">
         <div>我收藏的帖子</div>
         <div :class="$style.itemCon">
-          <span>9</span>
+          <span>{{user.posts_collect}}</span>
           <i></i>
         </div>
       </div>
@@ -41,11 +41,19 @@ import * as Types from '~src/store/types'
 export default {
   name: 'user-View',
   created () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
+    this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
+      console.log(this.user)
+      this.$store.dispatch(Types.CLOSE_LOADING)
+    })
+  },
+  computed: {
+    user () {
+      return this.$store.state.user.user
+    }
   },
   methods: {
     toInfo () {
-      this.$router.push({name: 'userInfoView', params: { id: parseInt(this.$route.params.id) }})
+      this.$router.push({ name: 'userInfoView', params: { id: parseInt(this.$route.params.id) }})
     },
     clickCon (type) {
       this.$router.push({ name: 'userfavoritesView', params: { type, id: parseInt(this.$route.params.id) }})
