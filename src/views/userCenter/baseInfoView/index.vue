@@ -38,7 +38,6 @@
 
 <script>
 import * as Types from '~src/store/types'
-import area from 'china-area-data'
 import Item from './components/item.vue'
 import DialogMask from '~src/components/DialogMask.vue'
 import BottomMask from '../components/bottomMask.vue'

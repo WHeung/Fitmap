@@ -2,199 +2,101 @@
   <div :class="$style.main">
     <div :class="$style.infoGroup">
       <Item title="姓名">
-        <input v-model="form.name" placeholder="请填写真实姓名" type="text">
+        <input v-model="user.realname" placeholder="请填写真实姓名" type="text">
       </Item>
       <p :class="$style.line"></p>
       <Item title="城市">
         <div :class="$style.select" @click="openMask('area')">
-          <template v-if="!form.area">
+          <template v-if="!positionData">
             请选择
           </template>
           <template v-else>
-            {{form.area}}
+            {{positionData}}
           </template>
         </div>
       </Item>
     </div>
     <div :class="$style.infoGroup">
       <Item title="公司">
-        <input v-model="form.company" type="text">
+        <input v-model="user.company" type="text">
       </Item>
       <p :class="$style.line"></p>
       <Item title="职务">
         <div :class="$style.select" @click="openMask('job')">
-          <template v-if="!form.job">
+          <template v-if="!user.role">
             请选择
           </template>
           <template v-else>
-            {{form.job}}
+            {{user.role}}
           </template>
         </div>
       </Item>
     </div>
     <Btn :class="$style.btn" type="blue" title="提交" :disabled="disabled" @clickBtn="clickBtn"></Btn>
-    <div :class="$style.maskLayer" v-if="mask">
-      <div :class="$style.mask">
-      </div>
-      <div :class="$style.multiPicker">
-        <div :class="$style.pickerBtns">
-          <button @click="closeMask">取消</button>
-          <button @click="selectArea">确定</button>
-        </div>
-        <div :class="$style.pickerCon" v-if="mask === 'area'">
-          <swiper :class="$style.containerClass" :options="provOption" ref="provSwiper">
-            <swiperSlide v-for="(province,key) in provinces" :key="key">{{province}}</swiperSlide>
-          </swiper>
-          <swiper :class="$style.containerClass" :options="cityOption" ref="citySwiper">
-            <swiperSlide v-for="(city,key) in citys" :key="key">{{city}}</swiperSlide>
-          </swiper>
-        </div>
-        <div :class="$style.pickerCon" v-if="mask === 'job'">
-          <swiper :class="$style.containerClass" :options="jobOption" ref="jobSwiper">
-            <swiperSlide v-for="(job, key) in jobs" :key="key">{{job}}</swiperSlide>
-          </swiper>
-        </div>
-      </div>
-    </div>
+    <BottomMask
+      :province="user.province" :city="user.city"
+      :role="user.role" @maskClose="maskClose" :mask="mask"
+      @maskEnsure="maskEnsure"></BottomMask>
   </div>
 </template>
 
 <script>
 import * as Types from '~src/store/types'
-import area from 'china-area-data'
 import Item from './components/item.vue'
-import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
 import routerReplace from '~src/tool/routerReplace.js'
-
-
-const validConfig = [
-  {
-    case: 'name',
-    data: ['name'],
-    errorMsg: ['姓名字符过长']
-  }
-]
+import BottomMask from '../components/bottomMask.vue'
 
 export default {
   name: 'coummateInfo-view',
-  components: { Item, Btn, swiper, swiperSlide },
+  components: { Item, Btn, BottomMask },
   data () {
     return {
-      form: {
-        name: '',
-        area: '',
+      user: {
+        realname: '',
+        province: '',
+        city: '',
         company: '',
-        job: ''
+        role: ''
       },
-      swiperOption: {
-        notNextTick: true,
-        initialSlide: 0,
-        direction: 'vertical',
-        centeredSlides: true,
-        slideToClickedSlide: true,
-        debugger: true,
-        slidesPerView: 'auto'
-      },
-      provOption: {},
-      cityOption: {},
-      jobOption: {},
-      selectedArea: {},
-      provIndex: 0,
-      cityIndex: 0,
-      jobIndex: 0,
-      mask: null,
-      jobs: ['Boss', '教练', '运营']
-    }
-  },
-  watch: {
-    selectedArea: {
-      handler (val) {
-        if (val.prov && val.city) {
-          this.form.area = `${val.prov.name}-${val.city.name}`
-        }
-      }
+      mask: ''
     }
   },
   computed: {
-    provinces () {
-      return area[86]
-    },
-    provinceKey () {
-      const keys = Object.keys(area[86])
-      return keys[this.provIndex]
-    },
-    citys () {
-      const keys = Object.keys(area[86])
-      return area[this.provinceKey]
-    },
-    cityKey () {
-      const keys = Object.keys(this.citys)
-      return keys[this.cityIndex]
-    },
-    provSwiper () {
-      return this.$refs.provSwiper ? this.$refs.provSwiper.swiper : {}
-    },
-    citySwiper () {
-      return this.$refs.citySwiper ? this.$refs.citySwiper.swiper : {}
+    positionData () {
+      if (this.user.province && this.user.city) {
+        return `${this.user.province}-${this.user.city}`
+      } else {
+        return ''
+      }
     },
     disabled () {
       let disabled = true
-      if (this.form.name && this.form.area && this.form.company && this.form.job) {
+      if (this.user.realname && this.positionData && this.user.company && this.user.role) {
         disabled = false
       }
       return disabled
     }
   },
   created () {
-    Object.assign(this.swiperOption, { // 需要用到this的属性
-      slideClass: this.$style.slideClass,
-      slideActiveClass: this.$style.slideActiveClass,
-      wrapperClass: this.$style.swiperWrapper,
-      containerModifierClass: this.$style.containerClass
-    })
-    Object.assign(this.provOption, this.swiperOption, {
-      onSlideChangeEnd: (swiper) => {
-        this.provIndex = swiper.activeIndex
-      }
-    })
-    Object.assign(this.cityOption, this.swiperOption, {
-      onSlideChangeEnd: (swiper) => {
-        this.cityIndex = swiper.activeIndex
-      }
-    })
-    Object.assign(this.jobOption, this.swiperOption, {
-      onSlideChangeEnd: (swiper) => {
-        this.jobIndex = swiper.activeIndex
-      }
-    })
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
     openMask (type) {
       this.mask = type
     },
-    closeMask () {
-      this.mask = null
+    maskClose () {
+      this.mask = ''
     },
-    selectArea () {
-      if (this.mask === 'area') {
-        if (this.provinceKey && this.cityKey) {
-          this.selectedArea = {
-            prov: { key: this.provinceKey, name: area[86][this.provinceKey] },
-            city: { key: this.cityKey, name: area[this.provinceKey][this.cityKey] }
-          }
-          this.provOption.initialSlide = this.provIndex
-          this.cityOption.initialSlide = this.cityIndex
-        }
+    maskEnsure ({ type, data }) {
+      if (type === 'role') {
       }
-      if (this.mask === 'job') {
-        this.form.job = this.jobs[this.jobIndex]
+      if (type === 'area') {
       }
-      this.closeMask()
+      Object.assign(this.user, data)
     },
     clickBtn () {
+      this.$store.dispatch(Types.UPDATE_USER, { data: this.user })
       if (this.$route.query.detail) {
         const detail = JSON.parse(this.$route.query.detail)
         routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})

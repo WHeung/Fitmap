@@ -33,7 +33,7 @@ const Mutations = {
   }
 }
 
-const list = [
+var dataList = [
   {
     'id': 5,
     'title': '商家1',
@@ -160,8 +160,8 @@ const list = [
 ]
 const Actions = {
   [Types.UPDATE_MAP_SEARCH] ({ state, commit, dispatch }, data) {
-    new Promise(resolve => {
-      const list = list
+    return new Promise(resolve => {
+      const list = dataList
       /*
        CallApi(Types.FETCH_MAP_SEARCH, data).then(res => {
          const data = res.data.data

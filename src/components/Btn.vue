@@ -51,6 +51,6 @@ export default {
 .disabled
   opacity .3
   &:active
-    opacity inherit
+    opacity .3
 
 </style>
