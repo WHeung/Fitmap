@@ -57,8 +57,14 @@ apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
   )
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_GET] = function () {
-  return axiosRequest.get(`/users/collects?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
+  const params = {
+    ...data,
+    t: getTimeStampId()
+  }
+  return axiosRequest.get(`/users/collects`, {
+    params: params
+  })
 }
 
 apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {

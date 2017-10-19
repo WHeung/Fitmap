@@ -1,23 +1,27 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.img">
-      <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
+      <img :src="data.images[0]">
     </div>
     <div :class="$style.content">
-      <div :class="$style.title">厂家直销 直柄曲柄包胶固定杠铃 专业健身房用 无味家用健身器材</div>
-      <div :class="$style.price">¥ 1280.00</div>
+      <div :class="$style.title">{{data.content}}</div>
+      <div :class="$style.price">{{data.price}}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'map-bus-item',
+  name: 'user-favor-item',
+  props: ['data'],
   data () {
     return {
     }
   },
   methods: {
+    toDetail () {
+      this.$emit('toDetail', this.data.id)
+    }
   }
 }
 </script>

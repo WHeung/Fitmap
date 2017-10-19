@@ -1,27 +1,30 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetail">
     <div :class="$style.img">
-      <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg">
+      <img :src="data.images[0]">
     </div>
     <div :class="$style.content">
-      <div :class="$style.title">澳淋健身游泳俱乐部</div>
+      <div :class="$style.title">{{data.title}}</div>
       <div :class="$style.tag">
-        <span>健身房</span>
-        <span>帖子</span>
+        <span v-for="tag in data.tags"></span>
       </div>
-      <div :class="$style.address">610米 东莞庄路120号</div>
+      <div :class="$style.address">{{data.distance}} {{data.position_content}}</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'map-bus-item',
+  name: 'user-favor-merchant',
+  props: ['data'],
   data () {
     return {
     }
   },
   methods: {
+    toDetail () {
+      this.$emit('toDetail', this.data.id)
+    }
   }
 }
 </script>
@@ -48,6 +51,7 @@ export default {
 .content
   position relative
   padding 16px
+  flex 1 1
 
 .title
   font-size 15px
@@ -65,8 +69,12 @@ export default {
     
 .address
   position absolute
+  width 80%
   bottom 16px
   font-size 12px
   color $assistText
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
 
 </style>

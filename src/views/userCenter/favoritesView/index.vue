@@ -1,13 +1,19 @@
 <template>
   <div>
-    <template>
-      <StoreItem :class="$style.item"></StoreItem>
+    <template v-if="type === 'item'">
+      <StoreItem :class="$style.item"
+        v-for="data in dataList" :key="data.id"
+        :data="data" @toDetail="toDetail"></StoreItem>
     </template>
-    <template>
-      <BusItem :class="$style.item"></BusItem>
+    <template v-if="type === 'merchant'">
+      <BusItem :class="$style.item"
+        v-for="data in dataList" :key="data.id"
+        :data="data" @toDetail="toDetail"></BusItem>
     </template>
-    <template>
-      <PostItem :class="$style.item"></PostItem>
+    <template v-if="type === 'post'">
+      <PostItem :class="$style.item"
+        v-for="data in dataList" :key="data.id"
+        :data="data" @toDetail="toDetail"></PostItem>
     </template>
   </div>
 </template>
@@ -21,13 +27,25 @@ import PostItem from './components/postItem.vue'
 export default {
   name: 'favorites-View',
   components: { StoreItem, BusItem, PostItem },
-  computed: {
-    type () {
-      return this.$route.params.type
+  data () {
+    return {
+      type: '',
+      dataList: []
     }
   },
+  computed: {
+  },
   created () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
+    this.type = this.$route.params.type
+    this.$store.dispatch(Types.UPDATE_USERS_COLLECTS, { type: this.type }).then(dataList => {
+      this.dataList = dataList
+      this.$store.dispatch(Types.CLOSE_LOADING)
+    })
+  },
+  methods: {
+    toDetail (id) {
+      this.$router.push({ name: 'detailView', params: { type: this.type, id: parseInt(id) }})
+    }
   }
 }
 </script>

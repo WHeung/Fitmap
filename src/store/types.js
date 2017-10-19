@@ -34,6 +34,7 @@ export const USER_LOGIN = 'USER_LOGIN'
 export const UPDATE_LOGIN_OAUTH = 'UPDATE_LOGIN_OAUTH'
 export const UPDATE_CODE = 'UPDATE_CODE'
 export const UPDATE_USER = 'UPDATE_USER'
+export const UPDATE_USERS_COLLECTS = 'UPDATE_USERS_COLLECTS'
 
 // api
 export const FETCH_CODE_GET = 'FETCH_CODE_GET'
