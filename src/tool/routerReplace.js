@@ -9,8 +9,8 @@ export default function routerReplace (context, { name, path, query, params }) {
     query = {}
   }
   context.$router.replace({
-    name: name,
-    path: path,
+    name: name || undefined,
+    path: path || undefined,
     params: params,
     query: {
       ...query,
