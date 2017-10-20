@@ -74,7 +74,7 @@ const dataList = [
     'content': '西适体可以帮助您更快速、更直接的找到符合您企业的健身教练，行业顶尖的培训导师在培训期间帮助学员更好的掌握各项实用技能，并从中获得自信，学员无论参加私人教练学习，团操教练学习，还是营销管理学习，都能与实际俱乐部的运营需求和会员的需求接轨，快速成为俱乐部的中坚力量。',
     'area': '100㎡',
     'price': '¥ 10000/月',
-    'label': 'bid',
+    'label': 'lease',
     'created_time': '2019-02-12',
     'type': 'post',
     'telephones': [
@@ -83,10 +83,9 @@ const dataList = [
       '13000000000'
     ],
     'images': [
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfvB8JyLZOKw4p9D2G-rrqFoywue9oAVjt2hJappDTIrXBYEaI-A',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHs489wjRd9KOiIic5BnISdNIcf7bWZOW32UvirYoF7_VrBPWnZw',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROD0lEo6MMVDOuHDNL2uiDVHopW_Wp8pLKBJ8fJKb-aUOpvN8ZWQ',
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTR5kepYmwUULrTLC36721ykbTv7SWu2muCmpOeFRIa0k3ftHeLUA'
+      'http://editorial.quanjing.com/image/defaultnew/ly-mdl-four.jpg?v=0001',
+      'http://editorial.quanjing.com/image/defaultnew/ly-mdl-five.jpg?v=0001',
+      'http://editorial.quanjing.com/image/defaultnew/ly-mdl-three.jpg?v=0001'
     ],
     'job_content': '1、具备健身知识，熟练使用健身器械； 2、身体健康，有团队精神，服从公司管理； 3、年龄18到35周岁',
     'position_content': '广州-番禺',

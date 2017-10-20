@@ -39,12 +39,11 @@
 
 <script>
 import * as Types from '~src/store/types'
-import SwipeImg from '../components/swipeImg.vue'
 import ContactItem from '../components/contactItem.vue'
 
 export default {
   name: 'merchant-View',
-  components: { SwipeImg, ContactItem },
+  components: { ContactItem },
   props: ['data'],
   data () {
     return {

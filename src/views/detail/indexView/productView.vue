@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.item">
-      <SwipeImg type="product"></SwipeImg>
+      <SwipeImg type="product" :imgs="data.images"></SwipeImg>
       <div :class="$style.titleMsg">
         <div :class="$style.title">{{data.title}}</div>
         <div :class="$style.price">{{data.price}}</div>

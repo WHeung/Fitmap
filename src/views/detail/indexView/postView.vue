@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.item">
-      <SwipeImg type="post" v-if="data.label !== 'bid'"></SwipeImg>
+      <SwipeImg type="post" v-if="data.label !== 'bid'" :imgs="data.images"></SwipeImg>
       <div :class="$style.titleMsg">
         <div :class="$style.title">{{data.title}}</div>
         <div :class="$style.date">{{data.created_time}}</div>
@@ -54,7 +54,7 @@ export default {
               color: 'red'
             }, {
               name: '位置',
-              value: this.data.location
+              value: this.data.position_content
             }
           ]
         }
@@ -65,7 +65,7 @@ export default {
               value: this.data.area
             }, {
               name: '位置',
-              value: this.data.location
+              value: this.data.position_content
             }
           ]
         }

@@ -5,8 +5,8 @@
       <PostView v-if="data && view === 'post'" :data="data"></PostView>
       <ProductView v-if="data && view === 'product'" :data="data"></ProductView>
     </div>
-    <div :class="$style.bottom">
-      <Btn type="blue" title="收藏" @clickBtn="clickBtn"></Btn>
+    <div :class="$style.bottom" v-if="data">
+      <Btn type="blue" title="收藏" @clickBtn="clickBtn" :disabled="disabled"></Btn>
     </div>
   </div>
 </template>
@@ -24,7 +24,8 @@ export default {
     return {
       style: null,
       view: '',
-      data: null
+      data: null,
+      disabled: false
     }
   },
   beforeRouteUpdate (to, from, next) {
@@ -52,6 +53,9 @@ export default {
     fetchData ({ type, id }) {
       this.view = type
       this.$store.dispatch(Types.UPDATE_DETAIL, { type, id }).then(data => {
+        if (data.is_collected !== 0) {
+          this.disabled = true
+        }
         this.data = data
         this.$store.dispatch(Types.CLOSE_LOADING)
       })

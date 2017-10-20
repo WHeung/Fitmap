@@ -1,14 +1,8 @@
 <template>
   <div :class="$style.main">
     <swiper :class="$style.containerClass" :options="swiperOption" ref="swiper">
-      <swiperSlide :class="{[$style.square]: type === 'product'}">
-        <img src="http://cdn01.dwfei.com/img/country/new/yuenan@2x.png" alt="">
-      </swiperSlide>
-      <swiperSlide :class="{[$style.square]: type === 'product'}">
-        <img src="http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg" alt="">
-      </swiperSlide>
-      <swiperSlide :class="{[$style.square]: type === 'product'}">
-        <img src="http://cdn01.dwfei.com/img/banner/02/bincheng1.jpg" alt="">
+      <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img">
+        <img :src="img">
       </swiperSlide>
       <div :class="$style.swiperPagination" slot="pagination" id="pagination"></div>
     </swiper>
@@ -21,7 +15,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'swipe-img',
   components: { swiper, swiperSlide },
-  props: ['type'],
+  props: ['type', 'imgs'],
   data () {
     return {
       swiperOption: {
@@ -50,7 +44,6 @@ export default {
 </style>
 <style lang="stylus" module>
 @import '~tool/vendor'
-
   
 .containerClass
   position relative
