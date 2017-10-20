@@ -60,7 +60,14 @@ export default {
       if (data) {
         this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
       } else {
-        this.$store.dispatch(Types.UPDATE_MAP_SEARCH)
+        const store = this.$store.state.map
+        const type = store.classTypes[this.classForm.selected[0]].data
+        const form = {
+          keyword: this.classForm.input,
+          type: type,
+          category: store.classCategorys[type][this.classForm.selected[1]].data
+        }
+        this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
       }
     })
   },
@@ -76,9 +83,9 @@ export default {
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
     },
-    request (form) {
-      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+    request (data) {
       // 请求
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
     }
   }
 }

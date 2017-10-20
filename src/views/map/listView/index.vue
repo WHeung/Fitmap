@@ -59,9 +59,9 @@ export default {
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
     },
-    request (form) {
-      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+    request (data) {
       // 请求
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
     }
   }
 }

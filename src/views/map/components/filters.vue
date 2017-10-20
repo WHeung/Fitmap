@@ -104,6 +104,9 @@ export default {
     }
   },
   computed: {
+    classType () {
+      return this.classTypes[this.selected[0]]
+    },
     categorys () {
       const typeKey = this.classTypes[this.selected[0]].data
       return this.classCategorys[typeKey]
@@ -127,15 +130,25 @@ export default {
         input: this.input,
         selected: this.selected
       }
+      const data = {
+        keyword: form.input,
+        type: this.classType.data,
+        category: this.selectedCate.data
+      }
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
-      this.$emit('search', form)
+      this.$emit('search', data)
     },
     clearInput () {
       this.input = ''
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: this.input })
       if (this.origin !== 'search') {
         // 请求
-        this.$emit('request')
+        const data = {
+          keyword: this.input,
+          type: this.classType.data,
+          category: this.selectedCate.data
+        }
+        this.$emit('request', data)
       }
     },
     choiceType (index) {
@@ -151,12 +164,17 @@ export default {
       this.$set(this.selected, 1, index)
       this.mask = false
       if (this.origin !== 'search') {
-        // 请求
         const form = {
           input: this.input,
           selected: this.selected
         }
-        this.$emit('request', form)
+        const data = {
+          keyword: form.input,
+          type: this.classType.data,
+          category: this.selectedCate.data
+        }
+        this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
+        this.$emit('request', data)
       }
     }
   }

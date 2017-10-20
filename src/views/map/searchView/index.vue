@@ -11,7 +11,7 @@
         </div>
       </div>
       <div :class="$style.hisCon" v-if="history && history.length">
-        <span v-for="item in history" :key="item">{{item}}</span>
+        <span v-for="item in history" :key="item" @click="useHistory(item)">{{item}}</span>
       </div>
     </div>
   </div>
@@ -49,16 +49,26 @@ export default {
     }
   },
   methods: {
-    search (form) {
-      if (form.input && this.history.indexOf(form.input) < 0) {
-        this.history.unshift(form.input)
+    search (data) {
+      if (data.keyword && this.history.indexOf(data.keyword) < 0) {
+        this.history.unshift(data.keyword)
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }
+      // 请求
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
       this.$router.push({ name: 'mapListView' })
     },
     cleanHistory () {
       this.history = []
       window.localStorage[storageKey] = '[]'
+    },
+    useHistory (item) {
+      const data = {
+        keyword: item
+      }
+      // 请求
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
+      this.$router.push({ name: 'mapListView' })
     }
   }
 }

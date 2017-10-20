@@ -67,7 +67,7 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
   })
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
+apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ data }) {
   return axiosRequest.post(`/users/collects`,
     JSON.stringify({
       id: getTimeStampId(),

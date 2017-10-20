@@ -184,6 +184,17 @@ const Actions = {
         break
       }
     })
+  },
+  [Types.UPDATE_USERS_COLLECTS_POST] ({ state }, { type, id }) {
+    return new Promise(resolve => {
+      console.log(state)
+      /*
+       CallApi(Types.FETCH_USERS_COLLECTS_POST, id).then(res => {
+         const data = res.data.data
+       })
+      */
+      resolve()
+    })
   }
 }
 

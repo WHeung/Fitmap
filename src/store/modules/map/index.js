@@ -11,6 +11,53 @@ const State = {
   filtersForm: {
     input: '',
     selected: [0, 0]
+  },
+  classTypes: [
+    {
+      name: '商家',
+      data: 'merchant'
+    }, {
+      name: '帖子',
+      data: 'post'
+    }
+  ],
+  classCategorys: {
+    merchant: [
+      {
+        name: '健身房',
+        data: 'gym'
+      },
+      {
+        name: '室内设计',
+        data: 'design'
+      },
+      {
+        name: '健身培训',
+        data: 'train'
+      },
+      {
+        name: '室内器材',
+        data: 'equip'
+      }
+    ],
+    post: [
+      {
+        name: '场地租凭',
+        data: 'lease'
+      },
+      {
+        name: '转让信息',
+        data: 'transfer'
+      },
+      {
+        name: '人员招聘',
+        data: 'recruit'
+      },
+      {
+        name: '设计招标',
+        data: 'bid'
+      }
+    ]
   }
 }
 
@@ -167,6 +214,7 @@ const Actions = {
          const data = res.data.data
        })
       */
+      console.log(data)
       commit(Types.SET_MAP_LIST, list)
       const location = state.list.map(item => {
         return item.location_obj
