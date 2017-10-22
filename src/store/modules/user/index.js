@@ -219,14 +219,13 @@ const Actions = {
   },
   [Types.UPDATE_USERS_COLLECTS] ({ state, commit }, { type }) {
     return new Promise(resolve => {
-      // const data = {
-      //   token: state.user.token,
-      //   type: type
-      // }
-      // CallApi(Types.FETCH_USERS_COLLECTS_GET, { data }).then(res => {
-      //   resolve(res.data.data)
-      // })
-      resolve(collects)
+      const data = {
+        token: state.user.token,
+        type: type
+      }
+      CallApi(Types.FETCH_USERS_COLLECTS_GET, { data }).then(res => {
+        resolve(res.data.data)
+      })
     })
   }
 }
