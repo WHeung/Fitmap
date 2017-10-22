@@ -66,6 +66,7 @@ export default {
       const errMsg = valid({ mobile: this.cellphone }, mobileConfig)
       if (errMsg.count < 1) {
         this.inSeconds = 60
+        this.$store.dispatch(Types.UPDATE_CODE, { cellphone: this.cellphone })
         let interval = setInterval(() => {
           this.inSeconds--
           if (this.inSeconds === 0) {

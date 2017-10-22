@@ -2,7 +2,7 @@
   <div :class="$style.main">
     <div :class="$style.wechat">
       <div :class="$style.wechatImg">
-        <img src="http://wx.qlogo.cn/mmhead/0sDCa2E8S1tpsYwWPibzhiciaLPJxX6ohkNJu2t4IXrF2mic8jbPlhrX2Q/0">
+        <img :src="user.avatar">
       </div>
       <div :class="$style.wechatMsg">
         <div>
@@ -104,16 +104,25 @@ export default {
       this.mask = ''
     },
     maskEnsure ({ type, data }) {
+      console.log(type, data)
       if (type === 'role') {
+        if (this.user.role === data.role) {
+          return
+        }
       }
       if (type === 'area') {
+        if (this.user.province === data.province && this.user.city === data.city ) {
+          return
+        }
       }
       this.$store.dispatch(Types.UPDATE_USER, { data: data })
     },
     dialogEnsure (type) {
       const data = {}
-      data[type] = this.input
-      this.$store.dispatch(Types.UPDATE_USER, { data: data })
+      if (this.user[type] !== this.input) {
+        data[type] = this.input
+        this.$store.dispatch(Types.UPDATE_USER, { data: data })
+      }
       this.closeDialog()
     }
   }

@@ -1,7 +1,7 @@
 import * as types from '../types'
 
 export function checkResponseCode (code) {
-  if (code + '' === '0') {
+  if (code + '' === '200') {
     return { isSuccess: true }
   } else {
     return {

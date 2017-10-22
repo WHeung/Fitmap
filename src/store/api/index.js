@@ -18,7 +18,7 @@ export default function callApi (apiName, params) {
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
-      const codeResult = checkResponseCode(res.data.state.code)
+      const codeResult = checkResponseCode(res.data.code)
       if (codeResult.isSuccess) {
         resolve(res)
       } else {
@@ -39,11 +39,12 @@ apiMap[Types.FETCH_USERS_GET] = function () {
   return axiosRequest.get(`/users?t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_USERS_UPDATE] = function (data) {
+apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
+  console.log(data)
   return axiosRequest.put(`/users`,
     JSON.stringify({
-      id: getTimeStampId(),
-      data
+      t: getTimeStampId(),
+      ...data
     })
   )
 }
@@ -86,4 +87,10 @@ apiMap[Types.FETCH_MAP_SEARCH] = function () {
 
 apiMap[Types.FETCH_DETAIL] = function ({ type, id }) {
   return axiosRequest.get(`/${type}/${id}?t=${getTimeStampId()}`)
+}
+
+function localhost () {
+  if (window.location.hostname === 'localhost') {
+    
+  }
 }

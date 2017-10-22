@@ -35,7 +35,8 @@ app.use(hotMiddleware)
 
 app.use('*', function (req, res, next) {
   if (req.baseUrl !== '/') {
-    request('http://localhost:3231' + req.baseUrl, function (error, response, body) {
+    const url = 'https://easy-mock.com/mock/59ec3faa1a3fcd087e699845/Fitmap' + req.baseUrl
+    request(url, function (error, response, body) {
       if (!error && response.statusCode === 200) {
         res.set('content-type', 'text/json')
         res.send(response.body)
