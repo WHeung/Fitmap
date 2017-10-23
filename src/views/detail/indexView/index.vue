@@ -3,7 +3,7 @@
     <div :class="$style.detail" ref="detail" :style="style">
       <MerchantView v-if="data && view === 'merchant'" :data="data"></MerchantView>
       <PostView v-if="data && view === 'post'" :data="data"></PostView>
-      <ProductView v-if="data && view === 'product'" :data="data"></ProductView>
+      <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
     </div>
     <div :class="$style.bottom" v-if="data">
       <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn" :disabled="disabled"></Btn>
@@ -54,6 +54,7 @@ export default {
       })
     },
     fetchData ({ type, id }) {
+      console.log(type)
       this.view = type
       this.$store.dispatch(Types.UPDATE_DETAIL, { type, id }).then(data => {
         if (data.is_collected !== 0) {

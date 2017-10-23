@@ -179,7 +179,7 @@ const Actions = {
       case 'post':
         resolve(dataList[1])
         break
-      case 'product':
+      case 'item':
         resolve(dataList[2])
         break
       }
