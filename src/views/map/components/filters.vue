@@ -1,6 +1,6 @@
 <template>
   <div :class="[$style.main, {[$style.originList]: origin !== 'index' }]">
-    <div :class="$style.container">
+    <div :class="[$style.container, {[$style.topWhite]: origin !== 'index' }]">
       <div
       :class="[$style.classifyGroup,{[$style.dropUp]:mask === true}]"
       @click="clickClassify">
@@ -206,6 +206,10 @@ export default {
   justify-content space-between
   align-items center
   z-index 5
+.topWhite
+  z-index 5
+  background $white
+  border-bottom 1px solid $breakline
 .originList
   position fixed
   top 0
