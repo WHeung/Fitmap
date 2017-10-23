@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetail">
     <div :class="$style.img">
       <img :src="data.images[0]">
     </div>

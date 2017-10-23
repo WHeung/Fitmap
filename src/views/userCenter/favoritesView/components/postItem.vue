@@ -1,5 +1,5 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetail">
     <div :class="$style.top">
       <div :class="$style.title">{{data.title}}</div>
       <div :class="$style.tag"><span v-for="tag in data.tags">{{tag}}</span></div>
