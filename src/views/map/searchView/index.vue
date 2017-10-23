@@ -10,8 +10,8 @@
           清空
         </div>
       </div>
-      <div :class="$style.hisCon" v-if="history && history.length">
-        <span v-for="item in history" :key="item" @click="useHistory(item)">{{item}}</span>
+      <div :class="$style.hisCon" v-if="limitHis && limitHis.length">
+        <span v-for="item in limitHis" :key="item" @click="useHistory(item)">{{item}}</span>
       </div>
     </div>
   </div>
@@ -46,6 +46,9 @@ export default {
     },
     classForm () {
       return this.$store.state.map.filtersForm
+    },
+    limitHis () {
+      return this.history.slice(0, 10)
     }
   },
   methods: {
@@ -111,9 +114,11 @@ $mainText = #474C54
   margin 12px
   display flex
   white-space nowrap
+  flex-wrap wrap
   >span
     padding 5px 18px
     margin-right  12px
+    margin-bottom 12px
     font-size 12px
     border 1px solid $mainText
     border-radius 100px
