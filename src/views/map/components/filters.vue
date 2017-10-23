@@ -7,7 +7,7 @@
         {{selectedCate.name}}
       </div>
       <div :class="$style.searchGroup" @click="searchClick">
-        <input type="text" v-model="input" placeholder="搜索">
+        <input type="text" v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
         <i @click.stop="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
@@ -100,6 +100,12 @@ export default {
       handler (val) {
         this.input = this.form.input
         this.selected = [].concat(this.form.selected)
+        if (this.$parent.$route.name === 'mapSearchView' && this.$refs.input) {
+          console.log(1)
+          setTimeout(() => {
+            this.$refs.input.focus()
+          }, 300)
+        }
       }
     }
   },
