@@ -5,8 +5,8 @@
     @searchClick="searchClick" @request="request"></Filters>
     <Sacle :class="{[$style.transTop]: type }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="item">
-      <BusItem v-if="item.type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
-      <PostItem v-if="item.type==='post'" :item="item" @toDetail="toDetail"></PostItem>
+      <BusItem :class="$style.item" v-if="item.type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
+      <PostItem :class="$style.item" v-if="item.type==='post'" :item="item" @toDetail="toDetail"></PostItem>
       <div :class="$style.showList" v-if="list && list.length" @click="toListView">
         列表显示
       </div>
@@ -118,4 +118,8 @@ $assistText = #9DA2AB
 
 .transTop
   transform translateY(-300px)
+
+.item
+  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
+
 </style>

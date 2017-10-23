@@ -39,7 +39,6 @@ $white = #FFFFFF
   position relative
   padding 18px
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .top
   white-space nowrap

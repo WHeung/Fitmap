@@ -35,7 +35,6 @@ export default {
 .main
   display flex
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .img
   width 50%
