@@ -274,6 +274,7 @@ export default {
   margin-left 12px
   font-size 16px
   color $link
+  font-weight 600
   &:active
     opacity .6
 
