@@ -225,6 +225,8 @@ export default {
 
 .classifyGroup
   position relative
+  width 56px
+  overflow hidden
   padding 6px 42px 6px 12px
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
