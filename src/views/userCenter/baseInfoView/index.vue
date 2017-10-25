@@ -26,7 +26,7 @@
     </div>
     <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog" @ensure="dialogEnsure">
       <div :class="$style.input">
-        <input type="text" v-model="input">
+        <input type="text" v-model="input" ref="input">
       </div>
     </DialogMask>
     <BottomMask v-if="user.id"
@@ -83,6 +83,11 @@ export default {
         type: val,
         show: true
       })
+      setTimeout(() => {
+        if (this.$refs.input) {
+          this.$refs.input.focus()
+        }
+      }, 200)
     },
     closeDialog () {
       this.input = ''
