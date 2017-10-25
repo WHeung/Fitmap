@@ -16,6 +16,7 @@ import Toast from './components/Toast.vue'
 import Loading from './components/loading.vue'
 import ApiLoading from './components/ApiLoading.vue'
 import popUp from './components/popUp.vue'
+import { weixinShareConfig } from '~src/store/api/weixinApi'
 
 export default {
   name: 'app',
@@ -28,13 +29,7 @@ export default {
   methods: {
   },
   created () {
-    // window.onpopstate = () => { // 回退情况下判断，进入过外路由回来可能会触发部落vue的路由
-    //   setTimeout(() => {
-    //     if ('#' + this.$route.fullPath !== window.location.hash) {
-    //       window.location.reload()
-    //     }
-    //   }, 200)
-    // }
+    weixinShareConfig({})
   }
 }
 </script>
