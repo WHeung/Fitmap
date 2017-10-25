@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main" :style="style">
-    <div :class="$style.item" v-for="pic in picList" :key="pic" @click="preview" @animationend="animationend($event, pic)">
+    <div :class="$style.item" v-for="(pic,index) in picList" :key="pic" @click="preview" @animationend="animationend($event, pic, index)">
       <img :src="pic">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
@@ -62,8 +62,8 @@ export default {
       el.className += ' ' + this.$style.animat
       this.lockPreview = true
     },
-    animationend (e, pic) {
-      console.log(e)
+    animationend (e, pic, index) {
+      this.option.initialSlide = index
       Object.assign(this.previewData, {
         show: true,
         src: pic
