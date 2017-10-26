@@ -17,6 +17,7 @@ import Loading from './components/loading.vue'
 import ApiLoading from './components/ApiLoading.vue'
 import popUp from './components/popUp.vue'
 import { weixinShareConfig } from '~src/store/api/weixinApi'
+import { isWeixin } from '~src/tool/containerDetect'
 
 export default {
   name: 'app',
@@ -29,7 +30,9 @@ export default {
   methods: {
   },
   created () {
-    weixinShareConfig({})
+    if (isWeixin()) {
+      weixinShareConfig({})
+    }
   }
 }
 </script>
