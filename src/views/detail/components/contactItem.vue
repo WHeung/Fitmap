@@ -13,31 +13,48 @@
       </div>
       <div :class="$style.arrow"></div>
     </div>
+    <DialogMask :dialog="dialog" v-if="dialog.show" @cancel="cancelMask">
+      <div>
+        <div :class="$style.phoneItem" @click="chosePhone(phone)"
+        v-for="(phone,index) in telephones" :key="index">
+          <span>电话{{index + 1}}</span>
+          <span :class="$style.phoneCon">{{phone}}</span>
+        </div>
+      </div>
+    </DialogMask>
   </div>
 </template>
 
 <script>
+import DialogMask from '~src/components/DialogMask.vue'
 import * as Types from '~src/store/types'
 export default {
   name: 'around-item',
+  components: { DialogMask },
   props: ['location', 'telephones'],
+  data () {
+    return {
+      dialog: {
+        show: false,
+        title: '拨打电话'
+      }
+    }
+  },
   methods: {
     clickPhone () {
       if (typeof this.telephones === 'object' && this.telephones.length) {
         if (this.telephones.length === 1) {
           window.location.href = 'tel:' + this.telephones[0]
         } else {
-          let word = ''
-          for (let i = 0; i < this.telephones.length; i++) {
-            word += `<p onclick="window.location.href='tel:${this.telephones[i]}'">${this.telephones[i]}</p>`
-          }
-          this.$store.dispatch(Types.OPEN_POPUP, {
-            title: '拨打电话',
-            word: word,
-            leftMsg: '关闭'
-          })
+          this.dialog.show = true
         }
       }
+    },
+    cancelMask (val) {
+      this.dialog.show = false
+    },
+    chosePhone (phone) {
+      window.location.href = `tel:${phone}`
     },
     toMap () {
       this.$emit('toMap')
@@ -82,5 +99,16 @@ export default {
   margin-left 18px
   height 1px
   background $breakline
+
+.phoneItem
+  padding 0 18px
+  height 48px
+  line-height 48px
+  display flex
+  justify-content space-between
+  &:active
+    background $breakline
+.phoneCon
+  color $assistText
 
 </style>

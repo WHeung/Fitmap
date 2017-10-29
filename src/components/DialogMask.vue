@@ -1,5 +1,6 @@
 <template>
-  <div :class="$style.dialogWp" @touchmove.prevent="">
+  <div :class="$style.dialogWp" @touchmove.prevent>
+    <div :class="$style.mask" @click.stop="cancel"></div>
     <div :class="$style.wp">
       <div :class="$style.title" v-if="dialog.title">{{dialog.title}}</div>
       <slot></slot>
@@ -16,7 +17,7 @@
 </template>
 
 <script>
-export default{
+export default {
   name: 'dialog',
   props: ['dialog'],
   methods: {
@@ -37,11 +38,16 @@ export default{
 .dialogWp
   position fixed
   width 100%
-  background rgba(0, 0, 0, 0.5)
   top 0
   left 0
   bottom 0
   z-index 50
+
+.mask
+  position absolute
+  width 100%
+  height 100%
+  background rgba(0, 0, 0, 0.5)
 
 .wp
   position absolute
