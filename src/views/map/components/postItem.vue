@@ -3,7 +3,7 @@
     <div :class="$style.top">
       <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
-        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
+        <span v-if="item.label">{{item.label}}</span>
       </div>
     </div>
     <div :class="$style.sub">

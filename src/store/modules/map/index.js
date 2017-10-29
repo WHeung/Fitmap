@@ -82,12 +82,69 @@ const Mutations = {
 
 var dataList = [
   {
+    "id": 1,
+    "title": "宠物店",
+    "logo": "http://xxx",
+    "telephones": [
+        1311,
+        1312,
+        1313
+    ],
+    "images": [
+      "http://xxx1",
+      "http://xxx2"
+    ],
+    "label": "健身房",
+    "content": "content",
+    "star": "4",
+    "location_obj": {
+      "id": 1,
+      "lng": "1.123450",
+      "lat": "1.234550",
+      "province": "广东省",
+      "city": "广州市",
+      "area": "海珠区",
+      "address": "海宁路"
+    },
+    "items": [
+      {
+          "id": 1,
+          "images": [
+              "http://xxx7",
+              "http://xxx8"
+          ],
+          "title": "商品",
+          "price": "10000元",
+          "type": "器材",
+          "brand": "nike",
+          "merchant": {
+              "id": 1,
+              "title": "宠物店",
+              "logo": "http://xxx",
+              "telephones": [
+                  1311,
+                  1312,
+                  1313
+              ],
+              "images": [
+                  "http://xxx1",
+                  "http://xxx2"
+              ],
+              "label": "健身房",
+              "content": "content",
+              "star": "4"
+          }
+      }
+    ]
+  },
+  {
     'id': 5,
     'title': '商家1',
     'content': 'string',
     'area': 'string',
     'price': 'string',
     'type': 'merchant',
+    "label": "健身房",
     'telephones': [
       14000000000,
       12000000000,
@@ -118,6 +175,7 @@ var dataList = [
     'area': 'string',
     'price': 'string',
     'type': 'merchant',
+    "label": "室内设计",
     'telephones': [
       14000000000,
       12000000000,
@@ -148,6 +206,7 @@ var dataList = [
     'area': 'string',
     'price': 'string',
     'created_time': '2019-02-12',
+    "label": "场地租凭",
     'type': 'post',
     'telephones': [
       14000000000,
@@ -179,6 +238,7 @@ var dataList = [
     'created_time': '2017-05-13',
     'area': 'string',
     'price': 'string',
+    'label': '转让信息',
     'type': 'post',
     'telephones': [
       14000000000,

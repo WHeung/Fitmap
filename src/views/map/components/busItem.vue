@@ -6,7 +6,7 @@
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
-        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
+        <span v-if="item.label">{{item.label}}</span>
       </div>
       <div :class="$style.address">{{item.distance}} {{item.location_obj.location}}</div>
     </div>

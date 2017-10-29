@@ -9,6 +9,7 @@ const dataList = [
     'area': 'string',
     'price': 'string',
     'label': 'gym',
+    "label": "健身房",
     'type': 'merchant',
     'telephones': [
       84104928,
@@ -113,6 +114,7 @@ const dataList = [
       'title':	'商家信息',
       'logo':	'string',
       'label':	'string',
+      "label": "健身房",
       'distance': '600米',
       'location': '广东-广州-海珠-艺苑南路13号大院布衣港电商园11栋1楼（地铁站客村站D出口）'
     },
@@ -123,6 +125,7 @@ const dataList = [
       'title':	'商家信息',
       'logo':	'string',
       'label':	'string',
+      "label": "健身器材",
       'distance': '600米',
       'location': '广东-广州-海珠-艺苑南路13号大院布衣港电商园11栋1楼（地铁站客村站D出口）'
     },
