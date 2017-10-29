@@ -230,11 +230,11 @@ const Actions = {
         map: state.map,
         icon: Icon({
           icon: icon,
-          size: size(24, 26)
+          size: size(28, 30)
         }),
         clickable: true,
         topWhenClick: true,
-        offset: pixel(-12, -13),
+        offset: pixel(-14, -15),
         position: LngLat(item.lng, item.lat),
         extData: { id: item.id }
       })
