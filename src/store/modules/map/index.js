@@ -324,8 +324,7 @@ const Actions = {
     }
   },
   [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
-    data['location_obj'] = Object.assign({}, data.location)
-    const location = data['location_obj']
+    const location = data.location_obj
     const marker = new AMap.Marker({
       map: state.map,
       icon: Icon({

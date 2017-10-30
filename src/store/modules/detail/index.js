@@ -27,7 +27,8 @@ const dataList = [
     'job_content': 'string',
     'position_content': '广东-广州-海珠-艺苑南路13号大院布衣港电商园11栋1楼（地铁站客村站D出口）',
     'distance': '600米',
-    'location': {
+    'location': '详细地址',
+    'location_obj': {
       id: 1,
       lng: 113.264276,
       lat: 23.12521,
@@ -91,7 +92,8 @@ const dataList = [
     'job_content': '1、具备健身知识，熟练使用健身器械； 2、身体健康，有团队精神，服从公司管理； 3、年龄18到35周岁',
     'position_content': '广州-番禺',
     'distance': 'string',
-    'location': {
+    'location': '详细地址',
+    'location_obj': {
       id: 1,
       lng: 113.275669,
       lat: 23.126535,
