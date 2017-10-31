@@ -2,7 +2,7 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="$style.avatar">
-        <img :src="data.images[0]">
+        <img :src="data.images[0]" @load="imgLoad">
         <div :class="$style.moreImg" v-if="data.label !== 'equip'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">{{data.title}}</div>
@@ -54,6 +54,18 @@ export default {
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
+    imgLoad (e) {
+      const img = e.path[0]
+      if (img.width / img.height < 1.5) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
+    },
     seeMorePic () {
       this.$store.dispatch(Types.FILL_BUCKET, {
         id: 'MERCHANT_PIC',

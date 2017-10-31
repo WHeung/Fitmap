@@ -2,7 +2,7 @@
   <div :class="$style.main">
     <swiper :class="$style.containerClass" :options="swiperOption" ref="swiper">
       <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img">
-        <img :src="img">
+        <img :src="img" @load="imgLoad">
       </swiperSlide>
       <div :class="$style.swiperPagination" slot="pagination" id="pagination"></div>
     </swiper>
@@ -33,6 +33,22 @@ export default {
     })
   },
   methods: {
+    imgLoad (e) {
+      const img = e.path[0]
+      let scale = 1.5
+      if (this.type === 'product') {
+        scale = 1
+      }
+      if (img.width / img.height < scale) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
+    }
   }
 }
 </script>

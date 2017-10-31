@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img :src="item.images[0]">
+      <img :src="item.images[0]" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
@@ -21,6 +21,18 @@ export default {
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
       // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
+    },
+    imgLoad (e) {
+      const img = e.path[0]
+      if (img.width / img.height < 1.5) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
     }
   }
 }
