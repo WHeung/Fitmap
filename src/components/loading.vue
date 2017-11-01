@@ -39,7 +39,7 @@ export default {
   stroke-dasharray 90,150
   stroke-dashoffset 0
   stroke-width 2
-  stroke $mainBtn
+  stroke $blueBtn
   stroke-linecap round
 
 @keyframes loading-dash

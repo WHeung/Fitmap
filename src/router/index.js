@@ -51,6 +51,10 @@ const detailPicView = resolve => require.ensure(
   [], () => resolve(require('~src/views/detail/picView/index.vue')),
   'd'
 )
+const aboutUsView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/about/index.vue')),
+  'au'
+)
 
 Vue.use(Router)
 
@@ -86,6 +90,7 @@ const router = new Router({
     },
     { path: '/detail/:type/:id(\\d+)', component: detailView, name: 'detailView' },
     { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' },
+    { path: '/about', component: aboutUsView, name: 'aboutUsView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]
