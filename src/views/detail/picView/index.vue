@@ -88,7 +88,7 @@ export default {
   column-count 2
   column-gap (6/20)rem
   width 100%
-  padding (6/20)rem
+  padding 0 (6/20)rem
   overflow hidden
   box-sizing border-box
   background $blackBg
@@ -96,8 +96,7 @@ export default {
 .item
   break-inside avoid
   box-sizing border-box
-  display inline-block
-  width (178/20)rem
+  padding-top 6px
   >img
     display block
     width 100%
