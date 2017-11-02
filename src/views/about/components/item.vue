@@ -1,16 +1,14 @@
 <template>
   <div :class="$style.item">
     <div :class="$style.icon">
-      <img src="~public/about/fm_aboutus_01.svg">
+      <slot name="icon"></slot>
     </div>
     <div :class="$style.top">
       <slot name="top"></slot>
-      <p>投资/运营健身房，</p>
-      <p>Boss们最关注什么？</p>
     </div>
     <div :class="$style.line"></div>
     <div :class="$style.bottom">
-      商圈竞争如何布局？
+      <slot name="bottom"></slot>
     </div>
     <div :class="$style.dividerImg">
       <img src="~public/about/fm_divider.svg">
@@ -20,7 +18,8 @@
 
 <script>
 export default {
-  name: 'about-item'
+  name: 'about-item',
+  props: ['icon']
 }
 </script>
 
@@ -35,8 +34,6 @@ $breakline = #9DA2AB
 
 .item
   padding 18px 24px
-  text-align center
-  background $white
 
 .top
   margin-top 12px
