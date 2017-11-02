@@ -31,6 +31,7 @@ export default {
   color $assistText
 
 .content
-  flex 1 0 auto
+  flex 1 0
   white-space nowrap
+  display inline-flex
 </style>

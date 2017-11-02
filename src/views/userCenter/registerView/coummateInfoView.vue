@@ -122,6 +122,7 @@ export default {
   input
     width 100%
 .select
+  flex-grow 1
   position relative
   &:after
     content ''
