@@ -26,7 +26,9 @@
     <div :class="$style.itemImg">
       <img src="">
     </div>
-    <div :class="$style.thrid">
+    <Item icon="~public/about/fm_aboutus_01.svg">
+    </Item>
+    <!-- <div :class="$style.thrid">
       <div :class="$style.about01Img">
         <img src="~public/about/fm_aboutus_01.svg">
       </div>
@@ -40,7 +42,7 @@
       <div :class="$style.dividerImg">
         <img src="~public/about/fm_divider.svg">
       </div>
-    </div>
+    </div> -->
     <div :class="$style.itemImg">
       <img src="">
     </div>
@@ -55,9 +57,11 @@
 
 <script>
 import * as Types from '~src/store/types'
+import Item from './components/item.vue'
 
 export default {
   name: 'about-us',
+  components: { Item },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
   }
