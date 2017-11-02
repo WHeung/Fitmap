@@ -18,8 +18,7 @@
 
 <script>
 export default {
-  name: 'about-item',
-  props: ['icon']
+  name: 'about-item'
 }
 </script>
 
