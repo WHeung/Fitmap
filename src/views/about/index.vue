@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic01.jpg">
     </div>
     <div :class="$style.first">
       <div :class="$style.firstTxt1">
@@ -16,7 +16,7 @@
       <div :class="$style.firstTxt2">健身爱好者&从业者，有更深的解读！</div>
     </div>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic02.jpg">
     </div>
     <div :class="$style.second">
       <div :class="$style.secondTxt1">
@@ -27,7 +27,7 @@
       </div>
     </div>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic03.jpg">
     </div>
     <Item :class="$style.item">
       <img src="~public/about/fm_aboutus_01.svg" slot="icon">
@@ -40,7 +40,7 @@
       </template>
     </Item>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic04.jpg">
     </div>
     <div :class="$style.thrid">
       <div :class="$style.thridTxt">
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic05.jpg">
     </div>
     <Item :class="$style.item">
       <img src="~public/about/fm_aboutus_02.svg" slot="icon">
@@ -62,7 +62,7 @@
       </template>
     </Item>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic06.jpg">
     </div>
     <Item :class="$style.item">
       <img src="~public/about/fm_aboutus_03.svg" slot="icon">
@@ -74,7 +74,7 @@
       </template>
     </Item>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic07.jpg">
     </div>
     <Item :class="$style.item">
       <img src="~public/about/fm_aboutus_04.svg" slot="icon">
@@ -87,7 +87,7 @@
       </template>
     </Item>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic08.jpg">
     </div>
     <div :class="$style.fourth">
       <div :class="$style.dividerImg">
@@ -102,7 +102,7 @@
       </div>
     </div>
     <div :class="$style.itemImg">
-      <img src="">
+      <img src="~public/about/fm_aboutus_pic09.jpg">
     </div>
     <div :class="$style.bottom">
       <div :class="$style.bottomTit">
