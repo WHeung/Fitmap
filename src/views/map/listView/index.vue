@@ -5,7 +5,7 @@
     @searchClick="searchClick" @request="request"></Filters>
     <div v-if="list && list.length">
       <template v-if="classForm.selected[0] === 0">
-        <BusItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></BusItem>
+        <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></MerchantItem>
       </template>
       <template v-if="classForm.selected[0] === 1">
         <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></PostItem>
@@ -16,13 +16,13 @@
 
 <script>
 import Filters from '../components/filters.vue'
-import BusItem from '../components/busItem.vue'
+import MerchantItem from '../components/merchantItem.vue'
 import PostItem from '../components/postItem.vue'
 import * as Types from '~src/store/types'
 
 export default {
   name: 'map-list-view',
-  components: { Filters, BusItem, PostItem },
+  components: { Filters, MerchantItem, PostItem },
   data () {
     return {
       type: 'post',

@@ -91,7 +91,7 @@ var dataList = [
         1313
     ],
     "images": [
-      "http://xxx1",
+      'http://cdn01.dwfei.com/img/banner/02/mangu2.jpg',
       "http://xxx2"
     ],
     "label": "健身房",
@@ -106,6 +106,7 @@ var dataList = [
       "area": "海珠区",
       "address": "海宁路"
     },
+    'is_collected': 1,
     "items": [
       {
           "id": 1,
@@ -150,6 +151,7 @@ var dataList = [
       12000000000,
       13000000000
     ],
+    'is_collected': 0,
     'images': [
       'http://cdn01.dwfei.com/img/sell/1b8295d8c49446af9954af76a7c495bb.jpg',
       'http://xxx1'
@@ -166,8 +168,7 @@ var dataList = [
       city: 'string',
       area: 'string',
       location: 'string'
-    },
-    'is_collected': 0
+    }
   }, {
     'id': 6,
     'title': '商家2',
@@ -176,6 +177,7 @@ var dataList = [
     'price': 'string',
     'type': 'merchant',
     "label": "室内设计",
+    'is_collected': 1,
     'telephones': [
       14000000000,
       12000000000,
@@ -197,8 +199,7 @@ var dataList = [
       city: 'string',
       area: 'string',
       location: 'string'
-    },
-    'is_collected': 0
+    }
   }, {
     'id': 7,
     'title': '帖子1',
@@ -208,6 +209,7 @@ var dataList = [
     'created_time': '2019-02-12',
     "label": "场地租凭",
     'type': 'post',
+    'is_collected': 0,
     'telephones': [
       14000000000,
       12000000000,
@@ -229,8 +231,7 @@ var dataList = [
       city: 'string',
       area: 'string',
       location: 'string'
-    },
-    'is_collected': 0
+    }
   }, {
     'id': 8,
     'title': '帖子2',
@@ -240,6 +241,7 @@ var dataList = [
     'price': 'string',
     'label': '转让信息',
     'type': 'post',
+    "is_collected": 1,
     'telephones': [
       14000000000,
       12000000000,
@@ -261,8 +263,7 @@ var dataList = [
       city: 'string',
       area: 'string',
       location: 'string'
-    },
-    'is_collected': 0
+    }
   }
 ]
 const Actions = {
