@@ -116,7 +116,8 @@ $mainText = #474C54
   white-space nowrap
   flex-wrap wrap
   >span
-    padding 5px 18px
+    padding 0 18px
+    line-height 28px
     margin-right  12px
     margin-bottom 12px
     font-size 12px
