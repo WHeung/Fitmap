@@ -101,15 +101,17 @@ export default {
         this.input = this.form.input
         this.selected = [].concat(this.form.selected)
         if (this.$parent.$route.name === 'mapSearchView' && this.$refs.input) {
-          console.log(1)
           setTimeout(() => {
             this.$refs.input.focus()
-          }, 300)
+          }, 1000)
         }
       }
     }
   },
   computed: {
+    searchView () {
+      return this.$parent.$route.name === 'mapSearchView'
+    },
     classType () {
       return this.classTypes[this.selected[0]]
     },
