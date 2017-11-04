@@ -43,6 +43,10 @@ const mapListView = resolve => require.ensure(
   [], () => resolve(require('~src/views/map/listView/index.vue')),
   'm'
 )
+const mapNavigateView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/map/navigateView/index.vue')),
+  'm'
+)
 const detailView = resolve => require.ensure(
   [], () => resolve(require('~src/views/detail/indexView/index.vue')),
   'd'
@@ -85,6 +89,11 @@ const router = new Router({
           path: '/map/list',
           component: mapListView,
           name: 'mapListView'
+        },
+        {
+          path: '/map/navigate',
+          component: mapNavigateView,
+          name: 'mapNavigateView'
         }
       ]
     },

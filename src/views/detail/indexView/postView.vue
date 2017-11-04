@@ -94,7 +94,7 @@ export default {
         id: 'MAP_LOCATION',
         data: this.data
       })
-      this.$router.push({ name: 'mapIndexView' })
+      this.$router.push({ name: 'mapNavigateView' })
     }
   }
 }
