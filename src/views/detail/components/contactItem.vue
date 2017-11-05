@@ -13,24 +13,26 @@
       </div>
       <div :class="$style.arrow"></div>
     </div>
-    <DialogMask :dialog="dialog" v-if="dialog.show" @cancel="cancelMask">
-      <div>
-        <div :class="$style.phoneItem" @click="chosePhone(phone)"
-        v-for="(phone,index) in telephones" :key="index">
-          <span>电话{{index + 1}}</span>
-          <span :class="$style.phoneCon">{{phone}}</span>
-        </div>
+    <MaskLayer :class="$style.maskWrap" v-if="dialog.show" @maskClick="cancelMask">
+      <div :class="$style.maskCon">
+        <template v-for="(phone,index) in telephones">
+          <div :class="$style.maskConLine" v-if="index !== 0" :key="index"></div>
+          <div :class="$style.maskConItem" @click="chosePhone(phone)" :key="index">
+            {{phone}}
+          </div>
+        </template>
+        <div :class="$style.maskConItem" @click="cancelMask">取消</div>
       </div>
-    </DialogMask>
+    </MaskLayer>
   </div>
 </template>
 
 <script>
-import DialogMask from '~src/components/DialogMask.vue'
+import MaskLayer from '~src/components/MaskLayer.vue'
 import * as Types from '~src/store/types'
 export default {
   name: 'around-item',
-  components: { DialogMask },
+  components: { MaskLayer },
   props: ['location', 'telephones'],
   data () {
     return {
@@ -100,15 +102,22 @@ export default {
   height 1px
   background $breakline
 
-.phoneItem
-  padding 0 18px
-  height 48px
-  line-height 48px
+.main .maskWrap
+  align-items flex-end
+.maskCon
+  width (375/20)rem
+  background $breakline
+.maskConItem
+  padding 12px 0
   display flex
-  justify-content space-between
+  justify-content center
+  background $white
   &:active
     background $breakline
-.phoneCon
-  color $assistText
+  &:last-child
+    margin-top 6px
+.maskConLine
+  height 1px
+  background $breakline
 
 </style>
