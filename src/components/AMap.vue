@@ -30,6 +30,11 @@ export default {
       zoom: 14
     })
     map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
+    // AMap.plugin(['AMap.ToolBar'], function () {
+    //   map.addControl(new AMap.ToolBar({
+    //     position: 'RB'
+    //   }))
+    // })
     this.$emit('input', map)
     window.map = map // 方便调试
   },
