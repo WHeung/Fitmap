@@ -90,6 +90,7 @@ export default {
   left 50%
   transform translateX(-50%)
   bottom (24/20)rem
+  z-index 3
   >span
     width 5px
     height 5px

@@ -191,7 +191,7 @@ function getOauth ({ to }) { // 跳转微信授权
   // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
   window.location.href =
     'https://open.weixin.qq.com/connect/oauth2/authorize?' +
-    'appid=xxx' +
+    'appid=wx232406f650474f6a' +
     '&redirect_uri=' + encodeURIComponent(callbackURL) +
     '&response_type=code' +
     '&scope=snsapi_userinfo' +
