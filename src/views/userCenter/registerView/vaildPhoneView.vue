@@ -117,11 +117,13 @@ export default {
 .phone
   width 100%
 .code
-  display inline-flex
-  justify-content space-between
+  input
+    max-width 50%
+    flex 0 1
+    margin-right 10px
   button
+    flex 0 0 (96/20)rem
     padding 5px 0
-    width (96/20)rem
     font-size 12px
     border 1px solid $mainText
     border-radius 100px

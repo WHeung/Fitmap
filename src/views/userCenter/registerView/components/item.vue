@@ -24,14 +24,15 @@ export default {
   padding 10px 18px
   font-size 16px
   line-height 28px
+  width 100%
 
 .title
-  width 70px
+  flex 0 0 70px
   white-space nowrap
   color $assistText
 
 .content
-  flex 1 0
+  flex 1 1 auto
   white-space nowrap
   display inline-flex
 </style>
