@@ -7,7 +7,7 @@
         {{selectedCate.name}}
       </div>
       <div :class="$style.searchGroup" @click="searchClick">
-        <div :class="$style.mockInput" v-if="!searchView">搜索</div>
+        <div :class="$style.mockInput" v-if="!searchView">{{input || '搜索'}}</div>
         <input v-else v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
         <i @click.stop="clearInput"></i>
       </div>
