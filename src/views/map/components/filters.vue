@@ -7,7 +7,8 @@
         {{selectedCate.name}}
       </div>
       <div :class="$style.searchGroup" @click="searchClick">
-        <input type="text" v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
+        <div :class="$style.mockInput" v-if="!searchView">搜索</div>
+        <input v-else v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
         <i @click.stop="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
@@ -93,17 +94,18 @@ export default {
   },
   props: ['origin', 'updateForm', 'form'],
   created () {
-    console.log('created')
   },
   watch: {
     updateForm: {
       handler (val) {
         this.input = this.form.input
         this.selected = [].concat(this.form.selected)
-        if (this.$parent.$route.name === 'mapSearchView' && this.$refs.input) {
-          setTimeout(() => {
-            this.$refs.input.focus()
-          }, 1000)
+        if (this.$parent.$route.name === 'mapSearchView') {
+          if (this.$refs.input) {
+            setTimeout(() => {
+              this.$refs.input.focus()
+            }, 1000)
+          }
         }
       }
     }
@@ -124,6 +126,10 @@ export default {
     }
   },
   methods: {
+    inputFocus ($el) {
+      $el.focus()
+      console.log(11)
+    },
     clickClassify () {
       this.mask = !this.mask
     },
@@ -215,6 +221,7 @@ export default {
 .originList
   position fixed
   top 0
+  width 100%
   z-index 5
   background $white
   border-bottom 1px solid $breakline
@@ -226,6 +233,7 @@ export default {
     border 1px solid $border
 
 .classifyGroup
+  flex-shrink 0
   position relative
   width 56px
   overflow hidden
@@ -273,6 +281,8 @@ export default {
     right 12px
     background url('~src/public/fm_clear.svg') no-repeat
     background-size 100% 100%
+  .mockInput
+    color #888
   >input
     line-height 21px
     width 100%
