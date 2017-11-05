@@ -24,7 +24,6 @@ export default {
   padding 10px 18px
   font-size 16px
   line-height 28px
-  width 100%
 
 .title
   flex 0 0 70px
