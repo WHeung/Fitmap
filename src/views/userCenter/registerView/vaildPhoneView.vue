@@ -5,7 +5,7 @@
         <input :class="$style.phone" v-model="cellphone" type="text">
       </Item>
       <p :class="$style.line"></p>
-      <Item title="验证码":class="$style.code">
+      <Item title="验证码" :class="$style.code">
         <input type="text" v-model="code">
         <button v-if="!inSeconds" @click="getCode">发送验证码</button>
         <button v-else :class="$style.notClick">{{inSeconds}}s</button>
