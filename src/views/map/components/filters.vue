@@ -126,10 +126,6 @@ export default {
     }
   },
   methods: {
-    inputFocus ($el) {
-      $el.focus()
-      console.log(11)
-    },
     clickClassify () {
       this.mask = !this.mask
     },
