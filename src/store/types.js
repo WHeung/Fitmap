@@ -12,6 +12,7 @@ export const SET_MAP = 'SET_MAP'
 export const SET_MAP_LIST = 'SET_MAP_LIST'
 export const SET_MAP_SELECTED_MARKER = 'SET_MAP_SELECTED_MARKER'
 export const SET_MAP_FILTERS_FORM = 'SET_MAP_FILTERS_FORM'
+export const SET_MAP_USER_LOCATION = 'SET_MAP_USER_LOCATION'
 
 // action global
 export const OPEN_TOAST = 'OPEN_TOAST'

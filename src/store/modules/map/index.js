@@ -8,6 +8,10 @@ const State = {
   map: null, // Object
   selectedItem: null, // Object
   list: null, // Array
+  userLoc: {
+    lat: '',
+    lng: ''
+  },
   filtersForm: {
     input: '',
     selected: [0, 0]
@@ -77,6 +81,9 @@ const Mutations = {
   [Types.SET_MAP_FILTERS_FORM] (state, data) {
     console.log('mutation: set filtersForm')
     Object.assign(state.filtersForm, data)
+  },
+  [Types.SET_MAP_USER_LOCATION] (state, data) { // data: {lat, lng}
+    Object.assign(state.userLoc, data)
   }
 }
 
