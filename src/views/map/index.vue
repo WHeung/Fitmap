@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMap v-model="map" @mapClick="mapClick"></AMap>
+    <AMap v-model="map" :location="location" :citySearch="citySearch" @mapClick="mapClick"></AMap>
     <transition :name="transName" :mode="transName === 'trans' ? 'in-out' : 'out-in'">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
@@ -43,6 +43,8 @@ export default {
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
+    location() {},
+    citySearch() {},
     mapClick () {
       this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
     }
