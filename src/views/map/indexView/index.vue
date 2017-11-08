@@ -55,21 +55,14 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
-      console.log(data)
-      if (data) {
-        this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
-      } else {
-        const store = this.$store.state.map
-        const type = store.classTypes[this.classForm.selected[0]].data
-        const form = {
-          keyword: this.classForm.input,
-          type: type,
-          category: store.classCategorys[type][this.classForm.selected[1]].data
-        }
-        this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
-      }
-    })
+    const store = this.$store.state.map
+    const type = store.classTypes[this.classForm.selected[0]].data
+    const form = {
+      keyword: this.classForm.input,
+      type: type,
+      category: store.classCategorys[type][this.classForm.selected[1]].data
+    }
+    this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
   },
   methods: {
     toListView () {

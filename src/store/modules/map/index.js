@@ -282,7 +282,7 @@ const Actions = {
          const data = res.data.data
        })
       */
-      console.log(data)
+      console.log(state)
       commit(Types.SET_MAP_LIST, list)
       const location = state.list.map(item => {
         return item.location_obj

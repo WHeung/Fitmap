@@ -29,15 +29,15 @@ export default {
       resizeEnable: true,
       zoom: 14
     })
-    map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
+    map.setZoomAndCenter(13, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
     // AMap.plugin(['AMap.ToolBar'], function () {
     //   map.addControl(new AMap.ToolBar({
     //     position: 'RB'
     //   }))
     // })
-    map.plugin('AMap.Geolocation', function () {
+    map.plugin('AMap.Geolocation', () => {
       const geolocation = new AMap.Geolocation({
-        enableHighAccuracy: true, // 是否使用高精度定位，默认:true
+        enableHighAccuracy: false, // 是否使用高精度定位，默认:true
         timeout: 10000, // 超过10秒后停止定位，默认：无穷大
         maximumAge: 0, // 定位结果缓存0毫秒，默认：0
         convert: true, // 自动偏移坐标，偏移后的坐标为高德坐标，默认：true
@@ -48,13 +48,19 @@ export default {
         panToLocation: true // 定位成功后将定位到的位置作为地图中心点，默认：true
       })
       map.addControl(geolocation)
+      console.log(map.geolocation)
       geolocation.getCurrentPosition((status, res) => {
         console.log(status, res)
-        if (status === 'error') {
-          map.plugin('AMap.CitySearch', function () {
+        if (status === 'complete') {
+          map.setCenter(res.position)
+          this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
+        } else {
+          map.plugin('AMap.CitySearch', () => {
             const city = new AMap.CitySearch()
             city.getLocalCity((status, res) => {
               console.log(status, res)
+              map.setCity(res.adcode)
+              this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
             })
           })
         }
