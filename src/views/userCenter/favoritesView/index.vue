@@ -38,7 +38,7 @@ export default {
   created () {
     this.type = this.$route.params.type
     this.$store.dispatch(Types.UPDATE_USERS_COLLECTS, { type: this.type }).then(dataList => {
-      this.dataList = dataList
+      this.dataList = dataList.list
       this.$store.dispatch(Types.CLOSE_LOADING)
     })
   },

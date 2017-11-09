@@ -2,7 +2,7 @@
   <div :class="$style.main" @click="toDetail">
     <div :class="$style.top">
       <div :class="$style.title">{{data.title}}</div>
-      <div :class="$style.tag"><span v-for="tag in data.tags">{{tag}}</span></div>
+      <div :class="$style.tag"><span v-if="data.label">{{data.label}}</span></div>
     </div>
     <div :class="$style.sub">
       {{data.content}}

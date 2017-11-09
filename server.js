@@ -37,7 +37,7 @@ app.use('*', function (req, res, next) {
   if (req.baseUrl !== '/') {
     const url = 'http://fitmap.deexcul.com' + req.originalUrl
     if (req.originalUrl === '/api/users') {
-      console.log(req.method)
+      console.log(req)
     }
     request({
       url: url,

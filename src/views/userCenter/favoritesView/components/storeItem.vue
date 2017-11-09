@@ -4,7 +4,7 @@
       <img :src="data.images[0]">
     </div>
     <div :class="$style.content">
-      <div :class="$style.title">{{data.content}}</div>
+      <div :class="$style.title">{{data.title}}</div>
       <div :class="$style.price">{{data.price}}</div>
     </div>
   </div>
