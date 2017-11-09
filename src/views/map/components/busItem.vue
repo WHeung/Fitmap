@@ -8,7 +8,7 @@
       <div :class="$style.tag">
         <span v-if="item.label">{{item.label}}</span>
       </div>
-      <div :class="$style.address">{{item.distance}} {{item.location_obj.location}}</div>
+      <div :class="$style.address">{{item.distance}} {{item.location}}</div>
     </div>
   </div>
 </template>

@@ -1,13 +1,13 @@
 <template>
   <div :class="$style.main" :style="style">
     <div :class="$style.item" v-for="(pic,index) in picList" :key="pic" @click="preview" @animationend="animationend($event, pic, index)">
-      <img :src="pic">
+      <img :src="pic.url">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
       <!-- <img :src="previewData.src"> -->
       <swiper :class="$style.containerClass" :options="option" ref="swiper">
         <swiperSlide v-for="pic in picList" :key="pic">
-          <img :src="pic">
+          <img :src="pic.url">
         </swiperSlide>
       </swiper>
     </div>

@@ -298,6 +298,7 @@ const Actions = {
     })
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit }, list) { // query: Array
+    state.map.clearMap()
     for (let i = 0, item; i < list.length; i++) {
       item = list[i]
       var marker = new AMap.Marker({

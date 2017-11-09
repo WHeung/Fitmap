@@ -53,8 +53,8 @@ export default {
   methods: {
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      this.$router.push({ name: 'registerPhoneView', query: { detail }})
-      // this.$router.push({ name: 'detailView', params: { id, type }})
+      // this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      this.$router.push({ name: 'detailView', params: { id, type }})
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })

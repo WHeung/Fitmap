@@ -1,15 +1,15 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.item" @click="toMap">
+    <div :class="$style.item" @click="toMap" v-if="location">
       <div :class="[$style.icon, $style.locationIcon]"></div>
-      <div :class="$style.text">{{location.location}}</div>
+      <div :class="$style.text">{{location}}</div>
       <div :class="$style.arrow"></div>
     </div>
-    <p :class="$style.line"></p>
+    <p :class="$style.line" v-if="location && telephones && telephones.length"></p>
     <div :class="$style.item" @click="clickPhone">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
       <div :class="$style.text">
-        <span v-for="phone in telephones" :key="phone"><i>, </i>{{phone}}</span>
+        <span v-for="phone in telephones" :key="phone">{{phone}}<i>, </i></span>
       </div>
       <div :class="$style.arrow"></div>
     </div>
@@ -87,9 +87,11 @@ export default {
 .text
   margin-right 12px
   flex 1 1 auto
+  display inline-flex
+  flex-wrap wrap
   >span
     white-space nowrap
-    &:first-child i
+    &:last-child i
       display none
 .arrow
   flex 0 0 auto

@@ -8,8 +8,8 @@
       {{data.content}}
     </div>
     <div :class="$style.msg">
-      <div>{{data.position_content}}</div>
-      <div>{{data.created_time}}</div>
+      <div>{{data.location}}</div>
+      <div>{{data.created_at}}</div>
     </div>
   </div>
 </template>

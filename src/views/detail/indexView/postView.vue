@@ -4,7 +4,7 @@
       <SwipeImg type="post" v-if="data.label !== 'bid'" :imgs="data.images"></SwipeImg>
       <div :class="$style.titleMsg">
         <div :class="$style.title">{{data.title}}</div>
-        <div :class="$style.date">{{data.created_time}}</div>
+        <div :class="$style.date">{{data.created_at}}</div>
       </div>
     </div>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>

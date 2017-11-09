@@ -5,8 +5,8 @@
     @searchClick="searchClick" @request="request"></Filters>
     <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle>
     <div :class="$style.bottom" v-if="item">
-      <BusItem :class="$style.item" v-if="item.type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
-      <PostItem :class="$style.item" v-if="item.type==='post'" :item="item" @toDetail="toDetail"></PostItem>
+      <BusItem :class="$style.item" v-if="item.search_type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
+      <PostItem :class="$style.item" v-if="item.search_type==='post'" :item="item" @toDetail="toDetail"></PostItem>
       <div :class="$style.showList" v-if="list && list.length" @click="toListView">
         列表显示
       </div>
@@ -42,6 +42,7 @@ export default {
       }
     },
     classForm () {
+      console.log(this.$store.state.map.filtersForm)
       return this.$store.state.map.filtersForm
     },
     item () {
@@ -70,8 +71,8 @@ export default {
     },
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      this.$router.push({ name: 'registerPhoneView', query: { detail }})
-      // this.$router.push({ name: 'detailView', params: { id, type }})
+      // this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      this.$router.push({ name: 'detailView', params: { id, type }})
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
