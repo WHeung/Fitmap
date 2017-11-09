@@ -201,18 +201,12 @@ const Actions = {
         resolve()
         return
       }
-      commit(Types.SET_USER, data)
-      resolve()
-      /*
       CallApi(Types.FETCH_USERS_GET).then(res => {
         const info = res.data.data
-        commit(Types.SET_USER, {
-          info: info
-        })
+        commit(Types.SET_USER, info)
         callback && callback()
         resolve()
       })
-      */
     })
   },
   [Types.UPDATE_LOGIN_OAUTH] ({ commit, state, dispatch }, { code }) {
@@ -236,25 +230,22 @@ const Actions = {
   },
   [Types.UPDATE_USER] ({ state, commit }, { data }) {
     return new Promise(resolve => {
-      // const user = Object.assign(state.user, data)
-      // CallApi(Types.FETCH_USERS_UPDATE, { data: user }).then(res => {
-      //   commit(Types.SET_USER, res.data.data)
-      //   resolve(res.data.data)
-      // })
-      commit(Types.SET_USER, data)
-      resolve()
+      const user = Object.assign(state.user, data)
+      CallApi(Types.FETCH_USERS_UPDATE, { data: user }).then(res => {
+        commit(Types.SET_USER, res.data.data)
+        resolve(res.data.data)
+      })
     })
   },
   [Types.UPDATE_USERS_COLLECTS] ({ state, commit }, { type }) {
     return new Promise(resolve => {
-      // const data = {
-      //   token: state.user.token,
-      //   type: type
-      // }
-      // CallApi(Types.FETCH_USERS_COLLECTS_GET, { data }).then(res => {
-      //   resolve(res.data.data)
-      // })
-      resolve(collects)
+      const data = {
+        token: state.user.token,
+        type: type
+      }
+      CallApi(Types.FETCH_USERS_COLLECTS_GET, { data }).then(res => {
+        resolve(res.data.data)
+      })
     })
   }
 }

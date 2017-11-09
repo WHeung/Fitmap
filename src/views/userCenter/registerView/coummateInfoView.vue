@@ -2,7 +2,7 @@
   <div :class="$style.main">
     <div :class="$style.infoGroup">
       <Item title="姓名">
-        <input v-model="user.realname" placeholder="请填写真实姓名" type="text">
+        <input v-model="user.name" placeholder="请填写真实姓名" type="text">
       </Item>
       <p :class="$style.line"></p>
       <Item title="城市">
@@ -53,7 +53,7 @@ export default {
   data () {
     return {
       user: {
-        realname: '',
+        name: '',
         province: '',
         city: '',
         company: '',
@@ -72,7 +72,7 @@ export default {
     },
     disabled () {
       let disabled = true
-      if (this.user.realname && this.positionData && this.user.company && this.user.role) {
+      if (this.user.name && this.positionData && this.user.company && this.user.role) {
         disabled = false
       }
       return disabled

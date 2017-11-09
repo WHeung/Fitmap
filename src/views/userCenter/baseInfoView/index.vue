@@ -15,7 +15,7 @@
     </div>
     <Item :class="$style.group" title="手机号" :content="user.cellphone" :arrow="true" @clickCon="clickPhone"></Item>
     <div :class="$style.group">
-      <Item title="姓名" :content="user.realname" @clickCon="openDialog({ name: '姓名', val: 'realname'})"></Item>
+      <Item title="姓名" :content="user.name" @clickCon="openDialog({ name: '姓名', val: 'name'})"></Item>
       <p :class="$style.line"></p>
       <Item title="城市" :content="positionData" @clickCon="openMask('area')"></Item>
     </div>

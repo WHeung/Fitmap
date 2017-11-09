@@ -36,7 +36,14 @@ app.use(hotMiddleware)
 app.use('*', function (req, res, next) {
   if (req.baseUrl !== '/') {
     const url = 'http://fitmap.deexcul.com' + req.originalUrl
-    request(url, function (error, response, body) {
+    if (req.originalUrl === '/api/users') {
+      console.log(req.method)
+    }
+    request({
+      url: url,
+      method: req.method
+    },
+    function (error, response, body) {
       if (!error && response.statusCode === 200) {
         res.set('content-type', 'text/json')
         res.send(response.body)

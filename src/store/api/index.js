@@ -32,16 +32,16 @@ export default function callApi (apiName, params) {
 }
 
 apiMap[Types.FETCH_CODE_GET] = function (phone) {
-  return axiosRequest.get(`/code?cellphone=${phone}&t=${getTimeStampId()}`)
+  return axiosRequest.get(`/api/code?cellphone=${phone}&t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_GET] = function () {
-  return axiosRequest.get(`/users?t=${getTimeStampId()}`)
+  return axiosRequest.get(`/api/users?t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
   console.log(data)
-  return axiosRequest.put(`/users`,
+  return axiosRequest.post(`/api/users`,
     JSON.stringify({
       t: getTimeStampId(),
       ...data
@@ -50,7 +50,7 @@ apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
 }
 
 apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
-  return axiosRequest.post(`/users/oauth`,
+  return axiosRequest.post(`/api/users/oauth`,
     JSON.stringify({
       id: getTimeStampId(),
       data
@@ -63,13 +63,13 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
     ...data,
     t: getTimeStampId()
   }
-  return axiosRequest.get(`/users/collects`, {
+  return axiosRequest.get(`/api/users/collects`, {
     params: params
   })
 }
 
 apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ data }) {
-  return axiosRequest.post(`/users/collects`,
+  return axiosRequest.post(`/api/users/collects`,
     JSON.stringify({
       id: getTimeStampId(),
       data
@@ -78,7 +78,7 @@ apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ data }) {
 }
 
 apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function () {
-  return axiosRequest.delete(`/users/collects?t=${getTimeStampId()}`)
+  return axiosRequest.delete(`/api/users/collects?t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
