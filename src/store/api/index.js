@@ -81,12 +81,18 @@ apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function () {
   return axiosRequest.delete(`/users/collects?t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_MAP_SEARCH] = function () {
-  return axiosRequest.get(`/map/search?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
+  console.log(data)
+  return axiosRequest.get(
+    `/api/map/search?t=${getTimeStampId()}` +
+    `&type=${data.type}` +
+    `&category=${data.category}` +
+    `&keyword=${data.keyword}`
+  )
 }
 
 apiMap[Types.FETCH_DETAIL] = function ({ type, id }) {
-  return axiosRequest.get(`/${type}/${id}?t=${getTimeStampId()}`)
+  return axiosRequest.get(`/api/${type}/${id}?t=${getTimeStampId()}`)
 }
 
 function localhost () {

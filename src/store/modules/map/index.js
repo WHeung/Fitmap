@@ -276,19 +276,25 @@ var dataList = [
 const Actions = {
   [Types.UPDATE_MAP_SEARCH] ({ state, commit, dispatch }, data) {
     return new Promise(resolve => {
-      const list = dataList
-      /*
-       CallApi(Types.FETCH_MAP_SEARCH, data).then(res => {
-         const data = res.data.data
-       })
-      */
-      console.log(state)
-      commit(Types.SET_MAP_LIST, list)
-      const location = state.list.map(item => {
-        return item.location_obj
+      const filtersForm = state.filtersForm
+      console.log(filtersForm)
+      const type = state.classTypes[filtersForm.selected[0]].data
+      const category = state.classCategorys[type][filtersForm.selected[1]].name
+      const keyword = filtersForm.input
+      Object.assign(data, {
+        type,
+        category,
+        keyword
       })
-      dispatch(Types.UPDATE_MAP_MARKERS, location)
-      resolve()
+      CallApi(Types.FETCH_MAP_SEARCH, data).then(res => {
+        const data = res.data.data
+        commit(Types.SET_MAP_LIST, data)
+        const location = data.map(item => {
+          return item.location_obj
+        })
+        dispatch(Types.UPDATE_MAP_MARKERS, location)
+        resolve()
+      })
     })
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit }, list) { // query: Array
