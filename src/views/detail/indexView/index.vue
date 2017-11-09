@@ -6,7 +6,7 @@
       <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
     </div>
     <div :class="$style.bottom" v-if="data">
-      <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn" :disabled="disabled"></Btn>
+      <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
     </div>
   </div>
 </template>
@@ -44,20 +44,32 @@ export default {
   },
   methods: {
     clickBtn () {
-      this.$store.dispatch(Types.UPDATE_USERS_COLLECTS_POST, this.$route.params).then(() => {
-        this.disabled = true
-        this.$store.dispatch(Types.OPEN_POPUP, {
-          title: '提示',
-          word: '收藏成功',
-          leftMsg: '确定'
+      if (this.disabled === true) {
+        this.$store.dispatch(Types.UPDATE_USERS_COLLECTS_DEL, {
+          type: this.view,
+          id: this.$route.params.id
+        }).then(() => {
+          this.disabled = false
         })
-      })
+      } else {
+        this.$store.dispatch(Types.UPDATE_USERS_COLLECTS_POST, {
+          type: this.view,
+          id: this.$route.params.id
+        }).then(() => {
+          this.disabled = true
+          this.$store.dispatch(Types.OPEN_POPUP, {
+            title: '提示',
+            word: '收藏成功',
+            leftMsg: '确定'
+          })
+        })
+      }
     },
     fetchData ({ type, id }) {
       console.log(type)
       this.view = type
       this.$store.dispatch(Types.UPDATE_DETAIL, { type, id }).then(data => {
-        if (data.is_collected !== 0) {
+        if (data.is_collected) {
           this.disabled = true
         }
         this.data = data

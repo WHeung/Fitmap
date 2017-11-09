@@ -4,7 +4,7 @@
     <div :class="$style.tag">
       <span v-if="data.label">{{data.label}}</span>
     </div>
-    <div :class="$style.address">{{data.distance}} {{data.location}}</div>
+    <div :class="$style.address">{{data.location_obj.address}}</div>
   </div> 
 </template>
 

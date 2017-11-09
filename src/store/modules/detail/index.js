@@ -186,12 +186,17 @@ const Actions = {
   [Types.UPDATE_USERS_COLLECTS_POST] ({ state }, { type, id }) {
     return new Promise(resolve => {
       console.log(state)
-      /*
-       CallApi(Types.FETCH_USERS_COLLECTS_POST, id).then(res => {
-         const data = res.data.data
-       })
-      */
-      resolve()
+      CallApi(Types.FETCH_USERS_COLLECTS_POST, { type, id }).then(res => {
+        resolve()
+      })
+    })
+  },
+  [Types.UPDATE_USERS_COLLECTS_DEL] ({ state }, { type, id }) {
+    return new Promise(resolve => {
+      console.log(state)
+      CallApi(Types.FETCH_USERS_COLLECTS_DEL, { type, id }).then(res => {
+        resolve()
+      })
     })
   }
 }

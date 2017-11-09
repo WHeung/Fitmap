@@ -1,8 +1,8 @@
 <template>
   <div :class="$style.main">
     <swiper :class="$style.containerClass" :options="swiperOption" ref="swiper">
-      <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img">
-        <img :src="img" @load="imgLoad">
+      <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img.id">
+        <img :src="img.url" @load="imgLoad">
         <div :class="$style.shadow"></div>
       </swiperSlide>
       <div :class="$style.swiperPagination" slot="pagination" id="pagination"></div>

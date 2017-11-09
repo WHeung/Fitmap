@@ -70,17 +70,24 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
   })
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ data }) {
-  return axiosRequest.post(`${HTTP}/api/users/collects`,
+apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ type, id }) {
+  return axiosRequest.post(`${HTTP}/api/users/collect`,
     JSON.stringify({
       id: getTimeStampId(),
-      data
+      type: type,
+      target_id: id
     })
   )
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function () {
-  return axiosRequest.delete(`${HTTP}/api/users/collects?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function ({ type, id }) {
+  return axiosRequest.post(`${HTTP}/api/users/un_collect`,
+  JSON.stringify({
+    t: getTimeStampId(),
+    type: type,
+    target_id: id
+  })
+)
 }
 
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
