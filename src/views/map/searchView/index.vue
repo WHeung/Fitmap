@@ -20,6 +20,7 @@
 <script>
 import Filters from '../components/filters.vue'
 import * as Types from '~src/store/types'
+import routerReplace from '~src/tool/routerReplace'
 
 const storageKey = 'search_history'
 
@@ -59,7 +60,7 @@ export default {
       }
       // 请求
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
-      this.$router.push({ name: 'mapListView' })
+      routerReplace(this, { name: 'mapListView' })
     },
     cleanHistory () {
       this.history = []

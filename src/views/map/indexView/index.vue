@@ -1,20 +1,24 @@
 <template>
   <div :class="$style.main">
-    <Filters
-    :updateForm="updateForm" :form="classForm" origin="index"
-    @searchClick="searchClick" @request="request"></Filters>
-    <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle>
-    <div :class="$style.bottom" v-if="item">
-      <BusItem :class="$style.item" v-if="item.search_type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
-      <PostItem :class="$style.item" v-if="item.search_type==='post'" :item="item" @toDetail="toDetail"></PostItem>
-      <div :class="$style.showList" v-if="list && list.length" @click="toListView">
-        列表显示
+    <AMap v-model="map" :location="location" :citySearch="citySearch" @mapClick="mapClick"></AMap>
+    <div :class="$style.content">
+      <Filters
+      :updateForm="updateForm" :form="classForm" origin="index"
+      @searchClick="searchClick" @request="request"></Filters>
+      <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle>
+      <div :class="$style.bottom" v-if="item">
+        <BusItem :class="$style.item" v-if="item.search_type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
+        <PostItem :class="$style.item" v-if="item.search_type==='post'" :item="item" @toDetail="toDetail"></PostItem>
+        <div :class="$style.showList" v-if="list && list.length" @click="toListView">
+          列表显示
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import AMap from '~src/components/AMap.vue'
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
@@ -23,7 +27,7 @@ import * as Types from '~src/store/types'
 
 export default {
   name: 'map-index-view',
-  components: { Filters, Sacle, BusItem, PostItem },
+  components: { Filters, Sacle, BusItem, PostItem, AMap },
   data () {
     return {
       type: '',
@@ -39,6 +43,10 @@ export default {
     map: {
       get () {
         return this.$store.state.map.map
+      },
+      set (val) {
+        console.log(val)
+        this.$store.commit(Types.SET_MAP, val)
       }
     },
     classForm () {
@@ -68,6 +76,11 @@ export default {
     }
   },
   methods: {
+    location() {},
+    citySearch() {},
+    mapClick () {
+      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
+    },
     toListView () {
       this.$router.push({ name: 'mapListView' })
     },
@@ -91,8 +104,12 @@ export default {
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 
-.main
+.content
   pointer-events none // 点击穿透属性，使地图可以拖到
+  position absolute
+  top 0
+  width 100%
+  height 100%
   >div
     pointer-events visible // 之后的容器不需要继承点击穿透
 
