@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img" :style="imgWrapStyle">
-      <img :src="item.images[0]" @load="imgLoad">
+      <img :src="item.images[0].url" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.titleWrap">
@@ -12,7 +12,7 @@
         <div :class="$style.tag">
           <span v-if="item.label">{{item.label}}</span>
         </div>
-        <div :class="$style.address">{{item.distance}} {{item.location}}</div>
+        <div :class="$style.address">{{item.distance}} {{item.location_obj.address}}</div>
       </div>
     </div>
   </div>

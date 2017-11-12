@@ -63,7 +63,9 @@ export default {
       type: type,
       category: store.classCategorys[type][this.classForm.selected[1]].data
     }
-    this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+    if (!this.list) {
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+    }
   },
   methods: {
     toListView () {

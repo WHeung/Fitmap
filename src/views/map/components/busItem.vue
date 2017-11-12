@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img :src="item.images[0]" @load="imgLoad">
+      <img :src="item.images[0].url" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
         <span v-if="item.label">{{item.label}}</span>
       </div>
-      <div :class="$style.address">{{item.distance}} {{item.location}}</div>
+      <div :class="$style.address">{{item.distance}} {{item.location_obj.address}}</div>
     </div>
   </div>
 </template>
