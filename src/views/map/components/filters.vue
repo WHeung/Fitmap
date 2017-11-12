@@ -6,7 +6,7 @@
       @click="clickClassify">
         {{selectedCate.name}}
       </div>
-      <div :class="$style.searchGroup" @click="searchClick">
+      <div :class="[$style.searchGroup, {[$style.minSearch]:origin !== 'index' }]" @click="searchClick">
         <div :class="$style.mockInput" v-if="!searchView">{{input || '搜索'}}</div>
         <input v-else v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
         <i @click.stop="clearInput"></i>
@@ -257,9 +257,13 @@ export default {
   margin-left 6px
   padding 6px 28px 6px 40px 
   flex 1 1 auto
+  box-sizing border-box
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
+  max-width (235/20)rem
   border-radius 100px
+  &.minSearch
+    max-width (189/20)rem
   &:before,>i
     content ''
     position absolute
@@ -279,6 +283,7 @@ export default {
     background-size 100% 100%
   .mockInput
     color #888
+    overflow-x scroll
   >input
     line-height 21px
     width 100%

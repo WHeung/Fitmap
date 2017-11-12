@@ -281,11 +281,11 @@ const Actions = {
       const type = state.classTypes[filtersForm.selected[0]].data
       const category = state.classCategorys[type][filtersForm.selected[1]].name
       const keyword = filtersForm.input
-      Object.assign(data, {
+      Object.assign({
         type,
         category,
         keyword
-      })
+      }, data)
       CallApi(Types.FETCH_MAP_SEARCH, data).then(res => {
         const data = res.data.data
         commit(Types.SET_MAP_LIST, data)

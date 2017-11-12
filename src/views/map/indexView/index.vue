@@ -55,7 +55,6 @@ export default {
     },
     item () {
       if (this.$store.state.map.selectedItem && this.$store.state.map.selectedItem.item) {
-        console.log(this.$store.state.map.selectedItem.item)
         return this.$store.state.map.selectedItem.item
       }
     },
@@ -73,6 +72,9 @@ export default {
     }
     if (!this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+    }
+    if (this.item) {
+      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
     }
   },
   methods: {

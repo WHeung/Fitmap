@@ -71,6 +71,7 @@ export default {
         keyword: item
       }
       // 请求
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: item })
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
       this.$router.push({ name: 'mapListView' })
     }

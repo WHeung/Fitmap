@@ -48,7 +48,7 @@ export default {
         panToLocation: true // 定位成功后将定位到的位置作为地图中心点，默认：true
       })
       map.addControl(geolocation)
-      this.$emit('location', geolocation)
+      map.geolocation = geolocation
       geolocation.getCurrentPosition((status, res) => {
         console.log(status, res)
         if (status === 'complete') {
@@ -68,7 +68,7 @@ export default {
     map.plugin('AMap.CitySearch', () => {
       const citySearch = new AMap.CitySearch()
       map.addControl(citySearch)
-      this.$emit('citySearch', citySearch)
+      map.citySearch = citySearch
     })
     this.$emit('input', map)
     window.map = map // 方便调试
