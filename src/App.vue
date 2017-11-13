@@ -16,7 +16,6 @@ import Toast from './components/Toast.vue'
 import Loading from './components/loading.vue'
 import ApiLoading from './components/ApiLoading.vue'
 import popUp from './components/popUp.vue'
-import { weixinShareConfig } from '~src/store/api/weixinApi'
 import { isWeixin } from '~src/tool/containerDetect'
 
 export default {
@@ -30,9 +29,6 @@ export default {
   methods: {
   },
   created () {
-    if (isWeixin()) {
-      weixinShareConfig({})
-    }
   }
 }
 </script>

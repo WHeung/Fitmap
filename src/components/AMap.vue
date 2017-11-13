@@ -13,7 +13,8 @@ export default {
     return {
       mapStyle: {
         width: window.screen.width + 'px',
-        height: window.screen.height + 'px'
+        height: window.innerHeight + 'px',
+        '-webkit-overflow-scrolling': 'touch' // 加上这个IOS顺滑的实现
       }
     }
   },
@@ -27,14 +28,21 @@ export default {
   mounted () {
     const map = new AMap.Map('allmap', { // 创建Map实例
       resizeEnable: true,
-      zoom: 14
+      mapStyle: 'amap://styles/7b3dbe0900deae4bcbe445c95b0df7f3'
     })
-    map.setZoomAndCenter(13, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
-    // AMap.plugin(['AMap.ToolBar'], function () {
-    //   map.addControl(new AMap.ToolBar({
-    //     position: 'RB'
-    //   }))
-    // })
+    map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
+    map.plugin(['AMap.ToolBar'], function () {
+      var toolBar = new AMap.ToolBar({
+        offset: new AMap.Pixel(10, 10),
+        ruler: false,
+        noIpLocate: true,
+        locate: true,
+        direction: false,
+        position: 'LB',
+        liteStyle: true
+      })
+      map.addControl(toolBar)
+    })
     map.plugin('AMap.Geolocation', () => {
       const geolocation = new AMap.Geolocation({
         enableHighAccuracy: false, // 是否使用高精度定位，默认:true
@@ -84,6 +92,7 @@ export default {
 .amap-logo
 .amap-copyright
 .anchorBL
+.amap-zoomcontrol
   display none !important
 
 
