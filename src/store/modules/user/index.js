@@ -211,7 +211,7 @@ const Actions = {
   },
   [Types.UPDATE_LOGIN_OAUTH] ({ commit, state, dispatch }, { code }) {
     return new Promise((resolve, reject) => {
-      CallApi(Types.FETCH_USERS_OAUTH).then(res => {
+      CallApi(Types.FETCH_USERS_OAUTH, { code }).then(res => {
         const info = res.data.data
         window.document.cookie.token = info.token
         commit(Types.SET_USER, info)

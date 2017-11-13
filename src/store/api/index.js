@@ -52,12 +52,7 @@ apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
 }
 
 apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
-  return axiosRequest.post(`${HTTP}/api/users/oauth`,
-    JSON.stringify({
-      id: getTimeStampId(),
-      data
-    })
-  )
+  return axiosRequest.get(`${HTTP}/api/users/oauth?code=${data.code}&t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
