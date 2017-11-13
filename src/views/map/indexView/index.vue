@@ -63,6 +63,8 @@ export default {
     }
   },
   mounted () {
+    this.$store.dispatch(Types.CLOSE_LOADING)
+
     const store = this.$store.state.map
     const type = store.classTypes[this.classForm.selected[0]].data
     const form = {

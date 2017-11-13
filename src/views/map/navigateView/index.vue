@@ -1,5 +1,6 @@
 <template>
-  <div :class="$style.main" v-pxtorem>
+  <div :class="$style.main">
+    <AMap v-model="map" :location="location" :citySearch="citySearch" @mapClick="mapClick"></AMap>
     <div :class="$style.bottom">
       <div :class="$style.location">
         <div :class="$style.locCon">

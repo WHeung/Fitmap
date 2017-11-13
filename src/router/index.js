@@ -71,6 +71,11 @@ const router = new Router({
     { path: '/user/register/phone', component: vaildPhoneView, name: 'registerPhoneView' },
     { path: '/user/register/info', component: coummateInfoView, name: 'coummateInfoView' },
     {
+      path: '/map/a/index',
+      component: mapIndexView,
+      name: 'mapIndexView'
+    },
+    {
       path: '/map',
       name: 'mapView',
       component: map,
@@ -107,20 +112,19 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   /*
-  * 平时不能使用code 或者state来作为参数，微信授权登陆会自带
+  * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
   if (isWeixin() && to.path !== '/' && false) {
-    if (window.document.cookie.indexOf('token=') < 0) {
+    const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+    if (!token) {
       if (to.query.code) {
         Store.dispatch(Types.UPDATE_LOGIN_OAUTH, { code: to.query.code }).then(() => {
-          if (to.query.code) {
-            const route = {
-              path: to.path,
-              query: Object.assign({}, to.query)
-            }
-            route.query.code = undefined
-            router.replace(route)
+          const route = {
+            path: to.path,
+            query: Object.assign({}, to.query)
           }
+          route.query.code = undefined
+          router.replace(route)
         }).catch(() => {
           getOauth({ to })
         })

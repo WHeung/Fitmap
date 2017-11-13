@@ -213,6 +213,7 @@ const Actions = {
     return new Promise((resolve, reject) => {
       CallApi(Types.FETCH_USERS_OAUTH).then(res => {
         const info = res.data.data
+        window.document.cookie.token = info.token
         commit(Types.SET_USER, info)
         resolve()
       }).catch(() => {
