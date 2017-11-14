@@ -60,6 +60,9 @@ export default {
     },
     list () {
       return this.$store.state.map.list
+    },
+    user () {
+      return this.$store.state.user.user
     }
   },
   mounted () {
@@ -90,8 +93,13 @@ export default {
     },
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      // this.$router.push({ name: 'registerPhoneView', query: { detail }})
-      this.$router.push({ name: 'detailView', params: { id, type }})
+      if (this.user.is_cellphone_checked && this.user.is_company_checked) {
+        this.$router.push({ name: 'detailView', params: { id, type }})
+      } else if (this.user.is_cellphone_checked) {
+        this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      } else {
+        this.$router.push({ name: 'coummateInfoView', query: { detail }})
+      }
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
