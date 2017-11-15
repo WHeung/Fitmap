@@ -24,6 +24,18 @@ export default {
       resizeEnable: true,
       mapStyle: 'amap://styles/7b3dbe0900deae4bcbe445c95b0df7f3'
     })
+    map.plugin(['AMap.ToolBar'], function () {
+      var toolBar = new AMap.ToolBar({
+        offset: new AMap.Pixel(10, 10),
+        ruler: false,
+        noIpLocate: true,
+        locate: true,
+        direction: false,
+        position: 'LB',
+        liteStyle: true
+      })
+      map.addControl(toolBar)
+    })
     map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
     window.map = map // 方便调试
   },
@@ -35,8 +47,12 @@ export default {
 .amap-logo
 .amap-copyright
 .anchorBL
-.amap-zoomcontrol
   display none !important
+
+#app .amap-zoomcontrol
+  position fixed
+  right 10px
+  bottom 10px
 
 #amap
   transform translateZ(0)
