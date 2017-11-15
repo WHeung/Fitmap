@@ -5,7 +5,7 @@
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
       @searchClick="searchClick" @request="request"></Filters>
-      <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle>
+      <!-- <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle> -->
       <div :class="$style.bottom" v-if="item">
         <BusItem :class="$style.item" v-if="item.search_type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
         <PostItem :class="$style.item" v-if="item.search_type==='post'" :item="item" @toDetail="toDetail"></PostItem>

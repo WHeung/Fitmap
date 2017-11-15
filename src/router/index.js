@@ -59,22 +59,26 @@ const aboutUsView = resolve => require.ensure(
   [], () => resolve(require('~src/views/about/index.vue')),
   'au'
 )
+const testAMapView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/test/amap.vue')),
+  'test'
+)
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
+    {
+      path: '/amap',
+      component: testAMapView,
+      name: 'testAMapView'
+    },
     { path: '/user/:id(\\d+)', component: userView, name: 'userView' },
     { path: '/user/:id(\\d+)/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/:id(\\d+)/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
     { path: '/user/:id(\\d+)/vaildPhone', component: vaildPhoneView, name: 'userChangePhoneView' },
     { path: '/user/register/phone', component: vaildPhoneView, name: 'registerPhoneView' },
     { path: '/user/register/info', component: coummateInfoView, name: 'coummateInfoView' },
-    {
-      path: '/map/a/index',
-      component: mapIndexView,
-      name: 'mapIndexView'
-    },
     {
       path: '/map',
       name: 'mapView',
