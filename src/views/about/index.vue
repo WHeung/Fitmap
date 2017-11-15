@@ -23,7 +23,7 @@
         健身地图是为健身爱好者及商家，提供高效解决方案的服务商。
       </div>
       <div :class="$style.secondTxt2">
-        ——健身地图发起人<br>M.Soong
+        ——健身地图创立人<br>M.Soong
       </div>
     </div>
     <div :class="$style.itemImg">

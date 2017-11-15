@@ -95,5 +95,9 @@ export default {
 .amap-zoomcontrol
   display none !important
 
+#allmap
+  transform translateZ(0)
+  opacity 1
+
 
 </style>
