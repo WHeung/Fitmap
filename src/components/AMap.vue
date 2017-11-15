@@ -96,6 +96,7 @@ export default {
 #app .amap-zoomcontrol
   position fixed
   right 10px
+  bottom 10px
 
 #allmap
   transform translateZ(0)
