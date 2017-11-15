@@ -98,14 +98,10 @@ const router = new Router({
           path: '/map/list',
           component: mapListView,
           name: 'mapListView'
-        },
-        {
-          path: '/map/navigate',
-          component: mapNavigateView,
-          name: 'mapNavigateView'
         }
       ]
     },
+    { path: '/map/navigate', component: mapNavigateView, name: 'mapNavigateView' },
     { path: '/detail/:type/:id(\\d+)', component: detailView, name: 'detailView' },
     { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' },
     { path: '/about', component: aboutUsView, name: 'aboutUsView' },
