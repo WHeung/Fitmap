@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMap v-model="map" :location="location" :citySearch="citySearch"></AMap>
+    <AMapComponent v-model="map" :location="location" :citySearch="citySearch"></AMapComponent>
     <div :class="$style.content">
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
@@ -18,7 +18,8 @@
 </template>
 
 <script>
-import AMap from '~src/components/AMap.vue'
+import AMapComponent from '~src/components/AMap.vue'
+import AMap from 'AMap'
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
@@ -27,7 +28,7 @@ import * as Types from '~src/store/types'
 
 export default {
   name: 'map-index-view',
-  components: { Filters, Sacle, BusItem, PostItem, AMap },
+  components: { Filters, Sacle, BusItem, PostItem, AMapComponent },
   data () {
     return {
       type: '',
@@ -63,6 +64,16 @@ export default {
     },
     user () {
       return this.$store.state.user.user
+    }
+  },
+  watch: {
+    item (val) {
+      if (val && val.id && this.map && this.map.toolBar) {
+        this.map.toolBar.setOffset(
+          new AMap.Pixel(10, 300)
+        )
+        console.log(this.map.toolBar)
+      }
     }
   },
   mounted () {

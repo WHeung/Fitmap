@@ -26,15 +26,16 @@ export default {
     // map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
     map.plugin(['AMap.ToolBar'], function () {
       var toolBar = new AMap.ToolBar({
-        offset: new AMap.Pixel(10, 10),
+        // offset: new AMap.Pixel(10, 10),
         ruler: false,
         noIpLocate: true,
         locate: true,
         direction: false,
-        position: 'LB',
+        position: 'RB',
         liteStyle: true
       })
       map.addControl(toolBar)
+      map.toolBar = toolBar
     })
     map.plugin('AMap.Geolocation', () => {
       const geolocation = new AMap.Geolocation({
@@ -85,10 +86,10 @@ export default {
 .amap-copyright
 .anchorBL
   display none !important
-#app .amap-zoomcontrol
-  position fixed
-  right 10px
-  bottom 10px
+// #app .amap-zoomcontrol
+//   position fixed
+//   right 10px
+//   bottom 10px
 
 #allmap
   transform translateZ(0)
