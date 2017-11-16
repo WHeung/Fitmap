@@ -48,6 +48,9 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user.user
+    },
     disabled () {
       let disabled = true
       const err = valid({ mobile: this.cellphone }, mobileConfig)
@@ -84,20 +87,34 @@ export default {
       }
     },
     clickBtn () {
+      const data = {
+        cellphone: this.cellphone,
+        code: this.code
+      }
       if (this.routeName === 'userChangePhoneView') {
-        const data = {
-          cellphone: this.cellphone
-        }
         this.$store.dispatch(Types.UPDATE_USER, { data: data }).then(() => {
           this.$router.back()
         })
       }
       if (this.routeName === 'registerPhoneView') {
-        const query = {}
-        if (this.$route.query.detail) {
-          query.detail = this.$route.query.detail
-        }
-        routerReplace(this, { name: 'coummateInfoView', query })
+        this.$store.dispatch(Types.UPDATE_VAILD_CODE, { data: data }).then(() => {
+          this.$store.dispatch(Types.UPDATE_USER, { data: { cellphone: this.cellphone }}).then(() => {
+            const query = {}
+            if (this.$route.query.detail) {
+              query.detail = this.$route.query.detail
+            }
+            if (!this.user.is_company_checked) {
+              routerReplace(this, { name: 'coummateInfoView', query: query })
+              return
+            } else if (query.detail) {
+              const detail = JSON.parse(query.detail)
+              routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})
+              return
+            } else {
+              this.$router.back()
+            }
+          })
+        })
       }
     }
   }

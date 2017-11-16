@@ -19,6 +19,7 @@ import Filters from '../components/filters.vue'
 import MerchantItem from '../components/merchantItem.vue'
 import PostItem from '../components/postItem.vue'
 import * as Types from '~src/store/types'
+import routerReplace from '~src/tool/routerReplace'
 
 export default {
   name: 'map-list-view',
@@ -40,6 +41,9 @@ export default {
         return this.$store.state.map.map
       }
     },
+    user () {
+      return this.$store.state.user.user
+    },
     classForm () {
       return this.$store.state.map.filtersForm
     },
@@ -53,7 +57,14 @@ export default {
   methods: {
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      // this.$router.push({ name: 'registerPhoneView', query: { detail }})
+      if (!this.user.is_cellphone_checked) {
+        routerReplace(this, { name: 'registerPhoneView', query: { detail }})
+        return
+      }
+      if (!this.user.is_company_checked) {
+        routerReplace(this, { name: 'coummateInfoView', query: { detail }})
+        return
+      }
       this.$router.push({ name: 'detailView', params: { id, type }})
     },
     searchClick () {

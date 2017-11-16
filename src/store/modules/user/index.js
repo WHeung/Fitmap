@@ -183,7 +183,7 @@ var collects = [
 
 const State = {
   user: {
-    token: ''
+    token: 'token'
   }
 }
 
@@ -223,10 +223,16 @@ const Actions = {
   },
   [Types.UPDATE_CODE] ({ state }, { cellphone }) {
     return new Promise(resolve => {
-      // CallApi(Types.FETCH_CODE_GET, cellphone).then(res => {
-      //   resolve(res.data.data.code)
-      // })
-      resolve()
+      CallApi(Types.FETCH_CODE_GET, cellphone).then(res => {
+        resolve(res.data.data.code)
+      })
+    })
+  },
+  [Types.UPDATE_VAILD_CODE] ({ state }, data) {
+    return new Promise(resolve => {
+      CallApi(Types.FETCH_VAILD_CODE, data).then(res => {
+        resolve()
+      })
     })
   },
   [Types.UPDATE_USER] ({ state, commit }, { data }) {
