@@ -114,7 +114,7 @@ router.beforeEach((to, from, next) => {
   /*
   * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
-  if (isWeixin() && to.path !== '/' && false) {
+  if (isWeixin() && to.path !== '/') {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
       if (to.query.code) {
