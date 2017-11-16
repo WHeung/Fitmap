@@ -1,11 +1,11 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.item" @click="toMap" v-if="location">
+    <div :class="$style.item" @click="toMap" v-if="loc">
       <div :class="[$style.icon, $style.locationIcon]"></div>
-      <div :class="$style.text">{{location}}</div>
+      <div :class="$style.text">{{loc}}</div>
       <div :class="$style.arrow"></div>
     </div>
-    <p :class="$style.line" v-if="location && telephones && telephones.length"></p>
+    <p :class="$style.line" v-if="loc && telephones && telephones.length"></p>
     <div :class="$style.item" @click="clickPhone">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
       <div :class="$style.text">
@@ -33,12 +33,24 @@ import * as Types from '~src/store/types'
 export default {
   name: 'around-item',
   components: { MaskLayer },
-  props: ['location', 'telephones'],
+  props: ['location', 'telephones', 'locationObj'],
   data () {
     return {
       dialog: {
         show: false,
         title: '拨打电话'
+      }
+    }
+  },
+  computed: {
+    loc () {
+      if (this.location) {
+        return this.location
+      } else if (this.locationObj && this.locationObj.id) {
+        return this.locationObj.province +
+              this.locationObj.city +
+              this.locationObj.area +
+              this.locationObj.address
       }
     }
   },

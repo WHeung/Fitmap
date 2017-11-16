@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMap v-model="map" :location="location" :citySearch="citySearch" @mapClick="mapClick"></AMap>
+    <AMap v-model="map" :location="location" :citySearch="citySearch"></AMap>
     <div :class="$style.content">
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
@@ -77,17 +77,17 @@ export default {
     }
     if (!this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+    } else {
+      this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
     }
     if (this.item) {
-      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
+      console.info(this.item)
+      this.store.commit(Types.SET_MAP_SELECTED_MARKER, { item: this.item })
     }
   },
   methods: {
     location() {},
     citySearch() {},
-    mapClick () {
-      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
-    },
     toListView () {
       this.$router.push({ name: 'mapListView' })
     },

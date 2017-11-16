@@ -8,7 +8,7 @@
       <div :class="$style.title">{{data.title}}</div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
-    :location="data.location" :telephones="data.telephones"></ContactItem>
+    :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
     <div :class="$style.item" v-if="data.label === 'equip'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
