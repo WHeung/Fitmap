@@ -73,7 +73,7 @@ export default {
     const form = {
       keyword: this.classForm.input,
       type: type,
-      category: store.classCategorys[type][this.classForm.selected[1]].data
+      category: store.classCategorys[type][this.classForm.selected[1]].name
     }
     if (!this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)

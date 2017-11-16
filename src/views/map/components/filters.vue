@@ -143,7 +143,7 @@ export default {
       const data = {
         keyword: form.input,
         type: this.classType.data,
-        category: this.selectedCate.data
+        category: this.selectedCate.name
       }
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
       this.$emit('search', data)
@@ -156,7 +156,7 @@ export default {
         const data = {
           keyword: this.input,
           type: this.classType.data,
-          category: this.selectedCate.data
+          category: this.selectedCate.name
         }
         this.$emit('request', data)
       }
@@ -181,7 +181,7 @@ export default {
         const data = {
           keyword: form.input,
           type: this.classType.data,
-          category: this.selectedCate.data
+          category: this.selectedCate.name
         }
         this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
         this.$emit('request', data)
