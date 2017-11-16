@@ -32,7 +32,8 @@ export default {
         locate: true,
         direction: false,
         position: 'RB',
-        liteStyle: true
+        liteStyle: true,
+        autoPosition: true
       })
       map.addControl(toolBar)
       map.toolBar = toolBar
@@ -50,21 +51,21 @@ export default {
       })
       map.addControl(geolocation)
       map.geolocation = geolocation
-      geolocation.getCurrentPosition((status, res) => {
-        console.log(status, res)
-        if (status === 'complete') {
-          this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
-        } else {
-          map.plugin('AMap.CitySearch', () => {
-            const city = new AMap.CitySearch()
-            city.getLocalCity((status, res) => {
-              console.log(status, res)
-              map.setCity(res.adcode)
-              this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
-            })
-          })
-        }
-      })
+      // geolocation.getCurrentPosition((status, res) => {
+      //   console.log(status, res)
+      //   if (status === 'complete') {
+      //     this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
+      //   } else {
+      //     map.plugin('AMap.CitySearch', () => {
+      //       const city = new AMap.CitySearch()
+      //       city.getLocalCity((status, res) => {
+      //         console.log(status, res)
+      //         map.setCity(res.adcode)
+      //         this.$store.commit(Types.SET_MAP_USER_LOCATION, res)
+      //       })
+      //     })
+      //   }
+      // })
     })
     map.plugin('AMap.CitySearch', () => {
       const citySearch = new AMap.CitySearch()
@@ -86,6 +87,9 @@ export default {
 .amap-copyright
 .anchorBL
   display none !important
+
+.amap-geo
+  display block !important
 // #app .amap-zoomcontrol
 //   position fixed
 //   right 10px

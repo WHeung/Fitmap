@@ -68,12 +68,13 @@ export default {
   },
   watch: {
     item (val) {
+      let pixel
       if (val && val.id && this.map && this.map.toolBar) {
-        this.map.toolBar.setOffset(
-          new AMap.Pixel(10, 300)
-        )
-        console.log(this.map.toolBar)
+        pixel = new AMap.Pixel(10, 300)
+      } else {
+        pixel = new AMap.Pixel(10, 100)
       }
+      this.map.toolBar.setOffset(pixel)
     }
   },
   mounted () {

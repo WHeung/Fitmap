@@ -59,8 +59,7 @@ export default {
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }
       // 请求
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
-      routerReplace(this, { name: 'mapListView' })
+      this.request(data)
     },
     cleanHistory () {
       this.history = []
@@ -72,8 +71,13 @@ export default {
       }
       // 请求
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: item })
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
-      this.$router.push({ name: 'mapListView' })
+      this.request(data)
+    },
+    request (data) {
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
+        this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
+        routerReplace(this, { name: 'mapIndexView' })
+      })
     }
   }
 }

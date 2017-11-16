@@ -281,12 +281,12 @@ const Actions = {
       const type = state.classTypes[filtersForm.selected[0]].data
       const category = state.classCategorys[type][filtersForm.selected[1]].name
       const keyword = filtersForm.input
-      Object.assign({
+      const reqData = Object.assign({
         type,
         category,
         keyword
       }, data)
-      CallApi(Types.FETCH_MAP_SEARCH, data).then(res => {
+      CallApi(Types.FETCH_MAP_SEARCH, reqData).then(res => {
         const data = res.data.data
         commit(Types.SET_MAP_LIST, data)
         const location = data.map(item => {
@@ -298,7 +298,7 @@ const Actions = {
     })
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit }, list) { // query: Array
-    state.map.clearMap()
+    state.map && state.map.clearMap()
     for (let i = 0, item; i < list.length; i++) {
       item = list[i]
       var marker = new AMap.Marker({
