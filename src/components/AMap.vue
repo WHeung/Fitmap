@@ -24,7 +24,7 @@ export default {
       mapStyle: 'amap://styles/7b3dbe0900deae4bcbe445c95b0df7f3'
     })
     // map.setZoomAndCenter(14, [113.263406, 23.132208]) // 初始化地图,设置中心点坐标和地图级别
-    map.plugin(['AMap.ToolBar'], function () {
+    map.plugin(['AMap.ToolBar'], () => {
       var toolBar = new AMap.ToolBar({
         // offset: new AMap.Pixel(10, 10),
         ruler: false,
@@ -32,12 +32,18 @@ export default {
         locate: true,
         direction: false,
         position: 'RB',
-        liteStyle: true,
-        autoPosition: true
+        liteStyle: true
+        // autoPosition: true
       })
+      toolBar.on('location', ({ type, lnglat }) => {
+        console.log(lnglat)
+        this.$store.commit(Types.SET_MAP_USER_LOCATION, lnglat)
+      })
+      toolBar.doLocation()
       map.addControl(toolBar)
       map.toolBar = toolBar
     })
+    /**
     map.plugin('AMap.Geolocation', () => {
       const geolocation = new AMap.Geolocation({
         enableHighAccuracy: false, // 是否使用高精度定位，默认:true
@@ -67,6 +73,7 @@ export default {
       //   }
       // })
     })
+    */
     map.plugin('AMap.CitySearch', () => {
       const citySearch = new AMap.CitySearch()
       map.addControl(citySearch)

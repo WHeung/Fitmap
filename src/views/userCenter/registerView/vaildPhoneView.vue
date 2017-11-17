@@ -78,7 +78,6 @@ export default {
           }
         }, 1000)
       } else {
-        console.log(errMsg)
         this.$store.dispatch(Types.OPEN_POPUP, {
           title: '手机号码错误',
           word: errMsg.msg[0],

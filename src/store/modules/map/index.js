@@ -83,6 +83,7 @@ const Mutations = {
     Object.assign(state.filtersForm, data)
   },
   [Types.SET_MAP_USER_LOCATION] (state, data) { // data: {lat, lng}
+    console.log('mutation: set userLoc')
     Object.assign(state.userLoc, data)
   }
 }
@@ -277,7 +278,6 @@ const Actions = {
   [Types.UPDATE_MAP_SEARCH] ({ state, commit, dispatch }, data) {
     return new Promise(resolve => {
       const filtersForm = state.filtersForm
-      console.log(filtersForm)
       const type = state.classTypes[filtersForm.selected[0]].data
       const category = state.classCategorys[type][filtersForm.selected[1]].name
       const keyword = filtersForm.input
@@ -286,12 +286,14 @@ const Actions = {
         category,
         keyword
       }, data)
+      console.log(state.userLoc)
       CallApi(Types.FETCH_MAP_SEARCH, reqData).then(res => {
         const data = res.data.data
-        commit(Types.SET_MAP_LIST, data)
-        const location = data.map(item => {
+        commit(Types.SET_MAP_LIST, data.list)
+        const location = data.list.map(item => {
           return item.location_obj
         })
+        console.log(location)
         dispatch(Types.UPDATE_MAP_MARKERS, location)
         resolve()
       })

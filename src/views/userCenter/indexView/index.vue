@@ -42,7 +42,6 @@ export default {
   name: 'user-View',
   created () {
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
-      console.log(this.user)
       this.$store.dispatch(Types.CLOSE_LOADING)
     })
   },

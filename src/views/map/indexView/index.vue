@@ -46,12 +46,10 @@ export default {
         return this.$store.state.map.map
       },
       set (val) {
-        console.log(val)
         this.$store.commit(Types.SET_MAP, val)
       }
     },
     classForm () {
-      console.log(this.$store.state.map.filtersForm)
       return this.$store.state.map.filtersForm
     },
     item () {
@@ -64,6 +62,9 @@ export default {
     },
     user () {
       return this.$store.state.user.user
+    },
+    userLoc () {
+      return this.$store.state.map.userLoc
     }
   },
   watch: {
@@ -75,6 +76,12 @@ export default {
         pixel = new AMap.Pixel(10, 100)
       }
       this.map.toolBar.setOffset(pixel)
+    },
+    userLoc: {
+      handler (val) {
+        console.log(val)
+      },
+      deep: true
     }
   },
   mounted () {
@@ -93,7 +100,6 @@ export default {
       this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
     }
     if (this.item) {
-      console.info(this.item)
       this.store.commit(Types.SET_MAP_SELECTED_MARKER, { item: this.item })
     }
   },

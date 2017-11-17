@@ -66,7 +66,6 @@ export default {
       }
     },
     fetchData ({ type, id }) {
-      console.log(type)
       this.view = type
       this.$store.dispatch(Types.UPDATE_DETAIL, { type, id }).then(data => {
         if (data.is_collected) {

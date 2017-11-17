@@ -49,7 +49,6 @@ export default {
   },
   mounted () {
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
-      console.log(data)
       if (data) {
         this.item = data
         this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)

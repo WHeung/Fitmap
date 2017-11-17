@@ -12,9 +12,11 @@ const axiosRequest = Axios.create({
 const apiMap = {
 }
 
-export default function callApi (apiName, params) {
+export default function callApi (apiName, params, closeLoading) {
   return new Promise((resolve, reject) => {
-    store.dispatch(Types.OPEN_API_LOADING)
+    if (!closeLoading) {
+      store.dispatch(Types.OPEN_API_LOADING)
+    }
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)

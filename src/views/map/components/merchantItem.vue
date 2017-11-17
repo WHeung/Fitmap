@@ -33,7 +33,6 @@ export default {
       // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
     },
     imgLoad (e) {
-      console.log(this.item)
       const img = e.path[0]
       if (img.width / img.height > (375 / 211)) {
         this.imgWrapStyle = {

@@ -44,7 +44,6 @@ export default {
       wrapperClass: this.$style.swiperWrapper
     }
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MERCHANT_PIC' }).then(data => {
-      console.log(data)
       if (data && data.length) {
         this.picList = data
         this.$store.dispatch(Types.CLOSE_LOADING)

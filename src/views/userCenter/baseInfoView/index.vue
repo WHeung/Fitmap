@@ -109,7 +109,6 @@ export default {
       this.mask = ''
     },
     maskEnsure ({ type, data }) {
-      console.log(type, data)
       if (type === 'role') {
         if (this.user.role === data.role) {
           return
