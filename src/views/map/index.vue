@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <transition :name="transName" :mode="transName === 'trans' ? 'in-out' : 'out-in'">
+    <transition :name="transName" mode="in-out">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
       </keep-alive>
@@ -17,11 +17,11 @@ export default {
   components: { AMap },
   data () {
     return {
-      transName: 'view'
+      transName: ''
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.transName = 'view'
+    this.transName = ''
     if (from.name === 'mapIndexView' && to.name === 'mapListView') {
       this.transName = 'trans'
     }

@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetail">
     <div :class="$style.img">
-      <img :src="data.images[0]">
+      <img :src="data.images[0].url">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{data.title}}</div>

@@ -6,9 +6,9 @@
       :updateForm="updateForm" :form="classForm" origin="index"
       @searchClick="searchClick" @request="request"></Filters>
       <!-- <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle> -->
-      <div :class="$style.bottom" v-if="item">
-        <BusItem :class="$style.item" v-if="item.search_type==='merchant'" :item="item" @toDetail="toDetail"></BusItem>
-        <PostItem :class="$style.item" v-if="item.search_type==='post'" :item="item" @toDetail="toDetail"></PostItem>
+      <div :class="$style.bottom" v-if="selectedItem && selectedItem.item">
+        <BusItem :class="$style.item" v-if="selectedItem.item.search_type==='merchant'" :item="selectedItem.item" @toDetail="toDetail"></BusItem>
+        <PostItem :class="$style.item" v-if="selectedItem.item.search_type==='post'" :item="selectedItem.item" @toDetail="toDetail"></PostItem>
         <div :class="$style.showList" v-if="list && list.length" @click="toListView">
           列表显示
         </div>
@@ -52,9 +52,10 @@ export default {
     classForm () {
       return this.$store.state.map.filtersForm
     },
-    item () {
-      if (this.$store.state.map.selectedItem && this.$store.state.map.selectedItem.item) {
-        return this.$store.state.map.selectedItem.item
+    selectedItem () {
+      const selectedItem = this.$store.state.map.selectedItem
+      if (selectedItem && selectedItem.item) {
+        return this.$store.state.map.selectedItem
       }
     },
     list () {
@@ -68,7 +69,7 @@ export default {
     }
   },
   watch: {
-    item (val) {
+    selectedItem (val) {
       let pixel
       if (val && val.id && this.map && this.map.toolBar) {
         pixel = new AMap.Pixel(10, 300)
@@ -106,13 +107,13 @@ export default {
       type: type,
       category: store.classCategorys[type][this.classForm.selected[1]].name
     }
-    // if (!this.list) {
-    //   this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
-    // } else {
-    //   this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
-    // }
-    if (this.item) {
-      this.store.commit(Types.SET_MAP_SELECTED_MARKER, { item: this.item })
+    if (this.list) {
+      this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list).then(() => {
+        if (this.selectedItem) {
+        }
+      })
+    } else {
+      this.map.toolBar.doLocation()
     }
   },
   methods: {
@@ -138,6 +139,7 @@ export default {
     },
     request (data) {
       // 请求
+      this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
     }
   }

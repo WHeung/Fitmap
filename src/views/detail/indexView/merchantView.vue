@@ -3,13 +3,13 @@
     <div :class="$style.item">
       <div :class="$style.avatar">
         <img :src="data.images[0].url" @load="imgLoad">
-        <div :class="$style.moreImg" v-if="data.label !== 'equip'" @click="seeMorePic">更多</div>
+        <div :class="$style.moreImg" v-if="data.label !== '健身器材'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">{{data.title}}</div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
     :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
-    <div :class="$style.item" v-if="data.label === 'equip'">
+    <div :class="$style.item" v-if="data.label === '健身器材'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
         <div :class="$style.productsMore">

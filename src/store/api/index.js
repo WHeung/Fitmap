@@ -20,7 +20,6 @@ export default function callApi (apiName, params, closeLoading) {
     const token = store.state.user.user.token
     params = params || {}
     Object.assign(params, { token: token })
-    console.log(params)
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
@@ -45,7 +44,7 @@ apiMap[Types.FETCH_CODE_GET] = function (phone) {
 }
 
 apiMap[Types.FETCH_USERS_GET] = function (data) {
-  return axiosRequest.get(`${HTTP}/api/users?token=${data.token}t=${getTimeStampId()}`)
+  return axiosRequest.get(`${HTTP}/api/users?token=${data.token}&t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {

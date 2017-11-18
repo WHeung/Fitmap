@@ -57,15 +57,15 @@ export default {
   methods: {
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      if (!this.user.is_cellphone_checked) {
-        routerReplace(this, { name: 'registerPhoneView', query: { detail }})
-        return
-      }
-      if (!this.user.is_company_checked) {
-        routerReplace(this, { name: 'coummateInfoView', query: { detail }})
-        return
-      }
-      this.$router.push({ name: 'detailView', params: { id, type }})
+      this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
+        if (this.user.is_cellphone_checked && this.user.is_company_checked) {
+          this.$router.push({ name: 'detailView', params: { id, type }})
+        } else if (this.user.is_cellphone_checked) {
+          this.$router.push({ name: 'registerPhoneView', query: { detail }})
+        } else {
+          this.$router.push({ name: 'coummateInfoView', query: { detail }})
+        }
+      })
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })

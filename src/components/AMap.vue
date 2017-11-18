@@ -33,13 +33,11 @@ export default {
         direction: false,
         position: 'RB',
         liteStyle: true
-        // autoPosition: true
       })
       toolBar.on('location', ({ type, lnglat }) => {
         console.log(lnglat)
         this.$store.commit(Types.SET_MAP_USER_LOCATION, lnglat)
       })
-      toolBar.doLocation()
       map.addControl(toolBar)
       map.toolBar = toolBar
     })

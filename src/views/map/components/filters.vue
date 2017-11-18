@@ -3,8 +3,8 @@
     <div :class="[$style.container, {[$style.topWhite]: origin !== 'index' }]">
       <div
       :class="[$style.classifyGroup,{[$style.dropUp]:mask === true}]"
-      @click="clickClassify">
-        {{selectedCate.name}}
+      @click="toggleClassify">
+        {{originSelectedCate.name}}
       </div>
       <div :class="[$style.searchGroup, {[$style.minSearch]:origin !== 'index' }]" @click="searchClick">
         <div :class="$style.mockInput" v-if="!searchView">{{input || '搜索'}}</div>
@@ -23,12 +23,12 @@
       </div>
       <div :class="$style.classify">
         <div
-        :class="[$style.classItem, {[$style.activeItem]: selected[1] === index}]"
+        :class="[$style.classItem, {[$style.activeItem]: cate === originSelectedCate}]"
         v-for="(cate,index) in categorys" :key="cate.data"
-        @click="choiceCate(index)">{{cate.name}}</div>
+        @click="choiceCate(index, cate)">{{cate.name}}</div>
       </div>
     </div>
-    <div :class="$style.maskLayer" v-if="mask === true" @click="clickClassify"></div>
+    <div :class="$style.maskLayer" v-if="mask === true" @click="closeClassify"></div>
   </div>
 </template>
 
@@ -61,13 +61,13 @@ export default {
           data: 'train'
         },
         {
-          name: '室内器材',
+          name: '健身器材',
           data: 'equip'
         }
       ],
       post: [
         {
-          name: '场地租凭',
+          name: '场地租赁',
           data: 'lease'
         },
         {
@@ -93,8 +93,6 @@ export default {
     }
   },
   props: ['origin', 'updateForm', 'form'],
-  created () {
-  },
   watch: {
     updateForm: {
       handler (val) {
@@ -123,11 +121,19 @@ export default {
     },
     selectedCate () {
       return this.categorys[this.selected[1]]
+    },
+    originSelectedCate () {
+      const selected = this.form.selected
+      return this.classCategorys[this.classTypes[selected[0]].data][selected[1]]
     }
   },
   methods: {
-    clickClassify () {
+    toggleClassify () {
       this.mask = !this.mask
+    },
+    closeClassify () {
+      this.mask = false
+      this.selected = [].concat(this.form.selected)
     },
     toMap () {
       this.$router.push({ name: 'mapIndexView' })
@@ -167,8 +173,8 @@ export default {
       }
       this.selected = [index, 0]
     },
-    choiceCate (index) {
-      if (this.selected[1] === index) {
+    choiceCate (index, cate) {
+      if (this.originSelectedCate === cate) {
         return
       }
       this.$set(this.selected, 1, index)
