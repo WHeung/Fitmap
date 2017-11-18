@@ -6,7 +6,7 @@
       <div :class="$style.arrow"></div>
     </div>
     <p :class="$style.line" v-if="loc && telephones && telephones.length"></p>
-    <div :class="$style.item" @click="clickPhone">
+    <div :class="$style.item" @click="clickPhone" v-if="telephones && telephones.length">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
       <div :class="$style.text">
         <span v-for="phone in telephones" :key="phone">{{phone}}<i>, </i></span>

@@ -132,6 +132,8 @@ router.beforeEach((to, from, next) => {
         getOauth({ to })
       }
       return
+    } else {
+      Store.commit(Types.SET_USER, { token: token })
     }
   }
   // 去掉继承会有其他问题,比如地址重定向会在每次刷新后回到初始页

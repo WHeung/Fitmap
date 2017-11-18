@@ -17,6 +17,10 @@ export default function callApi (apiName, params, closeLoading) {
     if (!closeLoading) {
       store.dispatch(Types.OPEN_API_LOADING)
     }
+    const token = store.state.user.user.token
+    params = params || {}
+    Object.assign(params, { token: token })
+    console.log(params)
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
@@ -34,17 +38,17 @@ export default function callApi (apiName, params, closeLoading) {
 }
 
 const HTTP = 'http://fitmap.deexcul.com'
+// const token = store.state.user.user.token
 
 apiMap[Types.FETCH_CODE_GET] = function (phone) {
   return axiosRequest.get(`${HTTP}/api/code?cellphone=${phone}&t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_USERS_GET] = function () {
-  return axiosRequest.get(`${HTTP}/api/users?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_USERS_GET] = function (data) {
+  return axiosRequest.get(`${HTTP}/api/users?token=${data.token}t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
-  console.log(data)
   return axiosRequest.post(`${HTTP}/api/users`,
     JSON.stringify({
       t: getTimeStampId(),
@@ -67,22 +71,24 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
   })
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ type, id }) {
+apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
   return axiosRequest.post(`${HTTP}/api/users/collect`,
     JSON.stringify({
       id: getTimeStampId(),
-      type: type,
-      target_id: id
+      type: data.type,
+      target_id: data.id,
+      token: data.token
     })
   )
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function ({ type, id }) {
+apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
   return axiosRequest.post(`${HTTP}/api/users/un_collect`,
   JSON.stringify({
     t: getTimeStampId(),
-    type: type,
-    target_id: id
+    type: data.type,
+    target_id: data.id,
+    token: data.token
   })
 )
 }
@@ -92,7 +98,9 @@ apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
     `${HTTP}/api/map/search?t=${getTimeStampId()}` +
     `&type=${data.type}` +
     `&category=${data.category}` +
-    `&keyword=${data.keyword}`
+    `&keyword=${data.keyword}` +
+    `&lng=${data.lng}` +
+    `&lat=${data.lat}`
   )
 }
 

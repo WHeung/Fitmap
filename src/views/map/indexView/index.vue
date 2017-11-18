@@ -80,6 +80,18 @@ export default {
     userLoc: {
       handler (val) {
         console.log(val)
+        const store = this.$store.state.map
+        const type = store.classTypes[this.classForm.selected[0]].data
+        const form = {
+          keyword: this.classForm.input,
+          type: type,
+          category: store.classCategorys[type][this.classForm.selected[1]].name
+        }
+        if (!this.list) {
+          this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+        } else {
+          this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
+        }
       },
       deep: true
     }
@@ -94,11 +106,11 @@ export default {
       type: type,
       category: store.classCategorys[type][this.classForm.selected[1]].name
     }
-    if (!this.list) {
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
-    } else {
-      this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
-    }
+    // if (!this.list) {
+    //   this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+    // } else {
+    //   this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
+    // }
     if (this.item) {
       this.store.commit(Types.SET_MAP_SELECTED_MARKER, { item: this.item })
     }
@@ -111,13 +123,15 @@ export default {
     },
     toDetail ({ id, type }) {
       const detail = JSON.stringify({ id, type })
-      if (this.user.is_cellphone_checked && this.user.is_company_checked) {
-        this.$router.push({ name: 'detailView', params: { id, type }})
-      } else if (this.user.is_cellphone_checked) {
-        this.$router.push({ name: 'registerPhoneView', query: { detail }})
-      } else {
-        this.$router.push({ name: 'coummateInfoView', query: { detail }})
-      }
+      this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
+        if (this.user.is_cellphone_checked && this.user.is_company_checked) {
+          this.$router.push({ name: 'detailView', params: { id, type }})
+        } else if (this.user.is_cellphone_checked) {
+          this.$router.push({ name: 'registerPhoneView', query: { detail }})
+        } else {
+          this.$router.push({ name: 'coummateInfoView', query: { detail }})
+        }
+      })
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
