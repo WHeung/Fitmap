@@ -112,7 +112,7 @@ const Actions = {
       })
     })
   },
-  [Types.UPDATE_MAP_MARKERS] ({ state, commit }, list) { // query: Array
+  [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
     state.map && state.map.clearMap()
     const locationList = list.map(item => {
       return item.location_obj
@@ -131,30 +131,32 @@ const Actions = {
         position: LngLat(item.lng, item.lat),
         extData: { id: item.id }
       })
-      const store = arguments[0]
+      marker.itemId = item.id
       marker.on('click', ({ lnglat, pixel, target }) => {
-        const marker = target
-        const oldItem = store.state.selectedItem
-        const allData = store.state.list
-        if (oldItem && oldItem.marker) {
-          oldItem.marker.setIcon(Icon({
-            icon: icon,
-            size: size(24, 26)
-          }))
-          oldItem.marker.setOffset(new AMap.Pixel(-12, -13))
-        }
-        marker.setIcon(Icon({
-          icon: onIcon,
-          size: size(44, 62)
-        }))
-        const data = allData.find(val => {
-          return val.location_obj.id === marker.getExtData().id
-        })
-        marker.setOffset(new AMap.Pixel(-22, -57))
-        store.state.map.setCenter(marker.getPosition())
-        store.commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
+        dispatch(Types.UPDATE_MAP_SELECTITEM, target)
       }, arguments[0])
     }
+  },
+  [Types.UPDATE_MAP_SELECTITEM] ({ state, commit }, marker) {
+    const oldItem = state.selectedItem
+    const allData = state.list
+    if (oldItem && oldItem.marker) {
+      oldItem.marker.setIcon(Icon({
+        icon: icon,
+        size: size(24, 26)
+      }))
+      oldItem.marker.setOffset(new AMap.Pixel(-12, -13))
+    }
+    marker.setIcon(Icon({
+      icon: onIcon,
+      size: size(44, 62)
+    }))
+    const data = allData.find(val => {
+      return val.location_obj.id === marker.getExtData().id
+    })
+    marker.setOffset(new AMap.Pixel(-22, -57))
+    state.map.setCenter(marker.getPosition())
+    commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   },
   [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
     const location = data.location_obj

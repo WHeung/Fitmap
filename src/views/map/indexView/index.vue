@@ -71,14 +71,14 @@ export default {
   watch: {
     selectedItem (val) {
       let pixel
-      if (val && val.id && this.map && this.map.toolBar) {
+      if (val && val.marker && this.map && this.map.toolBar) {
         pixel = new AMap.Pixel(10, 300)
       } else {
         pixel = new AMap.Pixel(10, 100)
       }
       this.map.toolBar.setOffset(pixel)
     },
-    userLoc: {
+    userLoc: { // fixed 第一次进入页面获取定位过慢
       handler (val) {
         console.log(val)
         const store = this.$store.state.map
@@ -99,7 +99,6 @@ export default {
   },
   mounted () {
     this.$store.dispatch(Types.CLOSE_LOADING)
-
     const store = this.$store.state.map
     const type = store.classTypes[this.classForm.selected[0]].data
     const form = {
@@ -109,7 +108,11 @@ export default {
     }
     if (this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list).then(() => {
-        if (this.selectedItem) {
+        if (this.selectedItem && this.selectedItem.marker) {
+          const marker = this.map.getAllOverlays('marker').find(item => {
+            return item.itemId === this.selectedItem.marker.itemId
+          })
+          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
     } else {
@@ -140,7 +143,17 @@ export default {
     request (data) {
       // 请求
       this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
+        if (this.list && this.list.length) {
+          const itemId = this.list[0].location_obj.id
+          const marker = this.map.getAllOverlays('marker').find(item => {
+            return item.itemId === itemId
+          })
+          if (marker) {
+            this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
+          }
+        }
+      })
     }
   }
 }
