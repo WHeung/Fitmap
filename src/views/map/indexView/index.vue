@@ -78,7 +78,7 @@ export default {
       }
       this.map.toolBar.setOffset(pixel)
     },
-    userLoc: { // fixed 第一次进入页面获取定位过慢
+    userLoc: { // fixe 第一次进入页面获取定位过慢
       handler (val) {
         console.log(val)
         const store = this.$store.state.map
@@ -89,7 +89,10 @@ export default {
           category: store.classCategorys[type][this.classForm.selected[1]].name
         }
         if (!this.list) {
-          this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form)
+          this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form).then(() => {
+            const markers = this.map.getAllOverlays('marker')
+            this.map.setFitView(markers)
+          })
         } else {
           this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
         }
@@ -146,7 +149,9 @@ export default {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
         if (this.list && this.list.length) {
           const itemId = this.list[0].location_obj.id
-          const marker = this.map.getAllOverlays('marker').find(item => {
+          const markers = this.map.getAllOverlays('marker')
+          this.map.setFitView(markers)
+          const marker = markers.find(item => {
             return item.itemId === itemId
           })
           if (marker) {
