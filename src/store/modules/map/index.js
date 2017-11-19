@@ -8,6 +8,7 @@ const State = {
   map: null, // Object
   selectedItem: null, // Object
   list: null, // Array
+  pagination: {},
   userLoc: {
     lat: '',
     lng: ''
@@ -85,6 +86,10 @@ const Mutations = {
   [Types.SET_MAP_USER_LOCATION] (state, data) { // data: {lat, lng}
     console.log('mutation: set userLoc')
     Object.assign(state.userLoc, data)
+  },
+  [Types.SET_MAP_PAGINATION] (state, data) { // data: {lat, lng}
+    console.log('mutation: set pagination')
+    state.pagination = data
   }
 }
 
@@ -106,14 +111,21 @@ const Actions = {
       const reqData = Object.assign(stateData, data)
       CallApi(Types.FETCH_MAP_SEARCH, reqData).then(res => {
         const data = res.data.data
-        commit(Types.SET_MAP_LIST, data.list)
+        if (data.pagination && data.pagination.current_page > 1 && data.list) {
+          commit(Types.SET_MAP_LIST, state.list.concat(data.list))
+        } else {
+          commit(Types.SET_MAP_LIST, data.list)
+        }
+        commit(Types.SET_MAP_PAGINATION, data.pagination)
         dispatch(Types.UPDATE_MAP_MARKERS, data.list)
         resolve()
       })
     })
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
-    state.map && state.map.clearMap()
+    if (state.pagination && state.pagination.current_page === 1 ) {
+      state.map && state.map.clearMap()
+    }
     const locationList = list.map(item => {
       return item.location_obj
     })

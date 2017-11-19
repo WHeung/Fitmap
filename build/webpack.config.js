@@ -16,6 +16,7 @@ const config = {
       'vue',
       'vue-router',
       'vuex',
+      'vue-lazyload',
       'axios'
     ]
   },

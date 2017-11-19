@@ -99,7 +99,8 @@ apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
     `&category=${data.category}` +
     `&keyword=${data.keyword}` +
     `&lng=${data.lng}` +
-    `&lat=${data.lat}`
+    `&lat=${data.lat}` +
+    `&page=${data.page}`
   )
 }
 

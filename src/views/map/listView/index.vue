@@ -3,14 +3,17 @@
     <Filters
     :updateForm="updateForm" :form="classForm" origin="list"
     @searchClick="searchClick" @request="request"></Filters>
-    <div v-if="list && list.length">
-      <template v-if="classForm.selected[0] === 0">
-        <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></MerchantItem>
-      </template>
-      <template v-if="classForm.selected[0] === 1">
-        <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></PostItem>
-      </template>
-    </div>
+    <IScroll @handleBottomBounce="getMore">
+      <div v-if="list && list.length">
+        <template v-if="classForm.selected[0] === 0">
+          <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></MerchantItem>
+        </template>
+        <template v-if="classForm.selected[0] === 1">
+          <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></PostItem>
+        </template>
+      </div>
+      <div :class="$style.noMoreTips" v-if="status === 'noMore'">没有更多数据了</div>
+    </IScroll>
   </div>
 </template>
 
@@ -18,12 +21,13 @@
 import Filters from '../components/filters.vue'
 import MerchantItem from '../components/merchantItem.vue'
 import PostItem from '../components/postItem.vue'
+import IScroll from '~src/components/iScroll.vue'
 import * as Types from '~src/store/types'
 import routerReplace from '~src/tool/routerReplace'
 
 export default {
   name: 'map-list-view',
-  components: { Filters, MerchantItem, PostItem },
+  components: { Filters, MerchantItem, PostItem, IScroll },
   data () {
     return {
       type: 'post',
@@ -49,6 +53,14 @@ export default {
     },
     list () {
       return this.$store.state.map.list
+    },
+    pagination () {
+      return this.$store.state.map.pagination
+    },
+    status () {
+      if (this.pagination.current_page >= this.pagination.total_pages) {
+        return 'noMore'
+      }
     }
   },
   created () {
@@ -66,6 +78,9 @@ export default {
           this.$router.push({ name: 'coummateInfoView', query: { detail }})
         }
       })
+    },
+    getMore () {
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, { page: this.pagination.current_page + 1 })
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
@@ -85,6 +100,11 @@ $mainText = #474C54
 $mainBg = #F5F7FA
 
 .main
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
   padding-top 60px
   box-sizing border-box
   background $mainBg
@@ -92,5 +112,10 @@ $mainBg = #F5F7FA
 
 .item
   margin-top 10px
+
+.noMoreTips
+  margin-top 12px
+  text-align center
+  font-size 12px
 
 </style>

@@ -2,7 +2,7 @@
   <div v-if="disabled" :class="$style.main">
     <slot></slot>
   </div>
-  <div v-else :class="$style.main" @touchmove.prevent="function(){}" ref="main">
+  <div v-else :class="$style.main" @touchmove.prevent ref="main">
     <div :class="$style.scrollWrap" v-i-scroll="options" ref="scrollWrap">
       <div :class="$style.scrollContent" :style="contentStyle">
         <div v-if="downRefreshabled" :class="[$style.downFresh, downFreshTip.class]">
@@ -103,18 +103,18 @@ export default {
   width 100%
   position absolute
   bottom -40px
-  i
-    display inline-block
-    width 20px
-    height 20px
-    background url('~src\public\back_icon_grey@3x.png') no-repeat
-    background-size 100% 100%
-    vertical-align text-bottom
-    margin-right 15px
-    transform rotate(-90deg)
-    transition transform .3s linear
+//   i
+//     display inline-block
+//     width 20px
+//     height 20px
+//     background url('~src\public\back_icon_grey@3x.png') no-repeat
+//     background-size 100% 100%
+//     vertical-align text-bottom
+//     margin-right 15px
+//     transform rotate(-90deg)
+//     transition transform .3s linear
 
-.readyFresh i
-  transform rotate(90deg)
+// .readyFresh i
+//   transform rotate(90deg)
 
 </style>
