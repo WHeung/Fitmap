@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMapComponent v-model="map" :location="location" :citySearch="citySearch"></AMapComponent>
+    <AMapComponent v-model="map"></AMapComponent>
     <div :class="$style.content">
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
@@ -126,8 +126,6 @@ export default {
     }
   },
   methods: {
-    location() {},
-    citySearch() {},
     toListView () {
       this.$router.push({ name: 'mapListView' })
     },

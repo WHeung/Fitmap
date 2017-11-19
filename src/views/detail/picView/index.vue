@@ -1,12 +1,12 @@
 <template>
   <div :class="$style.main" :style="style">
-    <div :class="$style.item" v-for="(pic,index) in picList" :key="pic" @click="preview" @animationend="animationend($event, pic, index)">
+    <div :class="$style.item" v-for="(pic,index) in picList" :key="index" @click="preview" @animationend="animationend($event, pic, index)">
       <img :src="pic.url">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
       <!-- <img :src="previewData.src"> -->
       <swiper :class="$style.containerClass" :options="option" ref="swiper">
-        <swiperSlide v-for="pic in picList" :key="pic">
+        <swiperSlide v-for="(pic,index) in picList" :key="index">
           <img :src="pic.url">
         </swiperSlide>
       </swiper>
@@ -46,7 +46,7 @@ export default {
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MERCHANT_PIC' }).then(data => {
       if (data && data.length) {
         this.picList = data
-        this.$store.dispatch(Types.CHANGE_NAV, { title: `${data.label} Fit-map` })
+        this.$store.dispatch(Types.CHANGE_NAV, { title: `更多图片 Fit-map` })
         this.$store.dispatch(Types.CLOSE_LOADING)
       } else {
         this.$router.back()

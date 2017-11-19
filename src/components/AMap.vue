@@ -35,7 +35,6 @@ export default {
         liteStyle: true
       })
       toolBar.on('location', ({ type, lnglat }) => {
-        console.log(lnglat)
         this.$store.commit(Types.SET_MAP_USER_LOCATION, lnglat)
       })
       map.addControl(toolBar)
@@ -71,12 +70,12 @@ export default {
       //   }
       // })
     })
-    */
     map.plugin('AMap.CitySearch', () => {
       const citySearch = new AMap.CitySearch()
       map.addControl(citySearch)
       map.citySearch = citySearch
     })
+    */
     this.$emit('input', map)
     window.map = map // 方便调试
   },
