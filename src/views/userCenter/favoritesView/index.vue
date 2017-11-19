@@ -37,6 +37,19 @@ export default {
   },
   created () {
     this.type = this.$route.params.type
+    let typeName = '我收藏的'
+    switch (this.type) {
+    case 'merchant':
+      typeName += '商家'
+      break
+    case 'post':
+      typeName += '帖子'
+      break
+    case 'item':
+      typeName += '商品'
+      break
+    }
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `${typeName} Fit-map` })
     this.$store.dispatch(Types.UPDATE_USERS_COLLECTS, { type: this.type }).then(dataList => {
       this.dataList = dataList.list
       this.$store.dispatch(Types.CLOSE_LOADING)

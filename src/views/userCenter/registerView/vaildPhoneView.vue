@@ -12,7 +12,9 @@
       </Item>
     </div>
     <div :class="$style.tips" v-if="routeName === 'registerPhoneView'">请完善您的个人信息，以便获取更多内容。</div>
-    <Btn type="blue" title="下一步" :disabled="disabled" @clickBtn="clickBtn"></Btn>
+    <div :class="$style.btn">
+      <Btn type="blue" title="下一步" :disabled="disabled" @clickBtn="clickBtn"></Btn>
+    </div>
   </div>
 </template>
 
@@ -62,6 +64,12 @@ export default {
   },
   created () {
     this.routeName = this.$route.name
+    console.log(this.routeName)
+    if (this.routeName === 'userChangePhoneView') {
+      this.$store.dispatch(Types.CHANGE_NAV, { title: `更换手机号 Fit-map` })
+    } else {
+      this.$store.dispatch(Types.CHANGE_NAV, { title: `验证手机 Fit-map` })
+    }
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
@@ -147,8 +155,11 @@ export default {
   opacity .3
 
 .tips
-  margin 18px (24/20)rem 36px
+  margin 18px (24/20)rem 0
   font-size 13px
   color $assistText
+
+.btn
+  margin-top 36px
 
 </style>

@@ -79,6 +79,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `完善信息 Fit-map` })
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {

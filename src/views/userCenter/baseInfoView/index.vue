@@ -71,6 +71,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `个人信息 Fit-map` })
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
       this.$store.dispatch(Types.CLOSE_LOADING)
     })

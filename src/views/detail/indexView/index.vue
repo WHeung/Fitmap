@@ -72,6 +72,11 @@ export default {
           this.disabled = true
         }
         this.data = data
+        if (type !== 'item') {
+          this.$store.dispatch(Types.CHANGE_NAV, { title: `${data.label} Fit-map` })
+        } else {
+          this.$store.dispatch(Types.CHANGE_NAV, { title: `商品详情 Fit-map` })
+        }
         this.$store.dispatch(Types.CLOSE_LOADING)
       })
     }

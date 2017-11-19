@@ -41,6 +41,7 @@ import * as Types from '~src/store/types'
 export default {
   name: 'user-View',
   created () {
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `我的健身 Fit-map` })
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
       this.$store.dispatch(Types.CLOSE_LOADING)
     })

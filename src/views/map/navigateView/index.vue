@@ -48,6 +48,7 @@ export default {
     }
   },
   mounted () {
+    this.$store.dispatch(Types.CHANGE_NAV, { title: '地图定位' })
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
       if (data) {
         this.item = data

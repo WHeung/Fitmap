@@ -40,6 +40,7 @@ export default {
       vm.updateForm++
       const markers = vm.map.getAllOverlays('marker')
       vm.map.setFitView(markers)
+      vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
     })
   },
   computed: {

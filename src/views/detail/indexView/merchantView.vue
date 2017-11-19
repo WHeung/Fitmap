@@ -51,7 +51,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
     imgLoad (e) {

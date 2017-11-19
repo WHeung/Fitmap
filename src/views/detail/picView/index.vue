@@ -46,6 +46,7 @@ export default {
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MERCHANT_PIC' }).then(data => {
       if (data && data.length) {
         this.picList = data
+        this.$store.dispatch(Types.CHANGE_NAV, { title: `${data.label} Fit-map` })
         this.$store.dispatch(Types.CLOSE_LOADING)
       } else {
         this.$router.back()
