@@ -24,7 +24,7 @@ export default {
     },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height < 1.5) {
+      if (img.width / img.height < 187.5 / 140) {
         Object.assign(img.style, {
           height: 'auto',
           width: '100%',
@@ -50,6 +50,7 @@ $white = #FFFFFF
 
 .img
   width 50%
+  flex-shrink 0
   height (140/20)rem
   overflow hidden
   img
@@ -65,7 +66,14 @@ $white = #FFFFFF
   flex 1 1 auto
 
 .title
+  display -webkit-box
   font-size 15px
+  line-height 16px
+  height 33px
+  overflow hidden
+  text-overflow ellipsis
+  -webkit-line-clamp 2
+  -webkit-box-orient vertical
 
 .tag
   margin-top 6px
