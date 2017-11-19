@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetail">
     <div :class="$style.img">
-      <img :src="data.images[0].url">
+      <img :src="data.images[0].url" :style="imgStyle" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{data.title}}</div>
@@ -19,11 +19,24 @@ export default {
   props: ['data'],
   data () {
     return {
+      imgStyle: null
     }
   },
   methods: {
     toDetail () {
       this.$emit('toDetail', this.data.id)
+    },
+    imgLoad (e) {
+      const img = e.path[0]
+      if (img.width / img.height < (187.5 / 140)) {
+        this.imgStyle = {
+          height: 'auto',
+          width: '100%',
+          left: '0',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        }
+      }
     }
   }
 }
