@@ -3,13 +3,13 @@
     <Filters
     :updateForm="updateForm" :form="classForm" origin="list"
     @searchClick="searchClick" @request="request"></Filters>
-    <IScroll @handleBottomBounce="getMore">
+    <IScroll @handleBottomBounce="getMore" v-model="iScroll">
       <div v-if="list && list.length">
         <template v-if="classForm.selected[0] === 0">
-          <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></MerchantItem>
+          <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail" ref="items"></MerchantItem>
         </template>
         <template v-if="classForm.selected[0] === 1">
-          <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail"></PostItem>
+          <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail" ref="items"></PostItem>
         </template>
       </div>
       <div :class="$style.noMoreTips" v-if="status === 'noMore'">没有更多数据了</div>
@@ -31,13 +31,24 @@ export default {
   data () {
     return {
       type: 'post',
-      updateForm: 0
+      updateForm: 0,
+      iScroll: null
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
       vm.updateForm++
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
+      if (vm.iScroll) {
+      //   if (vm.list && vm.selectedItem) {
+      //     const item = vm.selectedItem.item
+      //     const selectItem = vm.$refs.items.find(val => {
+      //       return val.item.id === item.id
+      //     })
+      //     vm.iScroll.scrollToElement(selectItem.$el, 300, 100)
+      //   } else {
+        vm.iScroll.scrollTo(0, 0)
+      }
     })
   },
   computed: {
@@ -54,6 +65,12 @@ export default {
     },
     list () {
       return this.$store.state.map.list
+    },
+    selectedItem () {
+      const selectedItem = this.$store.state.map.selectedItem
+      if (selectedItem && selectedItem.item) {
+        return this.$store.state.map.selectedItem
+      }
     },
     pagination () {
       return this.$store.state.map.pagination
