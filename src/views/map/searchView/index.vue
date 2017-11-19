@@ -10,8 +10,8 @@
           清空
         </div>
       </div>
-      <div :class="$style.hisCon" v-if="history && history.length">
-        <span v-for="item in history" :key="item" @click="useHistory(item)">{{item}}</span>
+      <div :class="$style.hisCon" v-if="limitHis && limitHis.length">
+        <span v-for="item in limitHis" :key="item" @click="useHistory(item)">{{item}}</span>
       </div>
     </div>
   </div>
@@ -20,6 +20,7 @@
 <script>
 import Filters from '../components/filters.vue'
 import * as Types from '~src/store/types'
+import routerReplace from '~src/tool/routerReplace'
 
 const storageKey = 'search_history'
 
@@ -36,6 +37,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
       vm.updateForm++
+      vm.$store.dispatch(Types.CHANGE_NAV, { title: '搜索 Fit-map' })
     })
   },
   computed: {
@@ -46,6 +48,9 @@ export default {
     },
     classForm () {
       return this.$store.state.map.filtersForm
+    },
+    limitHis () {
+      return this.history.slice(0, 10)
     }
   },
   methods: {
@@ -55,8 +60,7 @@ export default {
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }
       // 请求
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
-      this.$router.push({ name: 'mapListView' })
+      this.request(data)
     },
     cleanHistory () {
       this.history = []
@@ -67,8 +71,14 @@ export default {
         keyword: item
       }
       // 请求
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data)
-      this.$router.push({ name: 'mapListView' })
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: item })
+      this.request(data)
+    },
+    request (data) {
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
+        this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
+        routerReplace(this, { name: 'mapIndexView' })
+      })
     }
   }
 }
@@ -111,9 +121,12 @@ $mainText = #474C54
   margin 12px
   display flex
   white-space nowrap
+  flex-wrap wrap
   >span
-    padding 5px 18px
+    padding 0 18px
+    line-height 28px
     margin-right  12px
+    margin-bottom 12px
     font-size 12px
     border 1px solid $mainText
     border-radius 100px

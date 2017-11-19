@@ -1,7 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMap v-model="map" @mapClick="mapClick"></AMap>
-    <transition :name="transName" :mode="transName === 'trans' ? 'in-out' : 'out-in'">
+    <transition :name="transName" mode="in-out">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
       </keep-alive>
@@ -18,50 +17,24 @@ export default {
   components: { AMap },
   data () {
     return {
-      transName: 'view'
+      transName: ''
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.transName = 'view'
+    this.transName = ''
     if (from.name === 'mapIndexView' && to.name === 'mapListView') {
       this.transName = 'trans'
     }
     next()
   },
-  computed: {
-    map: {
-      get () {
-        return this.$store.state.map.map
-      },
-      set (val) {
-        console.log(val)
-        this.$store.commit(Types.SET_MAP, val)
-      }
-    }
-  },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
-  },
-  methods: {
-    mapClick () {
-      this.$store.commit(Types.SET_MAP_SELECTED, { id: 1 })
-    }
   }
 }
 </script>
 
 <style lang="stylus" module>
 .main
-  position fixed
-  top 0
-  left 0
-  bottom 0
-  right 0
-
-.mapView
-  position absolute
   width 100%
   height 100%
-  top 0
-  z-index 1
 </style>

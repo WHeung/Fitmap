@@ -12,9 +12,14 @@ const axiosRequest = Axios.create({
 const apiMap = {
 }
 
-export default function callApi (apiName, params) {
+export default function callApi (apiName, params, closeLoading) {
   return new Promise((resolve, reject) => {
-    store.dispatch(Types.OPEN_API_LOADING)
+    if (!closeLoading) {
+      store.dispatch(Types.OPEN_API_LOADING)
+    }
+    const token = store.state.user.user.token
+    params = params || {}
+    Object.assign(params, { token: token })
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
@@ -31,17 +36,19 @@ export default function callApi (apiName, params) {
   })
 }
 
+const HTTP = 'http://fitmap.deexcul.com'
+// const token = store.state.user.user.token
+
 apiMap[Types.FETCH_CODE_GET] = function (phone) {
-  return axiosRequest.get(`/code?cellphone=${phone}&t=${getTimeStampId()}`)
+  return axiosRequest.get(`${HTTP}/api/code?cellphone=${phone}&t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_USERS_GET] = function () {
-  return axiosRequest.get(`/users?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_USERS_GET] = function (data) {
+  return axiosRequest.get(`${HTTP}/api/users?token=${data.token}&t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
-  console.log(data)
-  return axiosRequest.put(`/users`,
+  return axiosRequest.post(`${HTTP}/api/users`,
     JSON.stringify({
       t: getTimeStampId(),
       ...data
@@ -50,12 +57,7 @@ apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
 }
 
 apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
-  return axiosRequest.post(`/users/oauth`,
-    JSON.stringify({
-      id: getTimeStampId(),
-      data
-    })
-  )
+  return axiosRequest.get(`${HTTP}/api/users/oauth?code=${data.code}&t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
@@ -63,30 +65,56 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
     ...data,
     t: getTimeStampId()
   }
-  return axiosRequest.get(`/users/collects`, {
+  return axiosRequest.get(`${HTTP}/api/users/collects`, {
     params: params
   })
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_POST] = function ({ data }) {
-  return axiosRequest.post(`/users/collects`,
+apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
+  return axiosRequest.post(`${HTTP}/api/users/collect`,
     JSON.stringify({
       id: getTimeStampId(),
-      data
+      type: data.type,
+      target_id: data.id,
+      token: data.token
     })
   )
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function () {
-  return axiosRequest.delete(`/users/collects?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
+  return axiosRequest.post(`${HTTP}/api/users/un_collect`,
+  JSON.stringify({
+    t: getTimeStampId(),
+    type: data.type,
+    target_id: data.id,
+    token: data.token
+  })
+)
 }
 
-apiMap[Types.FETCH_MAP_SEARCH] = function () {
-  return axiosRequest.get(`/map/search?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
+  return axiosRequest.get(
+    `${HTTP}/api/map/search?t=${getTimeStampId()}` +
+    `&type=${data.type}` +
+    `&category=${data.category}` +
+    `&keyword=${data.keyword}` +
+    `&lng=${data.lng}` +
+    `&lat=${data.lat}` +
+    `&page=${data.page}`
+  )
 }
 
 apiMap[Types.FETCH_DETAIL] = function ({ type, id }) {
-  return axiosRequest.get(`/${type}/${id}?t=${getTimeStampId()}`)
+  return axiosRequest.get(`${HTTP}/api/${type}/${id}?t=${getTimeStampId()}`)
+}
+
+apiMap[Types.FETCH_VAILD_CODE] = function (data) {
+  return axiosRequest.post(`${HTTP}/api/code`,
+    JSON.stringify({
+      t: getTimeStampId(),
+      ...data
+    })
+  )
 }
 
 function localhost () {

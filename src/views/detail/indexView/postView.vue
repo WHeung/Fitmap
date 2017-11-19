@@ -1,16 +1,16 @@
 <template>
   <div :class="$style.main">
     <div :class="$style.item">
-      <SwipeImg type="post" v-if="data.label !== 'bid'" :imgs="data.images"></SwipeImg>
+      <SwipeImg type="post" v-if="data.label !== '人员招聘'" :imgs="data.images"></SwipeImg>
       <div :class="$style.titleMsg">
         <div :class="$style.title">{{data.title}}</div>
-        <div :class="$style.date">{{data.created_time}}</div>
+        <div :class="$style.date">{{data.created_at}}</div>
       </div>
     </div>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>
     <ContactItem :class="$style.item" @toMap="toMap"
     :location="data.location" :telephones="data.telephones"></ContactItem>
-    <template v-if="data.label === 'bid'">
+    <template v-if="data.label === '人员招聘'">
       <TextItem :class="$style.textItem" title="岗位介绍" :content="data.job_content"></TextItem>
       <TextItem :class="$style.textItem" title="任职要求" :content="data.job_content"></TextItem>
       <TextItem :class="$style.textItem" title="公司介绍" :content="data.content"></TextItem>
@@ -43,7 +43,7 @@ export default {
     aroundMsg () {
       let msg = null
       if (this.data) {
-        if (this.data.label === 'lease' || this.data.label === 'transfer') {
+        if (this.data.label === '场地租赁' || this.data.label === '转让信息') {
           msg = [
             {
               name: '面积',
@@ -58,7 +58,7 @@ export default {
             }
           ]
         }
-        if (this.data.label === 'recruit') {
+        if (this.data.label === '设计招标') {
           msg = [
             {
               name: '面积',
@@ -69,7 +69,7 @@ export default {
             }
           ]
         }
-        if (this.data.label === 'bid') {
+        if (this.data.label === '人员招聘') {
           msg = [
             {
               name: '薪资',
@@ -94,7 +94,7 @@ export default {
         id: 'MAP_LOCATION',
         data: this.data
       })
-      this.$router.push({ name: 'mapIndexView' })
+      this.$router.push({ name: 'mapNavigateView' })
     }
   }
 }

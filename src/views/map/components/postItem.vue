@@ -3,15 +3,15 @@
     <div :class="$style.top">
       <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
-        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
+        <span v-if="item.label">{{item.label}}</span>
       </div>
     </div>
     <div :class="$style.sub">
       {{item.content}}
     </div>
     <div :class="$style.msg">
-      <div>{{item.location_obj.location}}</div>
-      <div>{{item.created_time}}</div>
+      <div>{{item.location_obj.address}}</div>
+      <div>{{item.created_at}}</div>
     </div>
   </div>
 </template>
@@ -39,7 +39,6 @@ $white = #FFFFFF
   position relative
   padding 18px
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .top
   white-space nowrap

@@ -15,7 +15,7 @@
     </div>
     <Item :class="$style.group" title="手机号" :content="user.cellphone" :arrow="true" @clickCon="clickPhone"></Item>
     <div :class="$style.group">
-      <Item title="姓名" :content="user.realname" @clickCon="openDialog({ name: '姓名', val: 'realname'})"></Item>
+      <Item title="姓名" :content="user.name" @clickCon="openDialog({ name: '姓名', val: 'name'})"></Item>
       <p :class="$style.line"></p>
       <Item title="城市" :content="positionData" @clickCon="openMask('area')"></Item>
     </div>
@@ -26,7 +26,7 @@
     </div>
     <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog" @ensure="dialogEnsure">
       <div :class="$style.input">
-        <input type="text" v-model="input">
+        <input type="text" v-model="input" ref="input">
       </div>
     </DialogMask>
     <BottomMask v-if="user.id"
@@ -71,6 +71,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `个人信息 Fit-map` })
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
       this.$store.dispatch(Types.CLOSE_LOADING)
     })
@@ -83,6 +84,11 @@ export default {
         type: val,
         show: true
       })
+      setTimeout(() => {
+        if (this.$refs.input) {
+          this.$refs.input.focus()
+        }
+      }, 200)
     },
     closeDialog () {
       this.input = ''
@@ -104,7 +110,6 @@ export default {
       this.mask = ''
     },
     maskEnsure ({ type, data }) {
-      console.log(type, data)
       if (type === 'role') {
         if (this.user.role === data.role) {
           return

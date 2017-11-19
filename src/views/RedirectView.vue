@@ -21,6 +21,8 @@ export default {
 }
 </script>
 <style lang="stylus" module>
+@import '~tool/vendor'
+
 .main
   background #fff
   position absolute
@@ -46,7 +48,7 @@ export default {
   stroke-dasharray 90,150
   stroke-dashoffset 0
   stroke-width 2
-  stroke #32c47c
+  stroke $blueBtn
   stroke-linecap round
 
 @keyframes loading-dash

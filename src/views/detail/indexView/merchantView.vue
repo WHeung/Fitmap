@@ -2,14 +2,14 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="$style.avatar">
-        <img :src="data.images[0]">
-        <div :class="$style.moreImg" v-if="data.label !== 'equip'" @click="seeMorePic">更多</div>
+        <img :src="data.images[0].url" @load="imgLoad">
+        <div :class="$style.moreImg" v-if="data.label !== '健身器材'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">{{data.title}}</div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
-    :location="data.location" :telephones="data.telephones"></ContactItem>
-    <div :class="$style.item" v-if="data.label === 'equip'">
+    :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
+    <div :class="$style.item" v-if="data.label === '健身器材'">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
         <div :class="$style.productsMore">
@@ -51,9 +51,20 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
+    imgLoad (e) {
+      const img = e.path[0]
+      if (img.width / img.height < 1.5) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
+    },
     seeMorePic () {
       this.$store.dispatch(Types.FILL_BUCKET, {
         id: 'MERCHANT_PIC',
@@ -69,7 +80,7 @@ export default {
         id: 'MAP_LOCATION',
         data: this.data
       })
-      this.$router.push({ name: 'mapIndexView' })
+      this.$router.push({ name: 'mapNavigateView' })
     }
   }
 }

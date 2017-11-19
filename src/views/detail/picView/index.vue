@@ -1,19 +1,26 @@
 <template>
   <div :class="$style.main" :style="style">
-    <div :class="$style.item" v-for="pic in picList" :key="pic" @click="preview" @animationend="animationend($event, pic)">
-      <img :src="pic">
+    <div :class="$style.item" v-for="(pic,index) in picList" :key="pic" @click="preview" @animationend="animationend($event, pic, index)">
+      <img :src="pic.url">
     </div>
     <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
-      <img :src="previewData.src">
+      <!-- <img :src="previewData.src"> -->
+      <swiper :class="$style.containerClass" :options="option" ref="swiper">
+        <swiperSlide v-for="pic in picList" :key="pic">
+          <img :src="pic.url">
+        </swiperSlide>
+      </swiper>
     </div>
   </div>
 </template>
 
 <script>
 import * as Types from '~src/store/types'
+import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
   name: 'pic-View',
+  components: { swiper, swiperSlide },
   data () {
     return {
       style: null,
@@ -22,17 +29,24 @@ export default {
         src: ''
       },
       picList: [],
-      lockPreview: false
+      lockPreview: false,
+      option: {}
     }
   },
   created () {
     this.style = {
       'min-height': window.innerHeight + 'px'
     }
+    this.option = {
+      initialSlide: 0,
+      debugger: true,
+      slideClass: this.$style.slideClass,
+      wrapperClass: this.$style.swiperWrapper
+    }
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MERCHANT_PIC' }).then(data => {
-      console.log(data)
       if (data && data.length) {
         this.picList = data
+        this.$store.dispatch(Types.CHANGE_NAV, { title: `${data.label} Fit-map` })
         this.$store.dispatch(Types.CLOSE_LOADING)
       } else {
         this.$router.back()
@@ -48,8 +62,8 @@ export default {
       el.className += ' ' + this.$style.animat
       this.lockPreview = true
     },
-    animationend (e, pic) {
-      console.log(e)
+    animationend (e, pic, index) {
+      this.option.initialSlide = index
       Object.assign(this.previewData, {
         show: true,
         src: pic
@@ -74,7 +88,7 @@ export default {
   column-count 2
   column-gap (6/20)rem
   width 100%
-  padding (6/20)rem
+  padding 0 (6/20)rem
   overflow hidden
   box-sizing border-box
   background $blackBg
@@ -82,8 +96,7 @@ export default {
 .item
   break-inside avoid
   box-sizing border-box
-  display inline-block
-  width (178/20)rem
+  padding-top 6px
   >img
     display block
     width 100%
@@ -115,9 +128,16 @@ export default {
   bottom 0
   background rgba(0, 0, 0 ,.5)
   z-index 11
-  >img
-    position relative
-    top 50%
-    transform translateY(-50%)
+
+.containerClass
+  height 100%
+  display flex
+.swiperWrapper
+  display flex
+  height 100%
+  align-items center
+.slideClass
+  img
+    display block
     width 100%
 </style>

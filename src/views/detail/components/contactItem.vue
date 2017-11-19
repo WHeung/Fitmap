@@ -1,43 +1,74 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.item" @click="toMap">
+    <div :class="$style.item" @click="toMap" v-if="loc">
       <div :class="[$style.icon, $style.locationIcon]"></div>
-      <div :class="$style.text">{{location.location}}</div>
+      <div :class="$style.text">{{loc}}</div>
       <div :class="$style.arrow"></div>
     </div>
-    <p :class="$style.line"></p>
-    <div :class="$style.item" @click="clickPhone">
+    <p :class="$style.line" v-if="loc && telephones && telephones.length"></p>
+    <div :class="$style.item" @click="clickPhone" v-if="telephones && telephones.length">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
       <div :class="$style.text">
-        <span v-for="phone in telephones" :key="phone"><i>, </i>{{phone}}</span>
+        <span v-for="phone in telephones" :key="phone">{{phone}}<i>, </i></span>
       </div>
       <div :class="$style.arrow"></div>
     </div>
+    <MaskLayer :class="$style.maskWrap" v-if="dialog.show" @maskClick="cancelMask">
+      <div :class="$style.maskCon">
+        <template v-for="(phone,index) in telephones">
+          <div :class="$style.maskConLine" v-if="index !== 0" :key="index"></div>
+          <div :class="$style.maskConItem" @click="chosePhone(phone)" :key="index">
+            {{phone}}
+          </div>
+        </template>
+        <div :class="$style.maskConItem" @click="cancelMask">取消</div>
+      </div>
+    </MaskLayer>
   </div>
 </template>
 
 <script>
+import MaskLayer from '~src/components/MaskLayer.vue'
 import * as Types from '~src/store/types'
 export default {
   name: 'around-item',
-  props: ['location', 'telephones'],
+  components: { MaskLayer },
+  props: ['location', 'telephones', 'locationObj'],
+  data () {
+    return {
+      dialog: {
+        show: false,
+        title: '拨打电话'
+      }
+    }
+  },
+  computed: {
+    loc () {
+      if (this.location) {
+        return this.location
+      } else if (this.locationObj && this.locationObj.id) {
+        return this.locationObj.province +
+              this.locationObj.city +
+              this.locationObj.area +
+              this.locationObj.address
+      }
+    }
+  },
   methods: {
     clickPhone () {
       if (typeof this.telephones === 'object' && this.telephones.length) {
         if (this.telephones.length === 1) {
           window.location.href = 'tel:' + this.telephones[0]
         } else {
-          let word = ''
-          for (let i = 0; i < this.telephones.length; i++) {
-            word += `<p onclick="window.location.href='tel:${this.telephones[i]}'">${this.telephones[i]}</p>`
-          }
-          this.$store.dispatch(Types.OPEN_POPUP, {
-            title: '拨打电话',
-            word: word,
-            leftMsg: '关闭'
-          })
+          this.dialog.show = true
         }
       }
+    },
+    cancelMask (val) {
+      this.dialog.show = false
+    },
+    chosePhone (phone) {
+      window.location.href = `tel:${phone}`
     },
     toMap () {
       this.$emit('toMap')
@@ -68,9 +99,11 @@ export default {
 .text
   margin-right 12px
   flex 1 1 auto
+  display inline-flex
+  flex-wrap wrap
   >span
     white-space nowrap
-    &:first-child i
+    &:last-child i
       display none
 .arrow
   flex 0 0 auto
@@ -80,6 +113,24 @@ export default {
   background-size 100% 100%
 .line
   margin-left 18px
+  height 1px
+  background $breakline
+
+.main .maskWrap
+  align-items flex-end
+.maskCon
+  width (375/20)rem
+  background $breakline
+.maskConItem
+  padding 12px 0
+  display flex
+  justify-content center
+  background $white
+  &:active
+    background $breakline
+  &:last-child
+    margin-top 6px
+.maskConLine
   height 1px
   background $breakline
 

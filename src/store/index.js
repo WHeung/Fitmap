@@ -59,7 +59,7 @@ const store = new Vuex.Store({
       commit(Types.SET_API_LOADING, false)
     },
     [Types.CHANGE_NAV] ({ commit, state }, navData) {
-      commit(Types.SET_NAV, Object.assign({ title: 'Fitmap' }, navData))
+      commit(Types.SET_NAV, Object.assign({ title: 'Fit-map' }, navData))
     },
     [Types.OPEN_POPUP] ({ commit, state }, popUp) {
       commit(Types.SET_POPUP, Object.assign({}, state.popUp, popUp, { show: true }))

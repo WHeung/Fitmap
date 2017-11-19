@@ -26,11 +26,12 @@ export default {
   line-height 28px
 
 .title
-  width 70px
+  flex 0 0 70px
   white-space nowrap
   color $assistText
 
 .content
-  flex 1 0 auto
+  flex 1 1 auto
   white-space nowrap
+  display inline-flex
 </style>

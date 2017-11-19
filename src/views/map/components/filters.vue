@@ -1,13 +1,14 @@
 <template>
   <div :class="[$style.main, {[$style.originList]: origin !== 'index' }]">
-    <div :class="$style.container">
+    <div :class="[$style.container, {[$style.topWhite]: origin !== 'index' }]">
       <div
       :class="[$style.classifyGroup,{[$style.dropUp]:mask === true}]"
-      @click="clickClassify">
-        {{selectedCate.name}}
+      @click="toggleClassify">
+        {{originSelectedCate.name}}
       </div>
-      <div :class="$style.searchGroup" @click="searchClick">
-        <input type="text" v-model="input" placeholder="搜索">
+      <div :class="[$style.searchGroup, {[$style.minSearch]:origin !== 'index' }]" @click="searchClick">
+        <div :class="$style.mockInput" v-if="!searchView">{{input || '搜索'}}</div>
+        <input v-else v-model="input" @keyup.enter="search" placeholder="搜索" ref="input">
         <i @click.stop="clearInput"></i>
       </div>
       <div :class="$style.mapIcon" v-if="origin === 'list'" @click="toMap"></div>
@@ -22,12 +23,12 @@
       </div>
       <div :class="$style.classify">
         <div
-        :class="[$style.classItem, {[$style.activeItem]: selected[1] === index}]"
+        :class="[$style.classItem, {[$style.activeItem]: cate === originSelectedCate}]"
         v-for="(cate,index) in categorys" :key="cate.data"
-        @click="choiceCate(index)">{{cate.name}}</div>
+        @click="choiceCate(index, cate)">{{cate.name}}</div>
       </div>
     </div>
-    <div :class="$style.maskLayer" v-if="mask === true" @click="clickClassify"></div>
+    <div :class="$style.maskLayer" v-if="mask === true" @click="closeClassify"></div>
   </div>
 </template>
 
@@ -60,13 +61,13 @@ export default {
           data: 'train'
         },
         {
-          name: '室内器材',
+          name: '健身器材',
           data: 'equip'
         }
       ],
       post: [
         {
-          name: '场地租凭',
+          name: '场地租赁',
           data: 'lease'
         },
         {
@@ -92,18 +93,25 @@ export default {
     }
   },
   props: ['origin', 'updateForm', 'form'],
-  created () {
-    console.log('created')
-  },
   watch: {
     updateForm: {
       handler (val) {
         this.input = this.form.input
         this.selected = [].concat(this.form.selected)
+        if (this.$parent.$route.name === 'mapSearchView') {
+          if (this.$refs.input) {
+            setTimeout(() => {
+              this.$refs.input.focus()
+            }, 1000)
+          }
+        }
       }
     }
   },
   computed: {
+    searchView () {
+      return this.$parent.$route.name === 'mapSearchView'
+    },
     classType () {
       return this.classTypes[this.selected[0]]
     },
@@ -113,11 +121,19 @@ export default {
     },
     selectedCate () {
       return this.categorys[this.selected[1]]
+    },
+    originSelectedCate () {
+      const selected = this.form.selected
+      return this.classCategorys[this.classTypes[selected[0]].data][selected[1]]
     }
   },
   methods: {
-    clickClassify () {
+    toggleClassify () {
       this.mask = !this.mask
+    },
+    closeClassify () {
+      this.mask = false
+      this.selected = [].concat(this.form.selected)
     },
     toMap () {
       this.$router.push({ name: 'mapIndexView' })
@@ -133,7 +149,7 @@ export default {
       const data = {
         keyword: form.input,
         type: this.classType.data,
-        category: this.selectedCate.data
+        category: this.selectedCate.name
       }
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
       this.$emit('search', data)
@@ -146,7 +162,7 @@ export default {
         const data = {
           keyword: this.input,
           type: this.classType.data,
-          category: this.selectedCate.data
+          category: this.selectedCate.name
         }
         this.$emit('request', data)
       }
@@ -157,8 +173,8 @@ export default {
       }
       this.selected = [index, 0]
     },
-    choiceCate (index) {
-      if (this.selected[1] === index) {
+    choiceCate (index, cate) {
+      if (this.originSelectedCate === cate) {
         return
       }
       this.$set(this.selected, 1, index)
@@ -171,7 +187,7 @@ export default {
         const data = {
           keyword: form.input,
           type: this.classType.data,
-          category: this.selectedCate.data
+          category: this.selectedCate.name
         }
         this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
         this.$emit('request', data)
@@ -200,9 +216,14 @@ export default {
   justify-content space-between
   align-items center
   z-index 5
+.topWhite
+  z-index 5
+  background $white
+  border-bottom 1px solid $breakline
 .originList
   position fixed
   top 0
+  width 100%
   z-index 5
   background $white
   border-bottom 1px solid $breakline
@@ -214,7 +235,10 @@ export default {
     border 1px solid $border
 
 .classifyGroup
+  flex-shrink 0
   position relative
+  width 56px
+  overflow hidden
   padding 6px 42px 6px 12px
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
@@ -239,9 +263,13 @@ export default {
   margin-left 6px
   padding 6px 28px 6px 40px 
   flex 1 1 auto
+  box-sizing border-box
   background #FFFFFF
   box-shadow 0 3px 6px 0 rgba(0,0,0,0.10)
+  max-width (235/20)rem
   border-radius 100px
+  &.minSearch
+    max-width (189/20)rem
   &:before,>i
     content ''
     position absolute
@@ -259,6 +287,9 @@ export default {
     right 12px
     background url('~src/public/fm_clear.svg') no-repeat
     background-size 100% 100%
+  .mockInput
+    color #888
+    overflow-x scroll
   >input
     line-height 21px
     width 100%
@@ -274,6 +305,7 @@ export default {
   margin-left 12px
   font-size 16px
   color $link
+  font-weight 600
   &:active
     opacity .6
 

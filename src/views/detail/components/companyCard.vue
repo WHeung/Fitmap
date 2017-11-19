@@ -2,9 +2,9 @@
   <div :class="$style.main" @click="clickCon" v-if="data">
     <div :class="$style.title">{{data.title}}</div>
     <div :class="$style.tag">
-      <span v-for="tag in data.tags" :key="tag">{{tag}}</span>
+      <span v-if="data.label">{{data.label}}</span>
     </div>
-    <div :class="$style.address">{{data.distance}} {{data.location}}</div>
+    <div :class="$style.address">{{data.location_obj.address}}</div>
   </div> 
 </template>
 

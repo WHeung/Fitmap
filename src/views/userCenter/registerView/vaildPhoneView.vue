@@ -5,14 +5,16 @@
         <input :class="$style.phone" v-model="cellphone" type="text">
       </Item>
       <p :class="$style.line"></p>
-      <Item title="验证码":class="$style.code">
+      <Item title="验证码" :class="$style.code">
         <input type="text" v-model="code">
         <button v-if="!inSeconds" @click="getCode">发送验证码</button>
         <button v-else :class="$style.notClick">{{inSeconds}}s</button>
       </Item>
     </div>
     <div :class="$style.tips" v-if="routeName === 'registerPhoneView'">请完善您的个人信息，以便获取更多内容。</div>
-    <Btn type="blue" title="下一步" :disabled="disabled" @clickBtn="clickBtn"></Btn>
+    <div :class="$style.btn">
+      <Btn type="blue" title="下一步" :disabled="disabled" @clickBtn="clickBtn"></Btn>
+    </div>
   </div>
 </template>
 
@@ -48,6 +50,9 @@ export default {
     }
   },
   computed: {
+    user () {
+      return this.$store.state.user.user
+    },
     disabled () {
       let disabled = true
       const err = valid({ mobile: this.cellphone }, mobileConfig)
@@ -59,6 +64,12 @@ export default {
   },
   created () {
     this.routeName = this.$route.name
+    console.log(this.routeName)
+    if (this.routeName === 'userChangePhoneView') {
+      this.$store.dispatch(Types.CHANGE_NAV, { title: `更换手机号 Fit-map` })
+    } else {
+      this.$store.dispatch(Types.CHANGE_NAV, { title: `验证手机 Fit-map` })
+    }
     this.$store.dispatch(Types.CLOSE_LOADING)
   },
   methods: {
@@ -75,7 +86,6 @@ export default {
           }
         }, 1000)
       } else {
-        console.log(errMsg)
         this.$store.dispatch(Types.OPEN_POPUP, {
           title: '手机号码错误',
           word: errMsg.msg[0],
@@ -84,20 +94,34 @@ export default {
       }
     },
     clickBtn () {
+      const data = {
+        cellphone: this.cellphone,
+        code: this.code
+      }
       if (this.routeName === 'userChangePhoneView') {
-        const data = {
-          cellphone: this.cellphone
-        }
         this.$store.dispatch(Types.UPDATE_USER, { data: data }).then(() => {
           this.$router.back()
         })
       }
       if (this.routeName === 'registerPhoneView') {
-        const query = {}
-        if (this.$route.query.detail) {
-          query.detail = this.$route.query.detail
-        }
-        routerReplace(this, { name: 'coummateInfoView', query })
+        this.$store.dispatch(Types.UPDATE_VAILD_CODE, { data: data }).then(() => {
+          this.$store.dispatch(Types.UPDATE_USER, { data: { cellphone: this.cellphone }}).then(() => {
+            const query = {}
+            if (this.$route.query.detail) {
+              query.detail = this.$route.query.detail
+            }
+            if (!this.user.is_company_checked) {
+              routerReplace(this, { name: 'coummateInfoView', query: query })
+              return
+            } else if (query.detail) {
+              const detail = JSON.parse(query.detail)
+              routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})
+              return
+            } else {
+              this.$router.back()
+            }
+          })
+        })
       }
     }
   }
@@ -117,11 +141,13 @@ export default {
 .phone
   width 100%
 .code
-  display inline-flex
-  justify-content space-between
+  input
+    max-width 50%
+    flex 0 1
+    margin-right 10px
   button
+    flex 0 0 (96/20)rem
     padding 5px 0
-    width (96/20)rem
     font-size 12px
     border 1px solid $mainText
     border-radius 100px
@@ -129,8 +155,11 @@ export default {
   opacity .3
 
 .tips
-  margin 18px (24/20)rem 36px
+  margin 18px (24/20)rem 0
   font-size 13px
   color $assistText
+
+.btn
+  margin-top 36px
 
 </style>

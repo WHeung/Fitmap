@@ -1,8 +1,9 @@
 <template>
   <div :class="$style.main">
     <swiper :class="$style.containerClass" :options="swiperOption" ref="swiper">
-      <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img">
-        <img :src="img">
+      <swiperSlide :class="{[$style.square]: type === 'product'}" v-for="img in imgs" :key="img.id">
+        <img :src="img.url" @load="imgLoad">
+        <div :class="$style.shadow"></div>
       </swiperSlide>
       <div :class="$style.swiperPagination" slot="pagination" id="pagination"></div>
     </swiper>
@@ -33,6 +34,22 @@ export default {
     })
   },
   methods: {
+    imgLoad (e) {
+      const img = e.path[0]
+      let scale = 1.5
+      if (this.type === 'product') {
+        scale = 1
+      }
+      if (img.width / img.height < scale) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
+    }
   }
 }
 </script>
@@ -64,6 +81,7 @@ export default {
     height 100%
     left 50%
     transform translateX(-50%)
+    z-index 1
 
 .swiperPagination
   display flex
@@ -72,6 +90,7 @@ export default {
   left 50%
   transform translateX(-50%)
   bottom (24/20)rem
+  z-index 3
   >span
     width 5px
     height 5px
@@ -81,4 +100,12 @@ export default {
 
 .currentPagination
   border-width 2px
+
+.shadow
+  position absolute
+  width 100%
+  height 120px
+  bottom 0
+  background-image linear-gradient(-180deg, rgba(0,0,0,0.00) 0%, rgba(0,0,0,0.15) 100%)
+  z-index 2
 </style>

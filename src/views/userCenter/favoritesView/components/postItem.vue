@@ -1,15 +1,15 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetail">
     <div :class="$style.top">
       <div :class="$style.title">{{data.title}}</div>
-      <div :class="$style.tag"><span v-for="tag in data.tags">{{tag}}</span></div>
+      <div :class="$style.tag"><span v-if="data.label">{{data.label}}</span></div>
     </div>
     <div :class="$style.sub">
       {{data.content}}
     </div>
     <div :class="$style.msg">
-      <div>{{data.position_content}}</div>
-      <div>{{data.created_time}}</div>
+      <div>{{data.location}}</div>
+      <div>{{data.created_at}}</div>
     </div>
   </div>
 </template>
@@ -37,7 +37,6 @@ export default {
   position relative
   padding 18px
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .top
   white-space nowrap

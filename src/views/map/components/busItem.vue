@@ -1,14 +1,14 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img :src="item.images[0]">
+      <img :src="item.images[0].url" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
       <div :class="$style.tag">
-        <span v-for="tag in item.tags" :key="tag">{{tag}}</span>
+        <span v-if="item.label">{{item.label}}</span>
       </div>
-      <div :class="$style.address">{{item.distance}} {{item.location_obj.location}}</div>
+      <div :class="$style.address">{{item.distance}} {{item.location_obj.address}}</div>
     </div>
   </div>
 </template>
@@ -21,6 +21,18 @@ export default {
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
       // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
+    },
+    imgLoad (e) {
+      const img = e.path[0]
+      if (img.width / img.height < 1.5) {
+        Object.assign(img.style, {
+          height: 'auto',
+          width: '100%',
+          left: 'unset',
+          top: '50%',
+          transform: 'translateY(-50%)'
+        })
+      }
     }
   }
 }
@@ -35,7 +47,6 @@ $white = #FFFFFF
 .main
   display flex
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .img
   width 50%

@@ -1,10 +1,10 @@
 <template>
-  <div :class="$style.main">
+  <div :class="$style.main" @click="toDetail">
     <div :class="$style.img">
-      <img :src="data.images[0]">
+      <img :src="data.images[0].url">
     </div>
     <div :class="$style.content">
-      <div :class="$style.title">{{data.content}}</div>
+      <div :class="$style.title">{{data.title}}</div>
       <div :class="$style.price">{{data.price}}</div>
     </div>
   </div>
@@ -32,7 +32,6 @@ export default {
 .main
   display flex
   background $white
-  box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
 
 .img
   width (128/20)rem
