@@ -32,7 +32,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'bottom-mask',
   components: { swiper, swiperSlide },
-  props: ['mask', 'province', 'city', 'role'],
+  props: ['mask', 'province', 'city', 'position'],
   data () {
     return {
       swiperOption: null,
@@ -108,11 +108,11 @@ export default {
         this.jobIndex = swiper.activeIndex
       }
     })
-    if (this.role) {
-      const roleIndex = this.jobs.findIndex(item => {
-        return item === this.role
+    if (this.position) {
+      const positionIndex = this.jobs.findIndex(item => {
+        return item === this.position
       })
-      this.jobOption.initialSlide = roleIndex || 0
+      this.jobOption.initialSlide = positionIndex || 0
     }
   },
   methods: {
@@ -133,7 +133,7 @@ export default {
       }
       if (this.mask === 'job') {
         const job = this.jobs[this.jobIndex]
-        this.$emit('maskEnsure', { type: 'role', data: { role: job }})
+        this.$emit('maskEnsure', { type: 'position', data: { position: job }})
       }
       this.closeMask()
     }

@@ -22,7 +22,7 @@
     <div :class="$style.group">
       <Item title="公司" :content="user.company" @clickCon="openDialog({ name: '公司名称', val: 'company'})"></Item>
       <p :class="$style.line"></p>
-      <Item title="职务" :content="user.role" @clickCon="openMask('job')"></Item>
+      <Item title="职务" :content="user.position" @clickCon="openMask('job')"></Item>
     </div>
     <DialogMask v-if="dialog.show === true" :dialog="dialog" @cancel="closeDialog" @ensure="dialogEnsure">
       <div :class="$style.input">
@@ -31,7 +31,7 @@
     </DialogMask>
     <BottomMask v-if="user.id"
       :province="user.province" :city="user.city"
-      :role="user.role" @maskClose="maskClose" :mask="mask"
+      :position="user.position" @maskClose="maskClose" :mask="mask"
       @maskEnsure="maskEnsure"></BottomMask>
   </div>
 </template>
@@ -110,8 +110,8 @@ export default {
       this.mask = ''
     },
     maskEnsure ({ type, data }) {
-      if (type === 'role') {
-        if (this.user.role === data.role) {
+      if (type === 'position') {
+        if (this.user.position === data.position) {
           return
         }
       }

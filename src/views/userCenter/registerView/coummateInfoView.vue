@@ -23,11 +23,11 @@
       <p :class="$style.line"></p>
       <Item title="职务">
         <div :class="$style.select" @click="openMask('job')">
-          <template v-if="!user.role">
+          <template v-if="!user.position">
             请选择
           </template>
           <template v-else>
-            {{user.role}}
+            {{user.position}}
           </template>
         </div>
       </Item>
@@ -35,7 +35,7 @@
     <Btn :class="$style.btn" type="blue" title="提交" :disabled="disabled" @clickBtn="clickBtn"></Btn>
     <BottomMask
       :province="user.province" :city="user.city"
-      :role="user.role" @maskClose="maskClose" :mask="mask"
+      :position="user.position" @maskClose="maskClose" :mask="mask"
       @maskEnsure="maskEnsure"></BottomMask>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
         province: '',
         city: '',
         company: '',
-        role: ''
+        position: ''
       },
       mask: ''
     }
@@ -72,7 +72,7 @@ export default {
     },
     disabled () {
       let disabled = true
-      if (this.user.name && this.positionData && this.user.company && this.user.role) {
+      if (this.user.name && this.positionData && this.user.company && this.user.position) {
         disabled = false
       }
       return disabled
@@ -90,7 +90,7 @@ export default {
       this.mask = ''
     },
     maskEnsure ({ type, data }) {
-      if (type === 'role') {
+      if (type === 'position') {
       }
       if (type === 'area') {
       }
