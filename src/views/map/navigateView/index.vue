@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMap v-model="map" :location="location" :citySearch="citySearch" @mapClick="mapClick"></AMap>
+    <AMapComponent v-model="map"></AMapComponent>
     <div :class="$style.bottom">
       <div :class="$style.location">
         <div :class="$style.locCon">
@@ -17,34 +17,43 @@
 </template>
 
 <script>
-import AMap from '~src/components/AMap.vue'
+import AMapComponent from '~src/components/AMap.vue'
+import AMap from 'AMap'
 import * as Types from '~src/store/types'
+import onIcon from '~src/public/fm_map_pin_on@2x.png'
 
 export default {
   name: 'navigate-view',
-  components: { AMap },
+  components: { AMapComponent },
   data () {
     return {
-      item: {}
+      item: {},
+      map: {},
+      marker: {}
     }
   },
   computed: {
-    map: {
-      get () {
-        return this.$store.state.map.map
-      }
+    userLoc () {
+      return this.$store.state.map.userLoc
     }
   },
   methods: {
     findRoute () {
-      const locObj = this.item.location_obj
-      window.location.href = '//m.amap.com/navi/?start=' +
-        `&dest=${locObj.lng},${locObj.lat}` +
-        `&destName=${this.item.title}` +
-        '&naviBy=car' +
-        '&key=056a8882dfde3770452da397d2eb6e83'
-    },
-    getUserLocation () {
+      if (this.userLoc.lng && this.userLoc.lat) {
+        const locObj = this.item.location_obj
+        window.location.href = '//m.amap.com/navi/?' +
+          `start=${this.userLoc.lng},${this.userLoc.lat}` +
+          `&dest=${locObj.lng},${locObj.lat}` +
+          `&destName=${this.item.title}` +
+          '&naviBy=car' +
+          '&key=056a8882dfde3770452da397d2eb6e83'
+      } else {
+        this.$store.dispatch(Types.OPEN_POPUP, {
+          title: '提示',
+          word: '无法获取您的位置信息，请检查你的设置',
+          leftMsg: '确定'
+        })
+      }
     }
   },
   mounted () {
@@ -52,14 +61,59 @@ export default {
     this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
       if (data) {
         this.item = data
-        this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
-        this.getUserLocation()
+        // this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
+        const location = data.location_obj
+        this.marker = new AMap.Marker({
+          map: this.map,
+          icon: Icon({
+            icon: onIcon,
+            size: size(44, 62)
+          }),
+          clickable: true,
+          topWhenClick: true,
+          offset: pixel(-22, -57),
+          position: LngLat(location.lng, location.lat),
+          extData: { id: location.id }
+        })
+        this.map.toolBar.doLocation()
+        this.map.setCenter(this.marker.getPosition())
+        this.map.toolBar.setOffset(pixel(10, 200))
       } else {
         this.$router.back()
       }
     })
+  },
+  watch: {
+    userLoc: { // fixe 第一次进入页面获取定位过慢
+      handler (val) {
+        console.log(val)
+        this.map.setCenter(this.marker.getPosition())
+        this.map.setZoom(10)
+      },
+      deep: true
+    }
   }
 }
+
+function Icon ({ icon, size }) {
+  return new AMap.Icon({
+    image: icon,
+    size: size,
+    imageSize: size
+  })
+}
+function size (width, height) {
+  return new AMap.Size(width, height)
+}
+
+function pixel (left, right) {
+  return new AMap.Pixel(left, right)
+}
+
+function LngLat (lng, lat) {
+  return new AMap.LngLat(lng, lat)
+}
+
 </script>
 
 <style lang="stylus" module>
