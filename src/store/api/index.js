@@ -108,7 +108,7 @@ apiMap[Types.FETCH_DETAIL] = function ({ type, id }) {
   return axiosRequest.get(`${HTTP}/api/${type}/${id}?t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_VAILD_CODE] = function (data) {
+apiMap[Types.FETCH_VAILD_CODE] = function ({ data }) {
   return axiosRequest.post(`${HTTP}/api/code`,
     JSON.stringify({
       t: getTimeStampId(),
