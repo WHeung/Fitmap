@@ -43,7 +43,7 @@ export default {
   created () {
     this.$store.dispatch(Types.CHANGE_NAV, { title: `我的健身 Fit-map` })
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
-      const toRoute = JSON.stringify({ toRoute: { name: 'userView' }})
+      const toRoute = JSON.stringify({ name: 'userView' })
       if (this.user.is_cellphone_checked && this.user.is_company_checked) {
         this.$store.dispatch(Types.CLOSE_LOADING)
       } else if (!this.user.is_cellphone_checked) {
