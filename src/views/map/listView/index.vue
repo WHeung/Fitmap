@@ -86,14 +86,14 @@ export default {
   },
   methods: {
     toDetail ({ id, type }) {
-      const detail = JSON.stringify({ id, type })
+      const toRoute = JSON.stringify({ name: 'detailView', params: { id, type }})
       this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
         if (this.user.is_cellphone_checked && this.user.is_company_checked) {
           this.$router.push({ name: 'detailView', params: { id, type }})
         } else if (!this.user.is_cellphone_checked) {
-          this.$router.push({ name: 'registerPhoneView', query: { detail }})
+          this.$router.push({ name: 'registerPhoneView', query: { toRoute: toRoute }})
         } else {
-          this.$router.push({ name: 'coummateInfoView', query: { detail }})
+          this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
         }
       })
     },

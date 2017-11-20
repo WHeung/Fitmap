@@ -107,15 +107,15 @@ export default {
         this.$store.dispatch(Types.UPDATE_VAILD_CODE, { data: data }).then(() => {
           this.$store.dispatch(Types.UPDATE_USER, { data: { cellphone: this.cellphone }}).then(() => {
             const query = {}
-            if (this.$route.query.detail) {
-              query.detail = this.$route.query.detail
+            if (this.$route.query.toRoute) { // toRoute
+              query.toRoute = this.$route.query.toRoute
             }
             if (!this.user.is_company_checked) {
               routerReplace(this, { name: 'coummateInfoView', query: query })
               return
-            } else if (query.detail) {
-              const detail = JSON.parse(query.detail)
-              routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})
+            } else if (query.toRoute) {
+              const toRoute = JSON.parse(query.toRoute)
+              routerReplace(this, toRoute)
               return
             } else {
               this.$router.back()

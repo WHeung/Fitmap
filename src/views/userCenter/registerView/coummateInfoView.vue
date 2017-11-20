@@ -98,9 +98,9 @@ export default {
     },
     clickBtn () {
       this.$store.dispatch(Types.UPDATE_USER, { data: this.user })
-      if (this.$route.query.detail) {
-        const detail = JSON.parse(this.$route.query.detail)
-        routerReplace(this, { name: 'detailView', params: { type: detail.type, id: detail.id }})
+      if (this.$route.query.detail) { // toRoute
+        const toRoute = JSON.parse(this.$route.query.toRoute)
+        routerReplace(this, toRoute)
         return
       }
       routerReplace(this, { name: 'mapIndexView' })

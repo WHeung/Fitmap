@@ -43,7 +43,14 @@ export default {
   created () {
     this.$store.dispatch(Types.CHANGE_NAV, { title: `我的健身 Fit-map` })
     this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
-      this.$store.dispatch(Types.CLOSE_LOADING)
+      const toRoute = JSON.stringify({ toRoute: { name: 'userView' }})
+      if (this.user.is_cellphone_checked && this.user.is_company_checked) {
+        this.$store.dispatch(Types.CLOSE_LOADING)
+      } else if (!this.user.is_cellphone_checked) {
+        this.$router.push({ name: 'registerPhoneView', query: { toRoute: toRoute }})
+      } else {
+        this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
+      }
     })
   },
   computed: {
