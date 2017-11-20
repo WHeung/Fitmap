@@ -31,6 +31,10 @@ export default function callApi (apiName, params, closeLoading) {
       if (codeResult.isSuccess) {
         resolve(res)
       } else {
+        codeResult.data = res.data
+        if (res.data.message) {
+          store.dispatch(Types.OPEN_TOAST, { content: codeResult.data.message })
+        }
         reject(codeResult)
       }
     }).catch(() => {
