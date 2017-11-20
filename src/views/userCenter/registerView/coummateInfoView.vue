@@ -98,7 +98,7 @@ export default {
     },
     clickBtn () {
       this.$store.dispatch(Types.UPDATE_USER, { data: this.user })
-      if (this.$route.query.detail) { // toRoute
+      if (this.$route.query.toRoute) { // toRoute
         const toRoute = JSON.parse(this.$route.query.toRoute)
         routerReplace(this, toRoute)
         return
