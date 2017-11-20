@@ -64,7 +64,6 @@ export default {
   },
   created () {
     this.routeName = this.$route.name
-    console.log(this.routeName)
     if (this.routeName === 'userChangePhoneView') {
       this.$store.dispatch(Types.CHANGE_NAV, { title: `更换手机号 Fit-map` })
     } else {

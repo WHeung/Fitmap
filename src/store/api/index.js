@@ -19,7 +19,11 @@ export default function callApi (apiName, params, closeLoading) {
     }
     const token = store.state.user.user.token
     params = params || {}
-    Object.assign(params, { token: token })
+    if (params && typeof params.data === 'object') {
+      Object.assign(params.data, { token: token })
+    } else {
+      Object.assign(params, { token: token })
+    }
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
