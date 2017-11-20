@@ -50,6 +50,9 @@ export default {
       },
       set (val) {
         console.log('index_set_map')
+        if (!this.list) {
+          this.map.toolBar.doLocation()
+        }
         this.$store.commit(Types.SET_MAP, val)
       }
     },
@@ -106,13 +109,6 @@ export default {
   },
   mounted () {
     this.$store.dispatch(Types.CLOSE_LOADING)
-    const store = this.$store.state.map
-    const type = store.classTypes[this.classForm.selected[0]].data
-    const form = {
-      keyword: this.classForm.input,
-      type: type,
-      category: store.classCategorys[type][this.classForm.selected[1]].name
-    }
     if (this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list).then(() => {
         if (this.selectedItem && this.selectedItem.marker) {
@@ -122,8 +118,6 @@ export default {
           this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
-    } else {
-      this.map.toolBar.doLocation()
     }
   },
   methods: {
