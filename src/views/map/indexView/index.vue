@@ -49,6 +49,7 @@ export default {
         return this.$store.state.map.map
       },
       set (val) {
+        console.log('index_set_map')
         this.$store.commit(Types.SET_MAP, val)
       }
     },

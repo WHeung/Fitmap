@@ -90,7 +90,7 @@ export default {
       this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
         if (this.user.is_cellphone_checked && this.user.is_company_checked) {
           this.$router.push({ name: 'detailView', params: { id, type }})
-        } else if (this.user.is_cellphone_checked) {
+        } else if (!this.user.is_cellphone_checked) {
           this.$router.push({ name: 'registerPhoneView', query: { detail }})
         } else {
           this.$router.push({ name: 'coummateInfoView', query: { detail }})
