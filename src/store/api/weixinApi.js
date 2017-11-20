@@ -52,11 +52,8 @@ export function weixinShare (shareData, callback) {
   }
 }
 
-export function weixinGetLocation (shareData, callback) {
+export function weixinGetLocation (data, callback) {
   if (isWeixin()) {
-    if (typeof shareData.txtIndex !== 'number') {
-      shareData.txtIndex = 0
-    }
     wx.onMenuShareTimeline({ // 分享到朋友圈
       title: shareData.title,
       link: shareData.link,
