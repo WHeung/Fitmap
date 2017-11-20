@@ -1,6 +1,6 @@
 <template>
   <div id="app" v-pxtorem>
-    <transition name="view" mode="out-in">
+    <transition :name="isIOSDevice?'view':''" mode="out-in">
       <router-view :class="{ready: loading}"></router-view>
     </transition>
     <Toast></Toast>
@@ -17,6 +17,7 @@ import Loading from './components/loading.vue'
 import ApiLoading from './components/ApiLoading.vue'
 import popUp from './components/popUp.vue'
 import { isWeixin } from '~src/tool/containerDetect'
+import { isIOS } from '~src/tool/containerDetect'
 
 export default {
   name: 'app',
@@ -24,6 +25,9 @@ export default {
   computed: {
     loading () {
       return this.$store.state.loading
+    },
+    isIOSDevice () {
+      return isIOS()
     }
   },
   methods: {
