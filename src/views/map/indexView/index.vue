@@ -38,8 +38,10 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
       vm.updateForm++
-      const markers = vm.map.getAllOverlays('marker')
-      vm.map.setFitView(markers)
+      if (vm.map) {
+        const markers = vm.map.getAllOverlays('marker')
+        vm.map.setFitView(markers)
+      }
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
     })
   },
@@ -51,7 +53,7 @@ export default {
       set (val) {
         console.log('index_set_map')
         if (!this.list) {
-          this.map.toolBar.doLocation()
+          val.toolBar.doLocation()
         }
         this.$store.commit(Types.SET_MAP, val)
       }
