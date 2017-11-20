@@ -22,7 +22,7 @@ var data = {
 
 const State = {
   user: {
-    token: 'token'
+    token: ''
   }
 }
 
