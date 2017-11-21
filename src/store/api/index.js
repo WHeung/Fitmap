@@ -91,13 +91,13 @@ apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
 
 apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
   return axiosRequest.post(`${HTTP}/api/users/un_collect`,
-  JSON.stringify({
-    t: getTimeStampId(),
-    type: data.type,
-    target_id: data.id,
-    token: data.token
-  })
-)
+    JSON.stringify({
+      t: getTimeStampId(),
+      type: data.type,
+      target_id: data.id,
+      token: data.token
+    })
+  )
 }
 
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
@@ -123,6 +123,10 @@ apiMap[Types.FETCH_VAILD_CODE] = function ({ data }) {
       ...data
     })
   )
+}
+
+apiMap[Types.FETCH_WEIXIN_CONFIG] = function (data) {
+  return axiosRequest.get(`${HTTP}/api/wechat_config?t=${getTimeStampId()}`)
 }
 
 function localhost () {

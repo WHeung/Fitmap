@@ -24,6 +24,7 @@ import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
 import PostItem from '../components/postItem.vue'
+import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
 
 export default {
@@ -32,7 +33,8 @@ export default {
   data () {
     return {
       type: '',
-      updateForm: 0
+      updateForm: 0,
+      initRequset: true
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -48,13 +50,13 @@ export default {
   computed: {
     map: {
       get () {
-        return this.$store.state.map.map
+        const map = this.$store.state.map.map
+        if (map) {
+          return this.$store.state.map.map
+        }
       },
       set (val) {
         console.log('index_set_map')
-        if (!this.list) {
-          val.toolBar.doLocation()
-        }
         this.$store.commit(Types.SET_MAP, val)
       }
     },
@@ -74,7 +76,20 @@ export default {
       return this.$store.state.user.user
     },
     userLoc () {
-      return this.$store.state.map.userLoc
+      const userLoc = this.$store.state.map.userLoc
+      if (userLoc.lat && userLoc.lng) {
+        return userLoc
+      }
+    },
+    formData () {
+      const map = this.$store.state.map // mapModule
+      const type = map.classTypes[this.classForm.selected[0]].data
+      const formData = {
+        keyword: this.classForm.input,
+        type: type,
+        category: map.classCategorys[type][this.classForm.selected[1]].name
+      }
+      return formData
     }
   },
   watch: {
@@ -152,13 +167,30 @@ export default {
           const marker = markers.find(item => {
             return item.itemId === itemId
           })
-          if (marker) {
-            this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
-          }
+          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
+    },
+    firstRequest () {
+      if (!this.initRequset) {
+        return
+      }
+      if (this.map && this.userLoc) {
+        this.initRequset = false
+      }
     }
   }
+}
+function WeixinLocation (self) {
+  self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
+    weixinGetLocation({}, ({ lat, lng }) => {
+      this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
+      if (self.firstRequest && !self.list) {
+        self.firstRequest()
+      }
+    })
+    weixinConfig(data)
+  })
 }
 </script>
 

@@ -7,8 +7,7 @@
     "start": "cross-env NODE_ENV=development node server",
     "build": "rimraf dist && yarn run build:dev",
     "build-test": "rimraf dist && yarn run build:test",
-    "build-test-static": "rimraf static && yarn run build:test",
-    "build-pro": "rimraf static && yarn run build:pro --",
+    "build-pro": "rimraf static && yarn run build:pro",
     "build:test": "cross-env NODE_ENV=test webpack --config build/webpack.config.js",
     "build:dev": "cross-env NODE_ENV=development webpack --config build/webpack.config.js",
     "build:pro": "cross-env NODE_ENV=production webpack --config build/webpack.config.js"

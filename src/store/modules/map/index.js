@@ -41,7 +41,7 @@ const State = {
         data: 'train'
       },
       {
-        name: '室内器材',
+        name: '健身器材',
         data: 'equip'
       }
     ],
@@ -186,6 +186,13 @@ const Actions = {
     })
     state.map.setCenter(marker.getPosition())
     commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
+  },
+  [Types.UPDATE_WEIXIN_CONFIG] ({ state, commit }, data) {
+    return new Promise(resolve => {
+      CallApi(Types.FETCH_WEIXIN_CONFIG, data).then(res => {
+        resolve(res.data)
+      })
+    })
   }
 }
 
