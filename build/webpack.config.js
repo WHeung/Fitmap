@@ -73,8 +73,7 @@ const config = {
     // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       names: 'vendor'
-    }),
-    new webpack.NamedModulesPlugin()
+    })
   ]
 }
 
@@ -115,30 +114,6 @@ if (process.env.NODE_ENV === 'test') {
   )
 }
 
-if (process.env.NODE_ENV === 'localproduction') {
-  delete config.devtool
-  config.output.path = path.resolve(__dirname, '../dist/')
-  config.output.publicPath = './'
-
-  config.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    }),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false,
-        'drop_debugger': true,
-        'drop_console': true
-      }
-    }),
-    new HTMLPlugin({
-      template: 'src/index.html',
-      filename: path.resolve(__dirname, '../dist/index.html'),
-      env: process.env.NODE_ENV
-    })
-  )
-}
-
 // production start
 if (process.env.NODE_ENV === 'production') {
   delete config.devtool
@@ -150,18 +125,14 @@ if (process.env.NODE_ENV === 'production') {
   console.log('=========', JSON.stringify(process.argv), '===========')
   if (process.argv && process.argv.length > 0) {
     for (let i = 0; i < process.argv.length; i++) {
-      if (process.argv[i].indexOf('dwfversion=') > -1) {
+      if (process.argv[i].indexOf('FitMapversion=') > -1) {
         version = process.argv[i].split('=')[1].replace(/[\'\"]/g, '')
         break
       }
     }
   }
-  console.log('=========dwfversion=', version, '===========')
-  if (typeof version === 'string' && /^[\d._]+$/.test(version)) {
-    config.output.publicPath = `//cdn01.dwfei.com/h5/${version}/`
-  } else {
-    config.output.publicPath = './'
-  }
+  console.log('=========version=', version, '===========')
+  config.output.publicPath = './'
   config.output.path = path.resolve(__dirname, '../static/')
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({
@@ -177,8 +148,7 @@ if (process.env.NODE_ENV === 'production') {
     new HTMLPlugin({
       template: 'src/index.html',
       filename: path.resolve(__dirname, '../static/index.html'),
-      env: process.env.NODE_ENV,
-      excludeAssets: [/vendor.*.js/]
+      env: process.env.NODE_ENV
     }),
     new HTMLPlugin({
       template: 'src/index.html',
