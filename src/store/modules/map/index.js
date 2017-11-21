@@ -118,7 +118,7 @@ const Actions = {
         }
         commit(Types.SET_MAP_PAGINATION, data.pagination)
         dispatch(Types.UPDATE_MAP_MARKERS, data.list)
-        resolve()
+        resolve(data.list)
       })
     })
   },

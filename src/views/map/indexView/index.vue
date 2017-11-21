@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMapComponent v-model="map"></AMapComponent>
+    <!-- <AMapComponent v-model="map"></AMapComponent> -->
     <div :class="$style.content">
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
@@ -18,18 +18,17 @@
 </template>
 
 <script>
-import AMapComponent from '~src/components/AMap.vue'
+// import AMapComponent from '~src/components/AMap.vue'
 import AMap from 'AMap'
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
 import PostItem from '../components/postItem.vue'
-import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
 
 export default {
   name: 'map-index-view',
-  components: { Filters, Sacle, BusItem, PostItem, AMapComponent },
+  components: { Filters, Sacle, BusItem, PostItem },
   data () {
     return {
       type: '',
@@ -40,10 +39,6 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
       vm.updateForm++
-      if (vm.map) {
-        const markers = vm.map.getAllOverlays('marker')
-        vm.map.setFitView(markers)
-      }
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
     })
   },
@@ -54,10 +49,6 @@ export default {
         if (map) {
           return this.$store.state.map.map
         }
-      },
-      set (val) {
-        console.log('index_set_map')
-        this.$store.commit(Types.SET_MAP, val)
       }
     },
     classForm () {
@@ -125,7 +116,6 @@ export default {
     }
   },
   mounted () {
-    this.$store.dispatch(Types.CLOSE_LOADING)
     if (this.list) {
       this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list).then(() => {
         if (this.selectedItem && this.selectedItem.marker) {
@@ -170,27 +160,8 @@ export default {
           this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
-    },
-    firstRequest () {
-      if (!this.initRequset) {
-        return
-      }
-      if (this.map && this.userLoc) {
-        this.initRequset = false
-      }
     }
   }
-}
-function WeixinLocation (self) {
-  self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
-    weixinGetLocation({}, ({ lat, lng }) => {
-      this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
-      if (self.firstRequest && !self.list) {
-        self.firstRequest()
-      }
-    })
-    weixinConfig(data)
-  })
 }
 </script>
 

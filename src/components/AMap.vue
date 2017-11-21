@@ -12,7 +12,7 @@ export default {
   data () {
     return {
       mapStyle: {
-        width: window.screen.width + 'px',
+        width: window.innerWidth + 'px',
         height: window.innerHeight + 'px',
         '-webkit-overflow-scrolling': 'touch' // 加上这个IOS顺滑的实现
       }
