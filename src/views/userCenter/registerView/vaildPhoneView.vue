@@ -140,9 +140,9 @@ export default {
 .phone
   width 100%
 .code
+  justify-content space-between
   input
-    max-width 50%
-    flex 0 1
+    flex 1 1
     margin-right 10px
   button
     flex 0 0 (96/20)rem
