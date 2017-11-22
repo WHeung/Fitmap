@@ -1,7 +1,6 @@
 <template>
   <div :class="$style.main">
     <!-- <AMapComponent v-model="map"></AMapComponent> -->
-    <div :class="$style.content">
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
       @searchClick="searchClick" @request="request"></Filters>
@@ -13,7 +12,6 @@
           列表显示
         </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -32,8 +30,7 @@ export default {
   data () {
     return {
       type: '',
-      updateForm: 0,
-      initRequset: true
+      updateForm: 0
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -116,16 +113,6 @@ export default {
     }
   },
   mounted () {
-    if (this.list) {
-      this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list).then(() => {
-        if (this.selectedItem && this.selectedItem.marker) {
-          const marker = this.map.getAllOverlays('marker').find(item => {
-            return item.itemId === this.selectedItem.marker.itemId
-          })
-          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
-        }
-      })
-    }
   },
   methods: {
     toListView () {
@@ -169,7 +156,7 @@ export default {
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 
-.content
+.main
   pointer-events none // 点击穿透属性，使地图可以拖到
   position absolute
   top 0

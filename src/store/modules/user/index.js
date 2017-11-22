@@ -62,7 +62,7 @@ const Actions = {
   },
   [Types.UPDATE_CODE] ({ state }, { cellphone }) {
     return new Promise(resolve => {
-      CallApi(Types.FETCH_CODE_GET, cellphone).then(res => {
+      CallApi(Types.FETCH_CODE_GET, { cellphone }).then(res => {
         resolve(res.data.data.code)
       })
     })

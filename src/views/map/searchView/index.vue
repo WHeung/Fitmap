@@ -29,7 +29,6 @@ export default {
   components: { Filters },
   data () {
     return {
-      type: 'post',
       updateForm: 0,
       history: JSON.parse(window.localStorage[storageKey] || '[]')
     }
@@ -76,7 +75,6 @@ export default {
     },
     request (data) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
-        this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
         routerReplace(this, { name: 'mapIndexView' })
       })
     }

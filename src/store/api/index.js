@@ -19,14 +19,16 @@ export default function callApi (apiName, params, closeLoading) {
     }
     const token = store.state.user.user.token
     params = params || {}
-    if (params && typeof params.data === 'object') {
-      Object.assign(params.data, { token: token })
-    } else {
+    if (params && typeof params === 'object') {
       Object.assign(params, { token: token })
     }
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
       console.log(res.data)
+      if (res.data.code === 4000) {
+        document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
+        window.location.reload()
+      }
       const codeResult = checkResponseCode(res.data.code)
       if (codeResult.isSuccess) {
         resolve(res)
@@ -47,19 +49,20 @@ export default function callApi (apiName, params, closeLoading) {
 const HTTP = 'http://fitmap.deexcul.com'
 // const token = store.state.user.user.token
 
-apiMap[Types.FETCH_CODE_GET] = function (phone) {
-  return axiosRequest.get(`${HTTP}/api/code?cellphone=${phone}&t=${getTimeStampId()}`)
+apiMap[Types.FETCH_CODE_GET] = function (data) {
+  return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.phone}&token=${data.token}t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_GET] = function (data) {
   return axiosRequest.get(`${HTTP}/api/users?token=${data.token}&t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_USERS_UPDATE] = function ({ data }) {
+apiMap[Types.FETCH_USERS_UPDATE] = function ({ data, token }) {
   return axiosRequest.post(`${HTTP}/api/users`,
     JSON.stringify({
-      t: getTimeStampId(),
-      ...data
+      ...data,
+      token,
+      t: getTimeStampId()
     })
   )
 }
@@ -68,9 +71,10 @@ apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
   return axiosRequest.get(`${HTTP}/api/users/oauth?code=${data.code}&t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data }) {
+apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data, token }) {
   const params = {
     ...data,
+    token,
     t: getTimeStampId()
   }
   return axiosRequest.get(`${HTTP}/api/users/collects`, {
@@ -103,6 +107,7 @@ apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
   return axiosRequest.get(
     `${HTTP}/api/map/search?t=${getTimeStampId()}` +
+    `$token=${data.token}` +
     `&type=${data.type}` +
     `&category=${data.category}` +
     `&keyword=${data.keyword}` +
@@ -112,25 +117,20 @@ apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
   )
 }
 
-apiMap[Types.FETCH_DETAIL] = function ({ type, id }) {
-  return axiosRequest.get(`${HTTP}/api/${type}/${id}?t=${getTimeStampId()}`)
+apiMap[Types.FETCH_DETAIL] = function ({ type, id, token }) {
+  return axiosRequest.get(`${HTTP}/api/${type}/${id}?token=${token}&t=${getTimeStampId()}`)
 }
 
-apiMap[Types.FETCH_VAILD_CODE] = function ({ data }) {
+apiMap[Types.FETCH_VAILD_CODE] = function ({ data, token }) {
   return axiosRequest.post(`${HTTP}/api/code`,
     JSON.stringify({
       t: getTimeStampId(),
+      token,
       ...data
     })
   )
 }
 
 apiMap[Types.FETCH_WEIXIN_CONFIG] = function (data) {
-  return axiosRequest.get(`${HTTP}/api/wechat_config?t=${getTimeStampId()}`)
-}
-
-function localhost () {
-  if (window.location.hostname === 'localhost') {
-    
-  }
+  return axiosRequest.get(`${HTTP}/api/wechat_config?token=${data.token}&t=${getTimeStampId()}`)
 }

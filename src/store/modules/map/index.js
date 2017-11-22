@@ -123,8 +123,8 @@ const Actions = {
     })
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
-    if (state.pagination && state.pagination.current_page === 1 ) {
-      state.map && state.map.clearMap()
+    if (state.pagination && state.pagination.current_page === 1) {
+      state.map && state.map.remove(state.map.getAllOverlays())
     }
     const locationList = list.map(item => {
       return item.location_obj

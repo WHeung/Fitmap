@@ -38,6 +38,7 @@ export default {
       map.addControl(toolBar)
       map.toolBar = toolBar
       this.$emit('input', map)
+      window.map = map
     })
   },
   methods: {
