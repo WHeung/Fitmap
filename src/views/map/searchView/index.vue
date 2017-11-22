@@ -75,6 +75,13 @@ export default {
     },
     request (data) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
+        const itemId = this.list[0].location_obj.id
+        const markers = this.map.getAllOverlays('marker')
+        this.map.setFitView(markers)
+        const marker = markers.find(item => {
+          return item.itemId === itemId
+        })
+        this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         routerReplace(this, { name: 'mapIndexView' })
       })
     }

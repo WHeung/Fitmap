@@ -77,13 +77,13 @@ export default {
 
 function weixinLocation (self) {
   self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
+    weixinConfig(data.data)
     weixinGetLocation({}, ({ lat, lng }) => {
       self.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
       if (self.initRequset) {
         self.firstRequest()
       }
     })
-    weixinConfig(data)
   })
 }
 </script>
