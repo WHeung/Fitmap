@@ -24,13 +24,14 @@ export default {
     },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height > 187.5 / 140) {
+      const rem = window.document.documentElement.style.fontSize
+      if (img.height < (140 / 20) * parseInt(rem)) {
         Object.assign(img.style, {
-          height: 'auto',
-          width: '100%',
-          left: 'unset',
-          top: '50%',
-          transform: 'translateY(-50%)'
+          width: 'auto',
+          height: '100%',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
         })
       }
     }
@@ -56,9 +57,9 @@ $white = #FFFFFF
   img
     position relative
     display block
-    height 100%
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
 
 .content
   position relative

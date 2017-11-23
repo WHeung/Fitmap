@@ -73,7 +73,7 @@ export default {
       this.$router.push({ name: 'detailPicView', params: { id: this.data.id, type: 'merchant' }})
     },
     toProduct (id) {
-      this.$router.push({ name: 'detailView', params: { type: 'product', id: id }})
+      this.$router.push({ name: 'detailView', params: { type: 'item', id: id }})
     },
     toMap () {
       this.$store.dispatch(Types.FILL_BUCKET, {
