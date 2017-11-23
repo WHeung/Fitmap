@@ -107,7 +107,7 @@ apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
   return axiosRequest.get(
     `${HTTP}/api/map/search?t=${getTimeStampId()}` +
-    `$token=${data.token}` +
+    `&token=${data.token}` +
     `&type=${data.type}` +
     `&category=${data.category}` +
     `&keyword=${data.keyword}` +

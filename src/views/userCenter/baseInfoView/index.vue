@@ -116,7 +116,7 @@ export default {
         }
       }
       if (type === 'area') {
-        if (this.user.province === data.province && this.user.city === data.city ) {
+        if (this.user.province === data.province && this.user.city === data.city) {
           return
         }
       }
