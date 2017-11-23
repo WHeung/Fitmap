@@ -72,6 +72,8 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.main
+  background $mainBg
 .info
   padding (36/20)rem 0
   text-align center

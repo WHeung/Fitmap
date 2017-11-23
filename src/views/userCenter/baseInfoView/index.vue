@@ -137,6 +137,8 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.main
+  background $mainBg
 .wechat
   padding 18px 0 18px 18px
   display flex

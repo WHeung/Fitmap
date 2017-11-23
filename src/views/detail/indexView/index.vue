@@ -37,9 +37,6 @@ export default {
   },
   components: { MerchantView, PostView, ProductView, Btn },
   created () {
-    this.style = {
-      height: window.innerHeight + 'px'
-    }
     this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
   },
   methods: {
@@ -89,6 +86,7 @@ export default {
 
 .main
   position relative
+  background $mainBg
 
 .detail
   padding-bottom 72px

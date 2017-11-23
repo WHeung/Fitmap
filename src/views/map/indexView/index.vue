@@ -68,16 +68,6 @@ export default {
       if (userLoc.lat && userLoc.lng) {
         return userLoc
       }
-    },
-    formData () {
-      const map = this.$store.state.map // mapModule
-      const type = map.classTypes[this.classForm.selected[0]].data
-      const formData = {
-        keyword: this.classForm.input,
-        type: type,
-        category: map.classCategorys[type][this.classForm.selected[1]].name
-      }
-      return formData
     }
   },
   watch: {
@@ -141,12 +131,8 @@ $breakline = #E1E5EB
 $assistText = #9DA2AB
 
 .main
-  pointer-events none // 点击穿透属性，使地图可以拖到
-  position absolute
-  top 0
-  width 100%
-  height 100%
-  >div
+  pointer-events none !important// 点击穿透属性，使地图可以拖到
+  div
     pointer-events visible // 之后的容器不需要继承点击穿透
 
 .bottom

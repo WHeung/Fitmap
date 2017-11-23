@@ -42,9 +42,6 @@ export default {
     })
   },
   methods: {
-    handleClick (marker) {
-      this.$emit('mapClick', marker)
-    }
   }
 }
 </script>

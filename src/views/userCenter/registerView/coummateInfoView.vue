@@ -112,6 +112,8 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.main
+  background $mainBg
 .line
   height 1px
   margin-left 18px

@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMapComponent v-model="map"></AMapComponent>
+    <!-- <AMapComponent v-model="map"></AMapComponent> -->
     <transition :name="transName" mode="in-out">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
@@ -13,6 +13,7 @@
 import AMapComponent from '~src/components/AMap.vue'
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
+import { initMap } from '~src/tool/initMap.js'
 
 export default {
   name: 'map',
@@ -32,12 +33,31 @@ export default {
   },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
-    if (this.map) {
-      const markers = this.map.getAllOverlays('marker')
-      this.map.setFitView(markers)
-      this.initRequset = false
+    if (!this.map) {
+      initMap().then(map => {
+        this.$store.commit(Types.SET_MAP, map)
+        if (this.initRequset) {
+          this.firstRequest()
+        }
+      })
     }
-    weixinLocation(this)
+  },
+  mounted () {
+    if (this.map && this.list && this.list.length) {
+      // this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
+      // const markers = this.map.getAllOverlays('marker')
+      // this.map.setFitView(markers)
+      // if (this.selectedItem && this.selectedItem.item) {
+      //   const itemId = this.selectedItem.item.location_obj.id
+      //   const marker = markers.find(item => {
+      //     return item.itemId === itemId
+      //   })
+      //   this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
+      // }
+      // this.initRequset = false
+    } else {
+      weixinLocation(this)
+    }
   },
   computed: {
     map: {
@@ -46,13 +66,15 @@ export default {
         if (map) {
           return this.$store.state.map.map
         }
-      },
-      set (val) {
-        console.log('set_map')
-        this.$store.commit(Types.SET_MAP, val)
-        if (this.initRequset) {
-          this.firstRequest()
-        }
+      }
+    },
+    list () {
+      return this.$store.state.map.list
+    },
+    selectedItem () {
+      const selectedItem = this.$store.state.map.selectedItem
+      if (selectedItem && selectedItem.item) {
+        return this.$store.state.map.selectedItem
       }
     },
     userLoc () {
@@ -91,6 +113,9 @@ function weixinLocation (self) {
 <style lang="stylus" module>
 .main
   position relative
+  pointer-events none !important
+  div
+    pointer-events visible
 
 .mapView
   position absolute
