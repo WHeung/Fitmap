@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div :class="[$style.item, $style.intr]" v-html="data.content"></div>
+    <div :class="[$style.item, $style.intr]" v-if="data.content" v-html="data.content"></div>
   </div>
 </template>
 

@@ -9,7 +9,7 @@
     </div>
     <CompanyCard :class="$style.item" :data="data.merchant"></CompanyCard>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>
-    <div :class="$style.intr" v-html="data.content"></div>
+    <div :class="$style.intr" v-if="data.content" v-html="data.content"></div>
   </div>
 </template>
 
