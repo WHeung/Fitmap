@@ -6,14 +6,16 @@
         <img :src="pic.url" @click="clickImg(pic.url, index)">
       </div>
     </div>
-    <img :src="activePic.url" :class="$style.animat"
-    v-if="activePic && activePic.url" @animationend="animationend">
-    <div :class="$style.mask" v-if="previewData.show" @click="closeMask">
-      <swiper :class="$style.containerClass" :options="option" ref="swiper">
-        <swiperSlide v-for="(pic,index) in picList" :key="index">
-          <img :src="pic.url">
-        </swiperSlide>
-      </swiper>
+    <div :class="$style.mask" v-if="activePic || previewData.show">
+      <img :src="activePic.url" :class="$style.animat"
+      v-if="activePic && activePic.url" @animationend="animationend">
+      <div :class="$style.container" v-if="previewData.show" @click="closeMask">
+        <swiper :class="$style.containerClass" :options="option" ref="swiper">
+          <swiperSlide v-for="(pic,index) in picList" :key="index">
+            <img :src="pic.url">
+          </swiperSlide>
+        </swiper>
+      </div>
     </div>
   </div>
 </template>
@@ -192,9 +194,13 @@ function setPosition (list, i, itemH, length, itemW) {
   left 0
   right 0
   bottom 0
-  background rgba(0, 0, 0 ,.5)
+  background rgba(0, 0, 0 ,1)
   z-index 11
+  opacity 1
+  transition .3s all linear
 
+.container
+  height 100%
 .containerClass
   height 100%
   display flex
