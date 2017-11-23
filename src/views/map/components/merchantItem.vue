@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img" :style="imgWrapStyle">
-      <img v-lazy="item.images[0].url" @load="imgLoad">
+      <img v-lazy="item.cover" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.titleWrap">

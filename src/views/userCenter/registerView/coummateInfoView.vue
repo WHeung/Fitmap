@@ -97,13 +97,15 @@ export default {
       Object.assign(this.user, data)
     },
     clickBtn () {
-      this.$store.dispatch(Types.UPDATE_USER, { data: this.user })
-      if (this.$route.query.toRoute) { // toRoute
-        const toRoute = JSON.parse(this.$route.query.toRoute)
-        routerReplace(this, toRoute)
-        return
-      }
-      routerReplace(this, { name: 'mapIndexView' })
+      this.$store.dispatch(Types.UPDATE_USER, { data: this.user }).then(() => {
+        this.$store.commit(Types.SET_USER, { 'is_company_checked': true })
+        if (this.$route.query.toRoute) { // toRoute
+          const toRoute = JSON.parse(this.$route.query.toRoute)
+          routerReplace(this, toRoute)
+          return
+        }
+        routerReplace(this, { name: 'mapIndexView' })
+      })
     }
   }
 }

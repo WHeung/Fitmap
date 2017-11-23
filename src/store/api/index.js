@@ -51,7 +51,7 @@ const HTTP = 'http://fitmap.deexcul.com'
 // const token = store.state.user.user.token
 
 apiMap[Types.FETCH_CODE_GET] = function (data) {
-  return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.phone}&token=${data.token}t=${getTimeStampId()}`)
+  return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.cellphone}&token=${data.token}t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_GET] = function (data) {

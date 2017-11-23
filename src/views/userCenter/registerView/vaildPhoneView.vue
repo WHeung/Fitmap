@@ -6,7 +6,7 @@
       </Item>
       <p :class="$style.line"></p>
       <Item title="验证码" :class="$style.code">
-        <input type="text" v-model="code">
+        <input type="text" v-model="code" maxlength="9">
         <button v-if="!inSeconds" @click="getCode">发送验证码</button>
         <button v-else :class="$style.notClick">{{inSeconds}}s</button>
       </Item>
@@ -105,6 +105,7 @@ export default {
       if (this.routeName === 'registerPhoneView') {
         this.$store.dispatch(Types.UPDATE_VAILD_CODE, { data: data }).then(() => {
           this.$store.dispatch(Types.UPDATE_USER, { data: { cellphone: this.cellphone }}).then(() => {
+            this.$store.commit(Types.SET_USER, { 'is_cellphone_checked': true })
             const query = {}
             if (this.$route.query.toRoute) { // toRoute
               query.toRoute = this.$route.query.toRoute
@@ -140,15 +141,21 @@ export default {
 
 .formGroup
   background $white
+  width 100%
 .phone
   width 100%
 .code
+  position relative
+  max-width 100%
   justify-content space-between
   input
     flex 1 1
     margin-right 10px
   button
-    flex 0 0 (96/20)rem
+    position absolute
+    right 10px
+    top 10px
+    width (96/20)rem
     padding 5px 0
     font-size 12px
     border 1px solid $mainText
