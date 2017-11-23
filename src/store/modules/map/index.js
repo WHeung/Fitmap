@@ -1,6 +1,6 @@
 import * as Types from '~src/store/types'
 import CallApi from '~src/store/api'
-import AMap from 'AMap'
+import QMap from 'QMap'
 import icon from '~src/public/fm_map_pin@2x.png'
 import onIcon from '~src/public/fm_map_pin_on@2x.png'
 
@@ -131,18 +131,25 @@ const Actions = {
     })
     for (let i = 0, item; i < locationList.length; i++) {
       item = locationList[i]
-      var marker = new AMap.Marker({
+      // var marker = new AMap.Marker({
+      //   map: state.map,
+      //   icon: Icon({
+      //     icon: icon,
+      //     size: size(28, 30)
+      //   }),
+      //   clickable: true,
+      //   topWhenClick: true,
+      //   offset: pixel(-14, -15),
+      //   position: LngLat(item.lng, item.lat),
+      //   extData: { id: item.id }39.913889
+      // })
+      const marker = new QMap.Marker({
+        //设置Marker的位置坐标
+        position: LngLat(116.415396, 39.913889),
+        //设置显示Marker的地图
         map: state.map,
-        icon: Icon({
-          icon: icon,
-          size: size(28, 30)
-        }),
-        clickable: true,
-        topWhenClick: true,
-        offset: pixel(-14, -15),
-        position: LngLat(item.lng, item.lat),
-        extData: { id: item.id }
-      })
+        icon: normalIcon(),
+      });
       marker.itemId = item.id
       marker.on('click', ({ lnglat, pixel, target }) => {
         dispatch(Types.UPDATE_MAP_SELECTITEM, target)
@@ -172,18 +179,18 @@ const Actions = {
   },
   [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
     const location = data.location_obj
-    const marker = new AMap.Marker({
-      map: state.map,
-      icon: Icon({
-        icon: onIcon,
-        size: size(44, 62)
-      }),
-      clickable: true,
-      topWhenClick: true,
-      offset: pixel(-22, -57),
-      position: LngLat(location.lng, location.lat),
-      extData: { id: location.id }
-    })
+    // const marker = new AMap.Marker({
+    //   map: state.map,
+    //   icon: Icon({
+    //     icon: onIcon,
+    //     size: size(44, 62)
+    //   }),
+    //   clickable: true,
+    //   topWhenClick: true,
+    //   offset: pixel(-22, -57),
+    //   position: LngLat(location.lng, location.lat),
+    //   extData: { id: location.id }
+    // })
     state.map.setCenter(marker.getPosition())
     commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   },
@@ -202,6 +209,13 @@ export default {
   mutations: Mutations
 }
 
+function normalIcon () {
+  const size = Size(28, 30)
+  const origin = Point(0, 0)
+  const anchor = Point(0, 0)
+  return new QMap.MarkerImage(icon, size, origin, anchor)
+}
+
 function Icon ({ icon, size }) {
   return new AMap.Icon({
     image: icon,
@@ -209,14 +223,17 @@ function Icon ({ icon, size }) {
     imageSize: size
   })
 }
-function size (width, height) {
-  return new AMap.Size(width, height)
+function Size (width, height) {
+  return new QMap.Size(width, height)
 }
 
+function Point (x, y) {
+  return new QMap.Point(x, y)
+}
 function pixel (left, right) {
   return new AMap.Pixel(left, right)
 }
 
 function LngLat (lng, lat) {
-  return new AMap.LngLat(lng, lat)
+  return new QMap.LngLat(lng, lat)
 }

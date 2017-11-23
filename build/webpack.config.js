@@ -22,7 +22,7 @@ const config = {
     ]
   },
   externals: {
-    'AMap': 'AMap'
+    'QMap': 'qq.maps'
   },
   output: {
     path: path.resolve(__dirname, '../dist/'),
