@@ -181,6 +181,8 @@ export default {
         }
         this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
         this.$emit('request')
+      } else {
+        this.$emit('noSureSelect', this.selected)
       }
     }
   }
