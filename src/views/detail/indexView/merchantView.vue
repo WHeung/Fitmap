@@ -12,7 +12,7 @@
     <div :class="$style.item" v-if="data.label === '健身器材' && data.items && data.items.length">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
-        <div :class="$style.productsMore">
+        <div :class="$style.productsMore" v-show="data.items.length > 2">
           <span>更多</span>
           <i :class="$style.msgArrow"></i>
         </div>

@@ -24,7 +24,7 @@ export default {
     },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height < 187.5 / 140) {
+      if (img.width / img.height > 187.5 / 140) {
         Object.assign(img.style, {
           height: 'auto',
           width: '100%',
