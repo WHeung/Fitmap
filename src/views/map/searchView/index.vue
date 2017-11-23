@@ -59,30 +59,35 @@ export default {
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }
       // 请求
-      this.request(data)
+      this.request()
     },
     cleanHistory () {
       this.history = []
       window.localStorage[storageKey] = '[]'
     },
     useHistory (item) {
-      const data = {
-        keyword: item
-      }
       // 请求
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: item })
-      this.request(data)
+      this.request()
     },
     request (data) {
-      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
-        const itemId = this.list[0].location_obj.id
-        const markers = this.map.getAllOverlays('marker')
-        this.map.setFitView(markers)
-        const marker = markers.find(item => {
-          return item.itemId === itemId
-        })
-        this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
-        routerReplace(this, { name: 'mapIndexView' })
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then((list) => {
+        if (list && list.length) {
+          const itemId = list[0].location_obj.id
+          const markers = this.map.getAllOverlays('marker')
+          this.map.setFitView(markers)
+          const marker = markers.find(item => {
+            return item.itemId === itemId
+          })
+          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
+          routerReplace(this, { name: 'mapIndexView' })
+        } else {
+          this.$store.dispatch(Types.OPEN_POPUP, {
+            title: '提示',
+            word: '暂搜索不到任何数据，请更换关键词',
+            leftMsg: '确定'
+          })
+        }
       })
     }
   }

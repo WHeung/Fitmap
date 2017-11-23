@@ -3,7 +3,6 @@
 from fabric.api import run, env, local, put
 import sys
 import os
-print sys.path
 sys.path.append('./build')
 
 env.hosts = ['fitmap@120.24.154.176']

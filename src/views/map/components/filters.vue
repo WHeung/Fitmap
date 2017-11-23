@@ -123,7 +123,7 @@ export default {
       return this.categorys[this.selected[1]]
     },
     originSelectedCate () {
-      const selected = this.form.selected
+      const selected = this.selected
       return this.classCategorys[this.classTypes[selected[0]].data][selected[1]]
     }
   },
@@ -159,12 +159,7 @@ export default {
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: this.input })
       if (this.origin !== 'search') {
         // 请求
-        const data = {
-          keyword: this.input,
-          type: this.classType.data,
-          category: this.selectedCate.name
-        }
-        this.$emit('request', data)
+        this.$emit('request')
       }
     },
     choiceType (index) {
@@ -178,19 +173,15 @@ export default {
         return
       }
       this.$set(this.selected, 1, index)
+      console.log(this.selected)
       this.mask = false
       if (this.origin !== 'search') {
         const form = {
           input: this.input,
           selected: this.selected
         }
-        const data = {
-          keyword: form.input,
-          type: this.classType.data,
-          category: this.selectedCate.name
-        }
         this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
-        this.$emit('request', data)
+        this.$emit('request')
       }
     }
   }
