@@ -173,7 +173,6 @@ export default {
         return
       }
       this.$set(this.selected, 1, index)
-      console.log(this.selected)
       this.mask = false
       if (this.origin !== 'search') {
         const form = {

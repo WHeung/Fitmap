@@ -86,7 +86,6 @@ export default {
   watch: {
     userLoc: { // fixe 第一次进入页面获取定位过慢
       handler (val) {
-        console.log(val)
         this.map.setCenter(this.marker.getPosition())
         this.map.setZoom(10)
       },
