@@ -92,22 +92,6 @@ export default {
     },
     userLoc: { // fixe 第一次进入页面获取定位过慢
       handler (val) {
-        console.log(val)
-        const store = this.$store.state.map
-        const type = store.classTypes[this.classForm.selected[0]].data
-        const form = {
-          keyword: this.classForm.input,
-          type: type,
-          category: store.classCategorys[type][this.classForm.selected[1]].name
-        }
-        if (!this.list) {
-          this.$store.dispatch(Types.UPDATE_MAP_SEARCH, form).then(() => {
-            const markers = this.map.getAllOverlays('marker')
-            this.map.setFitView(markers)
-          })
-        } else {
-          this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
-        }
       },
       deep: true
     }
