@@ -2,14 +2,14 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="$style.avatar">
-        <img :src="data.images[0].url" @load="imgLoad">
+        <img :src="data.cover || data.images[0].url" @load="imgLoad">
         <div :class="$style.moreImg" v-if="data.label !== '健身器材'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">{{data.title}}</div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
     :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
-    <div :class="$style.item" v-if="data.label === '健身器材'">
+    <div :class="$style.item" v-if="data.label === '健身器材' && data.items && data.items.length">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
         <div :class="$style.productsMore">
@@ -22,7 +22,7 @@
         <div :class="$style.productItem" @click="toProduct(item.id)"
         v-for="item in data.items.slice(0, 2)" :key="item.id">
           <div :class="$style.productImg">
-            <img :src="item.images[0]">
+            <img :src="item.images[0].url" v-if="item.images && item.images.length">
           </div>
           <div :class="$style.productTitle">
             {{item.title}}
