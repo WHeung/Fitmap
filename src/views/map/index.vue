@@ -1,6 +1,6 @@
 <template>
   <div :class="$style.main">
-    <AMapComponent v-model="map"></AMapComponent>
+    <QMapComponent v-model="map"></QMapComponent>
     <transition :name="transName" mode="in-out">
       <keep-alive>
         <router-view :class="$style.mapView"></router-view>
@@ -11,12 +11,13 @@
 
 <script>
 import AMapComponent from '~src/components/AMap.vue'
+import QMapComponent from '~src/components/QMap.vue'
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
 
 export default {
   name: 'map',
-  components: { AMapComponent },
+  components: { QMapComponent },
   data () {
     return {
       transName: '',

@@ -5,7 +5,7 @@ import sys
 import os
 sys.path.append('./build')
 
-env.hosts = ['fitmap@120.24.154.176']
+env.hosts = ['ftpuser@120.24.154.176']
 
 def hello():
   print("Hello world!")
