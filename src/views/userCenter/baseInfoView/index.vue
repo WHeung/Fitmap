@@ -144,6 +144,7 @@ export default {
   display flex
   background $white
 .wechatImg
+  position relative
   margin-right (23/20)rem
   width 66px
   height 66px
@@ -151,14 +152,15 @@ export default {
   background $white
   border 3px solid $white
   box-shadow 0 4px 12px 0 rgba(0,0,0,.1)
-  border-radius 100px
+  border-radius 50%
   img
-    position relative
+    position absolute
     display block
     top 0
     left 50%
     transform translateX(-50%)
     height 100%
+    border-radius 50%
 .wechatMsg
   line-height 36px
   span

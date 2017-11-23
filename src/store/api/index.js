@@ -28,6 +28,7 @@ export default function callApi (apiName, params, closeLoading) {
       if (res.data.code === 4000) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
         window.location.reload()
+        return
       }
       const codeResult = checkResponseCode(res.data.code)
       if (codeResult.isSuccess) {
