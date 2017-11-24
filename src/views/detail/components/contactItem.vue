@@ -12,7 +12,7 @@
         <span v-for="phone in telephones" :key="phone">{{phone}}<i>, </i></span>
       </div>
       <div :class="$style.text" v-else>
-        <span>暂无数据</span>
+        <span>暂无电话</span>
       </div>
       <div :class="$style.arrow"></div>
     </div>
