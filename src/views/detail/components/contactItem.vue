@@ -6,10 +6,13 @@
       <div :class="$style.arrow"></div>
     </div>
     <p :class="$style.line" v-if="loc && telephones && telephones.length"></p>
-    <div :class="$style.item" @click="clickPhone" v-if="telephones && telephones.length">
+    <div :class="$style.item" @click="clickPhone">
       <div :class="[$style.icon, $style.phoneIcon]"></div>
-      <div :class="$style.text">
+      <div :class="$style.text" v-if="telephones && telephones.length && telephones[0]">
         <span v-for="phone in telephones" :key="phone">{{phone}}<i>, </i></span>
+      </div>
+      <div :class="$style.text" v-else>
+        <span>暂无数据</span>
       </div>
       <div :class="$style.arrow"></div>
     </div>
@@ -56,7 +59,7 @@ export default {
   },
   methods: {
     clickPhone () {
-      if (typeof this.telephones === 'object' && this.telephones.length) {
+      if (this.telephones && this.telephones.length && this.telephones[0]) {
         if (this.telephones.length === 1) {
           window.location.href = 'tel:' + this.telephones[0]
         } else {
