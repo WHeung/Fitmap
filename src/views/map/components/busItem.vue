@@ -24,8 +24,7 @@ export default {
     },
     imgLoad (e) {
       const img = e.path[0]
-      const rem = window.document.documentElement.style.fontSize
-      if (img.height < (140 / 20) * parseInt(rem)) {
+      if (img.height < img.width * 140 / 187.5) {
         Object.assign(img.style, {
           width: 'auto',
           height: '100%',
