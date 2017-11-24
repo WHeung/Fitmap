@@ -8,7 +8,7 @@
     <div :class="$style.bottom" v-if="data">
       <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
     </div>
-    <router-view :data="data"></router-view>
+    <router-view :data="data" mode="in-out"></router-view>
   </div>
 </template>
 
