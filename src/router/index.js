@@ -114,6 +114,8 @@ router.beforeEach((to, from, next) => {
   /*
   * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
+  
+  const oauth = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
   if (isWeixin()) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
@@ -204,6 +206,7 @@ function getOauth ({ to }) { // 跳转微信授权
   })
   const callbackURL = window.location.origin + window.location.pathname + outQuery
   // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+  window.sessionStorage.setItem('login', 'oauth') // 判断主动跳授权登录还是回退跳的
   window.location.href =
     'https://open.weixin.qq.com/connect/oauth2/authorize?' +
     'appid=wx232406f650474f6a' +

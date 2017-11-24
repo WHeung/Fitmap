@@ -17,6 +17,7 @@ import MerchantView from './merchantView.vue'
 import PostView from './postView.vue'
 import ProductView from './productView.vue'
 import Btn from '~src/components/Btn.vue'
+import routerReplace from '~src/tool/routerReplace'
 
 export default {
   name: 'detail',
@@ -37,7 +38,17 @@ export default {
   },
   components: { MerchantView, PostView, ProductView, Btn },
   created () {
-    this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
+    const toRoute = JSON.stringify({ name: this.$route.name, params: this.$route.params })
+    this.$store.dispatch(Types.USER_LOGIN, {}).then(user => {
+      if (!user.is_cellphone_checked) {
+        routerReplace(this, { name: 'registerPhoneView', query: { toRoute: toRoute }})
+        return
+      } else if (!user.is_company_checked) {
+        routerReplace(this, { name: 'coummateInfoView', query: { toRoute: toRoute }})
+        return
+      }
+      this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
+    })
   },
   methods: {
     clickBtn () {

@@ -28,7 +28,10 @@ export default function callApi (apiName, params, closeLoading) {
       console.log(res.data)
       if (res.data.code === 4000) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
-        weixinReload()
+        const location = window.location
+        const hash = location.hash.replace(/[\?|\&]redirected\=1/, '')
+        location.replace(location.origin + location.pathname + '?redirect=' + hash)
+        // weixinReload()
         return
       }
       const codeResult = checkResponseCode(res.data.code)

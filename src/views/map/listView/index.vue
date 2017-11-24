@@ -86,6 +86,8 @@ export default {
   },
   methods: {
     toDetail ({ id, type }) {
+      this.$router.push({ name: 'detailView', params: { id, type }})
+      /** 换成先跳转详情页再检查登录
       const toRoute = JSON.stringify({ name: 'detailView', params: { id, type }})
       this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
         if (this.user.is_cellphone_checked && this.user.is_company_checked) {
@@ -96,6 +98,7 @@ export default {
           this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
         }
       })
+      */
     },
     getMore () {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, { page: this.pagination.current_page + 1 })
