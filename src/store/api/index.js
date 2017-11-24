@@ -1,5 +1,6 @@
 import { checkResponseCode } from './responseCode'
 import getTimeStampId from '~src/tool/getTimeStampId'
+import weixinReload from '~src/tool/weixinReload.js'
 import * as Types from '../types'
 import Axios from 'axios'
 import store from '../'
@@ -27,7 +28,7 @@ export default function callApi (apiName, params, closeLoading) {
       console.log(res.data)
       if (res.data.code === 4000) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
-        window.location.reload()
+        weixinReload()
         return
       }
       const codeResult = checkResponseCode(res.data.code)
