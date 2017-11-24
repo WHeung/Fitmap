@@ -9,7 +9,7 @@
     </div>
     <AroundMsg :class="$style.item" :aroundMsg="aroundMsg"></AroundMsg>
     <ContactItem :class="$style.item" @toMap="toMap"
-    :location="data.location" :telephones="data.telephones"></ContactItem>
+    :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
     <template v-if="data.label === '人员招聘'">
       <TextItem :class="$style.textItem" title="岗位介绍" :content="data.job_content"></TextItem>
       <TextItem :class="$style.textItem" title="任职要求" :content="data.job_content"></TextItem>

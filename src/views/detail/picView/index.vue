@@ -155,7 +155,7 @@ function setPosition (list, i, itemH, length, itemW) {
 */
 .main
   position relative
-  background $blackBg
+  background $mainBg
 
 .item
   float left
