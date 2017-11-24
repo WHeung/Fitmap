@@ -55,13 +55,13 @@ export default {
   methods: {
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height < 1.5) {
+      if (img.height < img.width / 1.5) {
         Object.assign(img.style, {
-          height: 'auto',
-          width: '100%',
-          left: 'unset',
-          top: '50%',
-          transform: 'translateY(-50%)'
+          height: '100%',
+          width: 'auto',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
         })
       }
     },
@@ -100,9 +100,9 @@ export default {
   img
     position relative
     display block
-    height 100%
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
 .moreImg
   position absolute
   right 12px
