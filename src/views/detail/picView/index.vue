@@ -27,6 +27,7 @@ import { swiper, swiperSlide } from 'vue-awesome-swiper'
 export default {
   name: 'pic-View',
   components: { swiper, swiperSlide },
+  props: ['data'],
   data () {
     return {
       style: null,
@@ -40,6 +41,7 @@ export default {
     }
   },
   created () {
+    console.log(this.data)
     this.$store.dispatch(Types.OPEN_LOADING)
     this.style = {
       'min-height': window.innerHeight + 'px'
@@ -154,8 +156,12 @@ function setPosition (list, i, itemH, length, itemW) {
     width 100%
 */
 .main
-  position relative
+  position absolute
+  top 0
+  left 0
+  min-width 100%
   background $mainBg
+  
 
 .item
   float left

@@ -102,8 +102,14 @@ const router = new Router({
       ]
     },
     { path: '/map/navigate', component: mapNavigateView, name: 'mapNavigateView' },
-    { path: '/detail/:type/:id(\\d+)', component: detailView, name: 'detailView' },
-    { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' },
+    {
+      path: '/detail/:type/:id(\\d+)',
+      component: detailView,
+      name: 'detailView',
+      children: [
+        { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' }
+      ]
+    },
     { path: '/about', component: aboutUsView, name: 'aboutUsView' },
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
@@ -115,7 +121,8 @@ router.beforeEach((to, from, next) => {
   * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
   
-  const oauth = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
+  const loginType = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
+  if (loginType === 'oauth') {}
   if (isWeixin()) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
