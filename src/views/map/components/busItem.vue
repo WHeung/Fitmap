@@ -101,7 +101,7 @@ $white = #FFFFFF
   display -webkit-box
   font-size 15px
   line-height 16px
-  height 33px
+  height 32px
   overflow hidden
   text-overflow ellipsis
   -webkit-line-clamp 2

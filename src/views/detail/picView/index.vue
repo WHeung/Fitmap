@@ -12,19 +12,9 @@
         :height="imgH(pic.url, remTopx(178.5/20))"
         :order="index"
         :key="index">
-      <!-- <div :class="$style.imgDiv"> -->
         <img :src="pic.url" @click="clickImg(pic.url, index)">
-      <!-- </div> -->
       </waterfall-slot>
     </waterfall>
-    <!-- <div :class="$style.list" ref="list">
-      <div :class="$style.item"
-      v-for="(pic,index) in picList" :key="index" ref="items">
-        <div :class="$style.imgDiv">
-          <img :src="pic.url" @click="clickImg(pic.url, index)">
-        </div>
-      </div>
-    </div> -->
     <div :class="$style.mask" v-if="activePic || previewData.show">
       <img :src="activePic.url" :class="$style.animat"
       v-if="activePic && activePic.url" @animationend="animationend">
@@ -58,11 +48,10 @@ export default {
       picList: [],
       lockPreview: false,
       option: {},
-      update: 0
+      update: 1000
     }
   },
   created () {
-    console.log(this.data)
     this.$store.dispatch(Types.OPEN_LOADING)
     this.style = {
       'min-height': window.innerHeight + 'px'
@@ -87,8 +76,6 @@ export default {
       }
     })
   },
-  mounted () {
-  },
   methods: {
     reflowed (vm) {
       const children = vm.$children
@@ -97,8 +84,8 @@ export default {
       })
       if (result) {
         setTimeout(() => {
-          this.update++
-        }, 500)
+          this.update += 1000
+        }, this.update)
       }
     },
     imgH (src, width) {
@@ -134,72 +121,14 @@ export default {
         url: url,
         index: index
       }
-    },
-    initImgs () {
-      const list = this.$refs.items
-      const itemW = list[0].offsetWidth
-      const itemH = []
-      const length = list.length
-      setPosition(list, 0, itemH, length, itemW)
     }
   }
 }
-function setPosition (list, i, itemH, length, itemW) {
-  if (i >= length) {
-    return
-  }
-  if (i < 2) {
-    const Img = list[i].children[0].children[0]
-    if (Img && Img.height) {
-      itemH.push(list[i].offsetHeight)
-      setPosition(list, i + 1, itemH, length, itemW)
-    } else {
-      Img.onload = () => {
-        itemH.push(list[i].offsetHeight)
-        setPosition(list, i + 1, itemH, length, itemW)
-      }
-    }
-  } else {
-    const Img = list[i - 2].children[0].children[0]
-    const index = i % 2
-    if (Img && Img.width > 50) {
-      list[i].style.cssText = `;position:absolute;left:${itemW * index}px;top:${itemH[index]}px`
-      // 这一步很重要，防止剩下图片全都定位在同一坐标
-      itemH[index] += list[i].offsetHeight
-      setPosition(list, i + 1, itemH, length, itemW)
-    } else {
-      Img.onload = () => {
-        list[i].style.cssText = `;position:absolute;left:${itemW * index}px;top:${itemH[index]}px`
-        // 这一步很重要，防止剩下图片全都定位在同一坐标
-        itemH[index] += list[i].offsetHeight
-        setPosition(list, i + 1, itemH, length, itemW)
-      }
-    }
-  }
-}
-
 </script>
 
 <style lang="stylus" module>
 @import '~tool/vendor'
-/*
-.main
-  column-count 2
-  column-gap (6/20)rem
-  width 100%
-  padding 0 (6/20)rem
-  overflow hidden
-  box-sizing border-box
-  background $blackBg
 
-.item
-  break-inside avoid
-  box-sizing border-box
-  padding-top 6px
-  >img
-    display block
-    width 100%
-*/
 .main
   position absolute
   top 0

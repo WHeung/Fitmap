@@ -1,13 +1,15 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.detail" ref="detail" :style="style">
-      <MerchantView v-if="data && view === 'merchant'" :data="data"></MerchantView>
-      <PostView v-if="data && view === 'post'" :data="data"></PostView>
-      <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
-    </div>
-    <div :class="$style.bottom" v-if="data">
-      <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
-    </div>
+    <template v-show="$route.name === 'detailView'">
+      <div :class="$style.detail" ref="detail" :style="style">
+        <MerchantView v-if="data && view === 'merchant'" :data="data"></MerchantView>
+        <PostView v-if="data && view === 'post'" :data="data"></PostView>
+        <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
+      </div>
+      <div :class="$style.bottom" v-if="data">
+        <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
+      </div>
+    </template>
     <router-view :data="data" mode="in-out"></router-view>
   </div>
 </template>
@@ -24,17 +26,23 @@ export default {
   name: 'detail',
   data () {
     return {
-      style: null,
+      style: {
+        height: window.innerHeight + 'px'
+      },
       view: '',
       data: null,
       disabled: false
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch(Types.OPEN_LOADING)
-    this.view = null
-    this.$refs.detail.scrollTop = 0
-    this.fetchData({ type: to.params.type, id: to.params.id })
+    if (String(to.params.id) !== String(from.params.id)) {
+      console.info('fromId' + from.params.id)
+      console.info('toId' + to.params.id)
+      this.$store.dispatch(Types.OPEN_LOADING)
+      this.view = null
+      this.$refs.detail.scrollTop = 0
+      this.fetchData({ type: to.params.type, id: to.params.id })
+    }
     next()
   },
   components: { MerchantView, PostView, ProductView, Btn },
@@ -99,6 +107,7 @@ export default {
 .main
   position relative
   background $mainBg
+  min-height 100%
 
 .detail
   padding-bottom 72px
