@@ -1,11 +1,30 @@
 <template>
-  <div :class="$style.main" :style="style" ref="main">
-    <div :class="$style.item"
-    v-for="(pic,index) in picList" :key="index" ref="items">
-      <div :class="$style.imgDiv">
+  <div :class="$style.main" :style="style">
+    <waterfall :class="$style.waterfall"
+      :line-gap="remTopx(187.5/20)"
+      align="left"
+      @reflowed="reflowed"
+      :watch="update">
+      <waterfall-slot
+        :class="$style.waterfallSlot"
+        v-for="(pic,index) in picList"
+        :width="remTopx(178.5/20)"
+        :height="imgH(pic.url, remTopx(178.5/20))"
+        :order="index"
+        :key="index">
+      <!-- <div :class="$style.imgDiv"> -->
         <img :src="pic.url" @click="clickImg(pic.url, index)">
+      <!-- </div> -->
+      </waterfall-slot>
+    </waterfall>
+    <!-- <div :class="$style.list" ref="list">
+      <div :class="$style.item"
+      v-for="(pic,index) in picList" :key="index" ref="items">
+        <div :class="$style.imgDiv">
+          <img :src="pic.url" @click="clickImg(pic.url, index)">
+        </div>
       </div>
-    </div>
+    </div> -->
     <div :class="$style.mask" v-if="activePic || previewData.show">
       <img :src="activePic.url" :class="$style.animat"
       v-if="activePic && activePic.url" @animationend="animationend">
@@ -22,11 +41,12 @@
 
 <script>
 import * as Types from '~src/store/types'
+import { Waterfall, WaterfallSlot } from 'vue-waterfall'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
 
 export default {
   name: 'pic-View',
-  components: { swiper, swiperSlide },
+  components: { swiper, swiperSlide, Waterfall, WaterfallSlot },
   props: ['data'],
   data () {
     return {
@@ -37,7 +57,8 @@ export default {
       activePic: null,
       picList: [],
       lockPreview: false,
-      option: {}
+      option: {},
+      update: 0
     }
   },
   created () {
@@ -60,7 +81,6 @@ export default {
           setTimeout(() => {
             this.$store.dispatch(Types.CLOSE_LOADING)
           }, 500)
-          this.initImgs()
         })
       } else {
         this.$router.back()
@@ -70,6 +90,31 @@ export default {
   mounted () {
   },
   methods: {
+    reflowed (vm) {
+      const children = vm.$children
+      const result = children.find(item => {
+        return item.height === 0
+      })
+      if (result) {
+        setTimeout(() => {
+          this.update++
+        }, 500)
+      }
+    },
+    imgH (src, width) {
+      const image = new Image()
+      image.src = src
+      if (image.height && image.width) {
+        const height = image.height / image.width * width
+        return height
+      } else {
+        return 0
+      }
+    },
+    remTopx (num) {
+      const rem = parseFloat(window.document.documentElement.style.fontSize)
+      return parseInt(num * rem)
+    },
     animationend (e, pic, index) {
       this.option.initialSlide = this.activePic.index
       this.activePic = null
@@ -160,12 +205,20 @@ function setPosition (list, i, itemH, length, itemW) {
   top 0
   left 0
   min-width 100%
-  background $mainBg
+  background $blackBg
   
 
 .item
   float left
   padding 6px 0 0 (6/20)rem
+
+.waterfall
+  background $blackBg
+.waterfallSlot
+  padding 6px 0 0 (6/20)rem
+  img
+    display block
+    width 100%
 
 .imgDiv
   width (178.5/20)rem

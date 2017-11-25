@@ -120,10 +120,9 @@ router.beforeEach((to, from, next) => {
   /*
   * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
-  
   const loginType = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
   if (loginType === 'oauth') {}
-  if (isWeixin()) {
+  if (isWeixin() || true) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
       const outQuery = outRouteParams(window.location.search)
