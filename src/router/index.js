@@ -122,7 +122,7 @@ router.beforeEach((to, from, next) => {
   */
   const loginType = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
   if (loginType === 'oauth') {}
-  if (isWeixin() || true) {
+  if (isWeixin() || false) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
       const outQuery = outRouteParams(window.location.search)

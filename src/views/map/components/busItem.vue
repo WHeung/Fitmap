@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img :src="item.cover" @load="imgLoad">
+      <img :src="item.cover" :style="imgStyle" ref="img" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
@@ -17,6 +17,38 @@
 export default {
   name: 'map-bus-item',
   props: ['item'],
+  data () {
+    return {
+      imgStyle: null
+    }
+  },
+  watch: {
+    item: {
+      handler (val) {
+        const img = new Image()
+        img.src = val.cover
+        if (img.width && img.height) {
+          if (img.height < img.width * 140 / 187.5) {
+            this.imgStyle = {
+              width: 'auto',
+              height: '100%',
+              top: 'unset',
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }
+          } else {
+            this.imgStyle = {
+              width: '100%',
+              height: 'auto',
+              top: '50%',
+              left: 'unset',
+              transform: 'translateY(-50%)'
+            }
+          }
+        }
+      }
+    }
+  },
   methods: {
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
@@ -25,13 +57,13 @@ export default {
     imgLoad (e) {
       const img = e.path[0]
       if (img.height < img.width * 140 / 187.5) {
-        Object.assign(img.style, {
+        this.imgStyle = {
           width: 'auto',
           height: '100%',
           top: 'unset',
           left: '50%',
           transform: 'translateX(-50%)'
-        })
+        }
       }
     }
   }
