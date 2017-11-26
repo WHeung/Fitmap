@@ -72,13 +72,13 @@ export default {
   },
   watch: {
     selectedItem (val) {
-      let pixel
-      if (val && val.marker && this.map && this.map.toolBar) {
-        pixel = new AMap.Pixel(10, 300)
-      } else {
-        pixel = new AMap.Pixel(10, 100)
-      }
-      this.map.toolBar.setOffset(pixel)
+      // let pixel
+      // if (val && val.marker && this.map && this.map.toolBar) {
+      //   pixel = new AMap.Pixel(10, 300)
+      // } else {
+      //   pixel = new AMap.Pixel(10, 100)
+      // }
+      // this.map.toolBar.setOffset(pixel)
     },
     userLoc: { // fixe 第一次进入页面获取定位过慢
       handler (val) {
@@ -116,12 +116,12 @@ export default {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
         if (this.list && this.list.length) {
           const itemId = this.list[0].location_obj.id
-          const markers = this.map.getAllOverlays('marker')
-          this.map.setFitView(markers)
-          const marker = markers.find(item => {
-            return item.itemId === itemId
-          })
-          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
+          // const markers = this.map.getAllOverlays('marker')
+          // this.map.setFitView(markers)
+          // const marker = markers.find(item => {
+          //   return item.itemId === itemId
+          // })
+          // this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
     }

@@ -1,29 +1,21 @@
-import AMap from 'AMap'
+import QMap from 'QMap'
 import Store from '~src/store/index.js'
 import * as Types from '~src/store/types.js'
 
 export function initMap () {
   return new Promise(resolve => {
-    const map = new AMap.Map('allmap', { // 创建Map实例
-      resizeEnable: true,
-      mapStyle: 'amap://styles/7b3dbe0900deae4bcbe445c95b0df7f3'
+    const map = new QMap.Map(document.getElementById('allmap'), {
+      // 地图的中心地理坐标。
+      zoom: 10,
+      mapTypeId: QMap.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      zoomControl: true,
+      zoomControlOptions: {
+        position: QMap.ControlPosition.BOTTOM_RIGHT,
+        style: QMap.ZoomControlStyle.DEFAULT
+      }
     })
-    map.plugin(['AMap.ToolBar'], () => {
-      var toolBar = new AMap.ToolBar({
-        ruler: false,
-        noIpLocate: true,
-        locate: true,
-        direction: false,
-        position: 'RB',
-        liteStyle: true
-      })
-      toolBar.on('location', ({ type, lnglat }) => {
-        Store.commit(Types.SET_MAP_USER_LOCATION, lnglat)
-      })
-      map.addControl(toolBar)
-      map.toolBar = toolBar
-      resolve(map)
-      window.map = map
-    })
+    resolve(map)
+    window.map = map
   })
 }
