@@ -22,7 +22,7 @@
         <div :class="$style.productItem" @click="toProduct(item.id)"
         v-for="item in data.items.slice(0, 2)" :key="item.id">
           <div :class="$style.productImg">
-            <img :src="item.images[0].url" v-if="item.images && item.images.length">
+            <img :src="item.images[0].url" v-if="item.images && item.images.length" @load="proLoad">
           </div>
           <div :class="$style.productTitle">
             {{item.title}}
@@ -53,6 +53,18 @@ export default {
   created () {
   },
   methods: {
+    proLoad (e) {
+      const img = e.path[0]
+      if (img.height < img.width) {
+        Object.assign(img.style, {
+          height: '100%',
+          width: 'auto',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
+        })
+      }
+    },
     imgLoad (e) {
       const img = e.path[0]
       if (img.height < img.width / 1.5) {
@@ -150,10 +162,11 @@ export default {
   overflow hidden
   img
     display block
-    height 100%
     position relative
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
+    
 .productTitle
   margin-top 8px
   overflow hidden

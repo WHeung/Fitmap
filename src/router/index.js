@@ -122,7 +122,7 @@ router.beforeEach((to, from, next) => {
   */
   const loginType = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
   if (loginType === 'oauth') {}
-  if (isWeixin() || false) {
+  if (isWeixin()) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
       const outQuery = outRouteParams(window.location.search)
@@ -141,7 +141,10 @@ router.beforeEach((to, from, next) => {
       }
       return
     } else {
-      Store.commit(Types.SET_USER, { token: token })
+      const originToken = Store.state.user.user.token
+      if (token !== originToken) {
+        Store.commit(Types.SET_USER, { token: token })
+      }
     }
   }
   // 去掉继承会有其他问题,比如地址重定向会在每次刷新后回到初始页

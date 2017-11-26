@@ -36,8 +36,6 @@ export default {
   },
   beforeRouteUpdate (to, from, next) {
     if (String(to.params.id) !== String(from.params.id)) {
-      console.info('fromId' + from.params.id)
-      console.info('toId' + to.params.id)
       this.$store.dispatch(Types.OPEN_LOADING)
       this.view = null
       this.$refs.detail.scrollTop = 0

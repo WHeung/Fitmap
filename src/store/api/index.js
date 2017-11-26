@@ -51,7 +51,10 @@ export default function callApi (apiName, params, closeLoading) {
   })
 }
 
-const HTTP = 'http://fitmap.deexcul.com'
+let HTTP = 'http://fitmap.deexcul.com'
+if (/localhost/.test(window.location.origin)) {
+  HTTP = 'https://easy-mock.com/mock/59ec3faa1a3fcd087e699845/Fitmap'
+}
 // const token = store.state.user.user.token
 
 apiMap[Types.FETCH_CODE_GET] = function (data) {

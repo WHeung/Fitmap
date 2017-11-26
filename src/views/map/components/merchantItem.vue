@@ -6,7 +6,7 @@
     <div :class="$style.content">
       <div :class="$style.titleWrap">
         <div :class="$style.title">{{item.title}}</div>
-        <i :class="{[$style.active]: item.is_collected}"></i>
+        <i :class="{[$style.active]: item.is_collected}" @click.stop="collectClick"></i>
       </div>
       <div :class="$style.conWrap">
         <div :class="$style.tag">
@@ -39,6 +39,14 @@ export default {
           height: img.width + 'px'
         }
       }
+    },
+    collectClick () {
+      this.$emit('collect',
+        {
+          id: this.item.id,
+          method: this.item.is_collected ? 'del' : 'collect'
+        }
+      )
     }
   }
 }

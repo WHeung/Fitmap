@@ -6,7 +6,10 @@
     <IScroll @handleBottomBounce="getMore" v-model="iScroll">
       <div v-if="list && list.length">
         <template v-if="classForm.selected[0] === 0">
-          <MerchantItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail" ref="items"></MerchantItem>
+          <MerchantItem
+          :class="$style.item"
+          v-for="item in list" :key="item.id"
+          :item="item" @toDetail="toDetail" @collect="collect" ref="items"></MerchantItem>
         </template>
         <template v-if="classForm.selected[0] === 1">
           <PostItem :class="$style.item" v-for="item in list" :key="item.id" :item="item" @toDetail="toDetail" ref="items"></PostItem>
@@ -99,6 +102,34 @@ export default {
         }
       })
       */
+    },
+    collect ({ id, method }) {
+      if (method === 'del') {
+        this.$store.dispatch(Types.UPDATE_USERS_COLLECTS_DEL, {
+          type: 'merchant',
+          id: id
+        }).then(() => {
+          const item = this.list.find(item => {
+            return item.id === id
+          })
+          item['is_collected'] = false
+        })
+      } else {
+        this.$store.dispatch(Types.UPDATE_USERS_COLLECTS_POST, {
+          type: 'merchant',
+          id: id
+        }).then(() => {
+          const item = this.list.find(item => {
+            return item.id === id
+          })
+          item['is_collected'] = true
+          this.$store.dispatch(Types.OPEN_POPUP, {
+            title: '提示',
+            word: '收藏成功',
+            leftMsg: '确定'
+          })
+        })
+      }
     },
     getMore () {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, { page: this.pagination.current_page + 1 })
