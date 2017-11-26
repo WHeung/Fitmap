@@ -124,57 +124,54 @@ const Actions = {
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
     if (state.pagination && state.pagination.current_page === 1) {
-      state.map && state.map.remove(state.map.getAllOverlays())
+      // state.map && state.map.remove(state.map.getProjection())
     }
     const locationList = list.map(item => {
       return item.location_obj
     })
+    let minLat = locationList[0].lat
+    let maxLat = minLat
+    let minLng = locationList[0].lng
+    let maxLng = minLng
     for (let i = 0, item; i < locationList.length; i++) {
       item = locationList[i]
-      // var marker = new AMap.Marker({
-      //   map: state.map,
-      //   icon: Icon({
-      //     icon: icon,
-      //     size: size(28, 30)
-      //   }),
-      //   clickable: true,
-      //   topWhenClick: true,
-      //   offset: pixel(-14, -15),
-      //   position: LngLat(item.lng, item.lat),
-      //   extData: { id: item.id }39.913889
-      // })
+      item.lat < minLat && (minLat = item.lat)
+      item.lat > maxLat && (maxLat = item.lat)
+      item.lng < minLng && (minLng = item.lng)
+      item.lng > maxLng && (maxLng = item.lng)
       const marker = new QMap.Marker({
-        //设置Marker的位置坐标
-        position: LngLat(116.415396, 39.913889),
-        //设置显示Marker的地图
+        // 设置Marker的位置坐标
+        position: LngLat(item.lng, item.lat),
+        // 设置显示Marker的地图
         map: state.map,
-        icon: normalIcon(),
-      });
+        title: 'markerPoint',
+        icon: normalIcon()
+      })
       marker.itemId = item.id
-      marker.on('click', ({ lnglat, pixel, target }) => {
-        dispatch(Types.UPDATE_MAP_SELECTITEM, target)
-      }, arguments[0])
+      QMap.event.addListener(marker, 'click', (data) => {
+        dispatch(Types.UPDATE_MAP_SELECTITEM, data.target)
+      })
+      // marker.on('click', ({ lnglat, pixel, target }) => {
+      //   dispatch(Types.UPDATE_MAP_SELECTITEM, target)
+      // }, arguments[0])
     }
+    const sw = new QMap.LatLng(maxLat, maxLng)
+    const ne = new QMap.LatLng(minLat, minLng)
+    const latlngBounds = new QMap.LatLngBounds(ne, sw)
+    state.map.fitBounds(latlngBounds)
+    // console.log()
   },
   [Types.UPDATE_MAP_SELECTITEM] ({ state, commit }, marker) {
     const oldItem = state.selectedItem
     const allData = state.list
     if (oldItem && oldItem.marker) {
-      oldItem.marker.setIcon(Icon({
-        icon: icon,
-        size: size(24, 26)
-      }))
-      oldItem.marker.setOffset(new AMap.Pixel(-12, -13))
+      oldItem.marker.setIcon(normalIcon())
     }
-    marker.setIcon(Icon({
-      icon: onIcon,
-      size: size(44, 62)
-    }))
+    marker.setIcon(activeIcon())
     const data = allData.find(val => {
-      return val.location_obj.id === marker.getExtData().id
+      return val.location_obj.id === marker.itemId
     })
-    marker.setOffset(new AMap.Pixel(-22, -57))
-    state.map.setCenter(marker.getPosition())
+    state.map.panTo(marker.getPosition())
     commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   },
   [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
@@ -211,9 +208,17 @@ export default {
 
 function normalIcon () {
   const size = Size(28, 30)
+  const scaleSize = size
   const origin = Point(0, 0)
-  const anchor = Point(0, 0)
-  return new QMap.MarkerImage(icon, size, origin, anchor)
+  const anchor = Point(14, 15)
+  return new QMap.MarkerImage(icon, size, origin, anchor, scaleSize)
+}
+function activeIcon () {
+  const size = Size(44, 62)
+  const scaleSize = size
+  const origin = Point(0, 0)
+  const anchor = Point(22, 31)
+  return new QMap.MarkerImage(onIcon, size, origin, anchor, scaleSize)
 }
 
 function Icon ({ icon, size }) {
@@ -235,5 +240,5 @@ function pixel (left, right) {
 }
 
 function LngLat (lng, lat) {
-  return new QMap.LngLat(lng, lat)
+  return new QMap.LatLng(lat, lng)
 }

@@ -88,8 +88,8 @@ export default {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then((list) => {
         if (list && list.length) {
           const itemId = list[0].location_obj.id
-          const markers = this.map.getAllOverlays('marker')
-          this.map.setFitView(markers)
+          // const markers = this.map.getAllOverlays('marker')
+          // this.map.setFitView(markers)
           const marker = markers.find(item => {
             return item.itemId === itemId
           })

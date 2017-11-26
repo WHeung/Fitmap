@@ -129,6 +129,14 @@ a
   div
     pointer-events visible
 
+#allmap
+  div[title="markerPoint"]
+    border-radius 50%
+    overflow hidden
+    img
+      width 100%
+      border-radius 50%
+
 .routeView
   width 100%
   min-height 100%
