@@ -1,10 +1,11 @@
 <template>
   <div :class="$style.main">
-    <!-- <AMapComponent v-model="map"></AMapComponent> -->
       <Filters
       :updateForm="updateForm" :form="classForm" origin="index"
       @searchClick="searchClick" @request="request"></Filters>
-      <!-- <Sacle :class="{[$style.transTop]: item }" :map="map"></Sacle> -->
+      <Sacle :class="{[$style.transTop]: selectedItem }"
+      :locateBtn="locateBtn" :map="map"
+      @locate="locateClick"></Sacle>
       <div :class="$style.bottom" v-if="selectedItem && selectedItem.item">
         <BusItem :class="$style.item" v-if="selectedItem.item.search_type==='merchant'" :item="selectedItem.item" @toDetail="toDetail"></BusItem>
         <PostItem :class="$style.item" v-if="selectedItem.item.search_type==='post'" :item="selectedItem.item" @toDetail="toDetail"></PostItem>
@@ -28,7 +29,8 @@ export default {
   data () {
     return {
       type: '',
-      updateForm: 0
+      updateForm: 0,
+      locateBtn: 'no'
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -87,6 +89,13 @@ export default {
   mounted () {
   },
   methods: {
+    locateClick (isLocate) {
+      if (isLocate) {
+        this.locateBtn = 'loading'
+      } else {
+        this.locateBtn = 'no'
+      }
+    },
     toListView () {
       this.$router.push({ name: 'mapListView' })
     },
