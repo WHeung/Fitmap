@@ -15,6 +15,7 @@ export function initMap () {
         style: QMap.ZoomControlStyle.DEFAULT
       }
     })
+    map.markers = []
     resolve(map)
     window.map = map
   })

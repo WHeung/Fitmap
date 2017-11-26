@@ -16,8 +16,6 @@
 </template>
 
 <script>
-// import AMapComponent from '~src/components/AMap.vue'
-import AMap from 'AMap'
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
@@ -116,12 +114,11 @@ export default {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
         if (this.list && this.list.length) {
           const itemId = this.list[0].location_obj.id
-          // const markers = this.map.getAllOverlays('marker')
-          // this.map.setFitView(markers)
-          // const marker = markers.find(item => {
-          //   return item.itemId === itemId
-          // })
-          // this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
+          const markers = this.map.markers
+          const marker = markers.find(item => {
+            return item.itemId === itemId
+          })
+          this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
       })
     }

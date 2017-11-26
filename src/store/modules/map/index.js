@@ -124,7 +124,11 @@ const Actions = {
   },
   [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
     if (state.pagination && state.pagination.current_page === 1) {
-      // state.map && state.map.remove(state.map.getProjection())
+      for (let i = 0; i < state.map.markers.length; i++) {
+        const marker = state.map.markers[i]
+        marker.setMap(null)
+      }
+      state.map.markers = []
     }
     const locationList = list.map(item => {
       return item.location_obj
@@ -140,9 +144,7 @@ const Actions = {
       item.lng < minLng && (minLng = item.lng)
       item.lng > maxLng && (maxLng = item.lng)
       const marker = new QMap.Marker({
-        // 设置Marker的位置坐标
         position: LngLat(item.lng, item.lat),
-        // 设置显示Marker的地图
         map: state.map,
         title: 'markerPoint',
         icon: normalIcon()
@@ -151,23 +153,22 @@ const Actions = {
       QMap.event.addListener(marker, 'click', (data) => {
         dispatch(Types.UPDATE_MAP_SELECTITEM, data.target)
       })
-      // marker.on('click', ({ lnglat, pixel, target }) => {
-      //   dispatch(Types.UPDATE_MAP_SELECTITEM, target)
-      // }, arguments[0])
+      state.map.markers.push(marker)
     }
-    const sw = new QMap.LatLng(maxLat, maxLng)
-    const ne = new QMap.LatLng(minLat, minLng)
+    const sw = LngLat(maxLng, maxLat)
+    const ne = LngLat(minLng, minLat)
     const latlngBounds = new QMap.LatLngBounds(ne, sw)
     state.map.fitBounds(latlngBounds)
-    // console.log()
   },
   [Types.UPDATE_MAP_SELECTITEM] ({ state, commit }, marker) {
     const oldItem = state.selectedItem
     const allData = state.list
     if (oldItem && oldItem.marker) {
       oldItem.marker.setIcon(normalIcon())
+      oldItem.marker.setZIndex(0)
     }
     marker.setIcon(activeIcon())
+    marker.setZIndex(1)
     const data = allData.find(val => {
       return val.location_obj.id === marker.itemId
     })
@@ -217,7 +218,7 @@ function activeIcon () {
   const size = Size(44, 62)
   const scaleSize = size
   const origin = Point(0, 0)
-  const anchor = Point(22, 31)
+  const anchor = Point(22, 50)
   return new QMap.MarkerImage(onIcon, size, origin, anchor, scaleSize)
 }
 
