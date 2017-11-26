@@ -1,6 +1,4 @@
 import QMap from 'QMap'
-import Store from '~src/store/index.js'
-import * as Types from '~src/store/types.js'
 
 export function initMap () {
   return new Promise(resolve => {
@@ -9,7 +7,7 @@ export function initMap () {
       zoom: 10,
       mapTypeId: QMap.MapTypeId.ROADMAP,
       mapTypeControl: false,
-      zoomControl: true,
+      zoomControl: false, // true,
       zoomControlOptions: {
         position: QMap.ControlPosition.BOTTOM_RIGHT,
         style: QMap.ZoomControlStyle.DEFAULT
