@@ -1,13 +1,16 @@
 <template>
   <div :class="$style.main">
-    <div :class="$style.detail" ref="detail" :style="style">
-      <MerchantView v-if="data && view === 'merchant'" :data="data"></MerchantView>
-      <PostView v-if="data && view === 'post'" :data="data"></PostView>
-      <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
-    </div>
-    <div :class="$style.bottom" v-if="data">
-      <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
-    </div>
+    <template v-show="$route.name === 'detailView'">
+      <div :class="$style.detail" ref="detail" :style="style">
+        <MerchantView v-if="data && view === 'merchant'" :data="data"></MerchantView>
+        <PostView v-if="data && view === 'post'" :data="data"></PostView>
+        <ProductView v-if="data && view === 'item'" :data="data"></ProductView>
+      </div>
+      <div :class="$style.bottom" v-if="data">
+        <Btn type="blue" :title="`${disabled ? '已':''}收藏`" @clickBtn="clickBtn"></Btn>
+      </div>
+    </template>
+    <router-view :data="data" mode="in-out"></router-view>
   </div>
 </template>
 
@@ -17,30 +20,42 @@ import MerchantView from './merchantView.vue'
 import PostView from './postView.vue'
 import ProductView from './productView.vue'
 import Btn from '~src/components/Btn.vue'
+import routerReplace from '~src/tool/routerReplace'
 
 export default {
   name: 'detail',
   data () {
     return {
-      style: null,
+      style: {
+        height: window.innerHeight + 'px'
+      },
       view: '',
       data: null,
       disabled: false
     }
   },
   beforeRouteUpdate (to, from, next) {
-    this.$store.dispatch(Types.OPEN_LOADING)
-    this.view = null
-    this.$refs.detail.scrollTop = 0
-    this.fetchData({ type: to.params.type, id: to.params.id })
+    if (String(to.params.id) !== String(from.params.id)) {
+      this.$store.dispatch(Types.OPEN_LOADING)
+      this.view = null
+      this.$refs.detail.scrollTop = 0
+      this.fetchData({ type: to.params.type, id: to.params.id })
+    }
     next()
   },
   components: { MerchantView, PostView, ProductView, Btn },
   created () {
-    this.style = {
-      height: window.innerHeight + 'px'
-    }
-    this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
+    const toRoute = JSON.stringify({ name: this.$route.name, params: this.$route.params })
+    this.$store.dispatch(Types.USER_LOGIN, {}).then(user => {
+      if (!user.is_cellphone_checked) {
+        routerReplace(this, { name: 'registerPhoneView', query: { toRoute: toRoute }})
+        return
+      } else if (!user.is_company_checked) {
+        routerReplace(this, { name: 'coummateInfoView', query: { toRoute: toRoute }})
+        return
+      }
+      this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
+    })
   },
   methods: {
     clickBtn () {
@@ -89,6 +104,8 @@ export default {
 
 .main
   position relative
+  background $mainBg
+  min-height 100%
 
 .detail
   padding-bottom 72px

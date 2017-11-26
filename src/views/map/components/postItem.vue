@@ -6,8 +6,7 @@
         <span v-if="item.label">{{item.label}}</span>
       </div>
     </div>
-    <div :class="$style.sub">
-      {{item.content}}
+    <div :class="$style.sub" v-html="item.content">
     </div>
     <div :class="$style.msg">
       <div>{{item.location_obj.address}}</div>

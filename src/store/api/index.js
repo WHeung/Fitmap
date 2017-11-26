@@ -1,5 +1,6 @@
 import { checkResponseCode } from './responseCode'
 import getTimeStampId from '~src/tool/getTimeStampId'
+import weixinReload from '~src/tool/weixinReload.js'
 import * as Types from '../types'
 import Axios from 'axios'
 import store from '../'
@@ -27,7 +28,11 @@ export default function callApi (apiName, params, closeLoading) {
       console.log(res.data)
       if (res.data.code === 4000) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
-        window.location.reload()
+        const location = window.location
+        const hash = location.hash.replace(/[\?|\&]redirected\=1/, '')
+        location.replace(location.origin + location.pathname + '?redirect=' + hash)
+        // weixinReload()
+        return
       }
       const codeResult = checkResponseCode(res.data.code)
       if (codeResult.isSuccess) {
@@ -46,11 +51,14 @@ export default function callApi (apiName, params, closeLoading) {
   })
 }
 
-const HTTP = 'http://fitmap.deexcul.com'
+let HTTP = 'http://fitmap.deexcul.com'
+if (/localhost/.test(window.location.origin)) {
+  HTTP = 'https://easy-mock.com/mock/59ec3faa1a3fcd087e699845/Fitmap'
+}
 // const token = store.state.user.user.token
 
 apiMap[Types.FETCH_CODE_GET] = function (data) {
-  return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.phone}&token=${data.token}t=${getTimeStampId()}`)
+  return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.cellphone}&token=${data.token}t=${getTimeStampId()}`)
 }
 
 apiMap[Types.FETCH_USERS_GET] = function (data) {
@@ -107,7 +115,7 @@ apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
   return axiosRequest.get(
     `${HTTP}/api/map/search?t=${getTimeStampId()}` +
-    `$token=${data.token}` +
+    `&token=${data.token}` +
     `&type=${data.type}` +
     `&category=${data.category}` +
     `&keyword=${data.keyword}` +

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :class="$style.main">
     <div v-if="!dataList || !dataList.length">
       <div :class="$style.img"></div>
       <div :class="$style.title">还没有任何收藏</div>
@@ -77,6 +77,10 @@ export default {
 </script>
 
 <style lang="stylus" module>
+@import '~tool/vendor'
+
+.main
+  background $mainBg
 .item
   margin-bottom 12px
 

@@ -72,6 +72,8 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.main
+  background $mainBg
 .info
   padding (36/20)rem 0
   text-align center
@@ -79,6 +81,7 @@ export default {
   background-size 100% 100%
 
 .avatar
+  position relative
   margin 0 auto
   width 96px
   height 96px
@@ -86,13 +89,14 @@ export default {
   background #fff
   border 3px solid #fff
   box-shadow 0 4px 12px 0 rgba(0,0,0,0.10)
-  border-radius 100px
+  border-radius 50%
   img
-    position relative
+    position absolute
     display block
     width 100%
     top 50%
     transform translateY(-50%)
+    border-radius 50%
 
 .name
   margin 20px 0

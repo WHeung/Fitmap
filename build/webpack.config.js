@@ -17,7 +17,8 @@ const config = {
       'vue-router',
       'vuex',
       'vue-lazyload',
-      'axios'
+      'axios',
+      'weixin-js-sdk'
     ]
   },
   externals: {

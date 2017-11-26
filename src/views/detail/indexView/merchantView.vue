@@ -2,17 +2,17 @@
   <div :class="$style.main">
     <div :class="$style.item">
       <div :class="$style.avatar">
-        <img :src="data.images[0].url" @load="imgLoad">
+        <img :src="data.cover || data.images[0].url" @load="imgLoad">
         <div :class="$style.moreImg" v-if="data.label !== '健身器材'" @click="seeMorePic">更多</div>
       </div>
       <div :class="$style.title">{{data.title}}</div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
     :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
-    <div :class="$style.item" v-if="data.label === '健身器材'">
+    <div :class="$style.item" v-if="data.label === '健身器材' && data.items && data.items.length">
       <div :class="$style.productsTop">
         <div :class="$style.productsTitle">在售商品</div>
-        <div :class="$style.productsMore">
+        <div :class="$style.productsMore" v-show="data.items.length > 2">
           <span>更多</span>
           <i :class="$style.msgArrow"></i>
         </div>
@@ -22,7 +22,7 @@
         <div :class="$style.productItem" @click="toProduct(item.id)"
         v-for="item in data.items.slice(0, 2)" :key="item.id">
           <div :class="$style.productImg">
-            <img :src="item.images[0]">
+            <img :src="item.images[0].url" v-if="item.images && item.images.length" @load="proLoad">
           </div>
           <div :class="$style.productTitle">
             {{item.title}}
@@ -33,7 +33,7 @@
         </div>
       </div>
     </div>
-    <div :class="[$style.item, $style.intr]" v-html="data.content"></div>
+    <div :class="[$style.item, $style.intr]" v-if="data.content" v-html="data.content"></div>
   </div>
 </template>
 
@@ -53,15 +53,27 @@ export default {
   created () {
   },
   methods: {
+    proLoad (e) {
+      const img = e.path[0]
+      if (img.height < img.width) {
+        Object.assign(img.style, {
+          height: '100%',
+          width: 'auto',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
+        })
+      }
+    },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height < 1.5) {
+      if (img.height < img.width / 1.5) {
         Object.assign(img.style, {
-          height: 'auto',
-          width: '100%',
-          left: 'unset',
-          top: '50%',
-          transform: 'translateY(-50%)'
+          height: '100%',
+          width: 'auto',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
         })
       }
     },
@@ -73,7 +85,7 @@ export default {
       this.$router.push({ name: 'detailPicView', params: { id: this.data.id, type: 'merchant' }})
     },
     toProduct (id) {
-      this.$router.push({ name: 'detailView', params: { type: 'product', id: id }})
+      this.$router.push({ name: 'detailView', params: { type: 'item', id: id }})
     },
     toMap () {
       this.$store.dispatch(Types.FILL_BUCKET, {
@@ -100,9 +112,9 @@ export default {
   img
     position relative
     display block
-    height 100%
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
 .moreImg
   position absolute
   right 12px
@@ -150,10 +162,11 @@ export default {
   overflow hidden
   img
     display block
-    height 100%
     position relative
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
+    
 .productTitle
   margin-top 8px
   overflow hidden

@@ -68,16 +68,6 @@ export default {
       if (userLoc.lat && userLoc.lng) {
         return userLoc
       }
-    },
-    formData () {
-      const map = this.$store.state.map // mapModule
-      const type = map.classTypes[this.classForm.selected[0]].data
-      const formData = {
-        keyword: this.classForm.input,
-        type: type,
-        category: map.classCategorys[type][this.classForm.selected[1]].name
-      }
-      return formData
     }
   },
   watch: {
@@ -103,6 +93,8 @@ export default {
       this.$router.push({ name: 'mapListView' })
     },
     toDetail ({ id, type }) {
+      this.$router.push({ name: 'detailView', params: { id, type }})
+      /** 换成先跳转详情页再检查登录
       const toRoute = JSON.stringify({ name: 'detailView', params: { id, type }})
       this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
         if (this.user.is_cellphone_checked && this.user.is_company_checked) {
@@ -113,6 +105,7 @@ export default {
           this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
         }
       })
+      */
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
@@ -141,12 +134,8 @@ $breakline = #E1E5EB
 $assistText = #9DA2AB
 
 .main
-  pointer-events none // 点击穿透属性，使地图可以拖到
-  position absolute
-  top 0
-  width 100%
-  height 100%
-  >div
+  pointer-events none !important// 点击穿透属性，使地图可以拖到
+  div
     pointer-events visible // 之后的容器不需要继承点击穿透
 
 .bottom

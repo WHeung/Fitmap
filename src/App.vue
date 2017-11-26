@@ -1,12 +1,15 @@
 <template>
-  <div id="app" v-pxtorem>
-    <transition :name="isIOSDevice?'view':''" mode="out-in">
-      <router-view :class="{ready: loading}"></router-view>
-    </transition>
-    <Toast></Toast>
-    <Loading></Loading>
-    <ApiLoading></ApiLoading>
-    <popUp></popUp>
+  <div>
+    <div id="allmap" :style="mapStyle"></div>
+    <div id="app" v-pxtorem>
+      <transition :name="isIOSDevice?'view':''" mode="out-in">
+        <router-view :class="[{ready: loading}, 'routeView']"></router-view>
+      </transition>
+      <Toast></Toast>
+      <Loading></Loading>
+      <ApiLoading></ApiLoading>
+      <popUp></popUp>
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,14 @@ import { isIOS } from '~src/tool/containerDetect'
 export default {
   name: 'app',
   components: { Toast, Loading, ApiLoading, popUp },
+  data () {
+    return {
+      mapStyle: {
+        width: window.innerWidth + 'px',
+        height: window.innerHeight + 'px'
+      }
+    }
+  },
   computed: {
     loading () {
       return this.$store.state.loading
@@ -107,7 +118,40 @@ a
 
 .ready
   visibility hidden
-</style>
 
-<style lang="stylus" module>
+#app
+  pointer-events none
+  position absolute
+  top 0
+  left 0
+  width 100%
+  height 100%
+  div
+    pointer-events visible
+
+.routeView
+  width 100%
+  min-height 100%
+
+  
+
+.amap-logo
+.amap-copyright
+.anchorBL
+  display none !important
+
+.amap-geo
+  display block !important
+// #app .amap-zoomcontrol
+//   position fixed
+//   right 10px
+//   bottom 10px
+
+#allmap
+  width 100%
+  height 100%
+  transform translateZ(0)
+  opacity 1
+  -webkit-overflow-scrolling touch
+
 </style>

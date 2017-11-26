@@ -1,8 +1,10 @@
 <template>
-  <div :class="$style.loading" v-show="show">
-    <svg viewBox="25 25 50 50" :class="$style.circular">
-      <circle cx="50" cy="50" r="20" fill="none" :class="$style.path"></circle>
-    </svg>
+  <div :class="$style.mask" v-show="show">
+    <div :class="$style.loading">
+      <svg viewBox="25 25 50 50" :class="$style.circular">
+        <circle cx="50" cy="50" r="20" fill="none" :class="$style.path"></circle>
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -20,13 +22,21 @@ export default {
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.mask
+  position fixed
+  top 0
+  left 0
+  right 0
+  bottom 0
+  z-index 100
+  background $mainBg
 .loading
   top 50%
   left 0
   margin-top -21px
   width 100%
   text-align center
-  position fixed
+  position absolute
   z-index 100
 
 .circular

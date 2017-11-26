@@ -1,7 +1,7 @@
 <template>
   <div :class="$style.main" @click="toDetailView">
     <div :class="$style.img">
-      <img :src="item.images[0].url" @load="imgLoad">
+      <img :src="item.cover" :style="imgStyle" ref="img" @load="imgLoad">
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
@@ -17,6 +17,38 @@
 export default {
   name: 'map-bus-item',
   props: ['item'],
+  data () {
+    return {
+      imgStyle: null
+    }
+  },
+  watch: {
+    item: {
+      handler (val) {
+        const img = new Image()
+        img.src = val.cover
+        if (img.width && img.height) {
+          if (img.height < img.width * 140 / 187.5) {
+            this.imgStyle = {
+              width: 'auto',
+              height: '100%',
+              top: 'unset',
+              left: '50%',
+              transform: 'translateX(-50%)'
+            }
+          } else {
+            this.imgStyle = {
+              width: '100%',
+              height: 'auto',
+              top: '50%',
+              left: 'unset',
+              transform: 'translateY(-50%)'
+            }
+          }
+        }
+      }
+    }
+  },
   methods: {
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
@@ -24,14 +56,14 @@ export default {
     },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.width / img.height < 187.5 / 140) {
-        Object.assign(img.style, {
-          height: 'auto',
-          width: '100%',
-          left: 'unset',
-          top: '50%',
-          transform: 'translateY(-50%)'
-        })
+      if (img.height < img.width * 140 / 187.5) {
+        this.imgStyle = {
+          width: 'auto',
+          height: '100%',
+          top: 'unset',
+          left: '50%',
+          transform: 'translateX(-50%)'
+        }
       }
     }
   }
@@ -56,9 +88,9 @@ $white = #FFFFFF
   img
     position relative
     display block
-    height 100%
-    left 50%
-    transform translateX(-50%)
+    width 100%
+    top 50%
+    transform translateY(-50%)
 
 .content
   position relative
@@ -69,7 +101,7 @@ $white = #FFFFFF
   display -webkit-box
   font-size 15px
   line-height 16px
-  height 33px
+  height 32px
   overflow hidden
   text-overflow ellipsis
   -webkit-line-clamp 2

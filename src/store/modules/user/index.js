@@ -18,14 +18,14 @@ const Actions = {
   [Types.USER_LOGIN] ({ commit, state, dispatch }, { callback }) {
     return new Promise(resolve => {
       if (state.user.id) {
-        resolve()
+        resolve(state.user)
         return
       }
       CallApi(Types.FETCH_USERS_GET).then(res => {
         const info = res.data.data
         commit(Types.SET_USER, info)
         callback && callback()
-        resolve()
+        resolve(info)
       })
     })
   },
@@ -59,7 +59,7 @@ const Actions = {
     return new Promise(resolve => {
       const user = Object.assign({}, data) // Object.assign(state.user, data)
       CallApi(Types.FETCH_USERS_UPDATE, { data: user }).then(res => {
-        commit(Types.SET_USER, res.data.data)
+        commit(Types.SET_USER, data)
         resolve(res.data.data)
       })
     })

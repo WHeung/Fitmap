@@ -1,6 +1,8 @@
 <template>
   <div :class="$style.main">
-    <Filters :updateForm="updateForm" :form="classForm" origin="search" @search="search"></Filters>
+    <Filters
+    :updateForm="updateForm" :form="classForm" origin="search"
+    @search="search" @noSureSelect="noSureSelect"></Filters>
     <div :class="$style.histroy">
       <div :class="$style.hisTop">
         <div :class="$style.hisTitle">
@@ -30,13 +32,15 @@ export default {
   data () {
     return {
       updateForm: 0,
-      history: JSON.parse(window.localStorage[storageKey] || '[]')
+      history: JSON.parse(window.localStorage[storageKey] || '[]'),
+      momentSelect: ''
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
       vm.updateForm++
       vm.$store.dispatch(Types.CHANGE_NAV, { title: '搜索 Fit-map' })
+      vm.momentSelect = ''
     })
   },
   computed: {
@@ -67,8 +71,18 @@ export default {
     },
     useHistory (item) {
       // 请求
-      this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: item })
+      const form = {
+        input: item
+      }
+      if (this.momentSelect) {
+        form.selected = this.momentSelect
+      }
+      this.$store.commit(Types.SET_MAP_FILTERS_FORM, form)
       this.request()
+    },
+    noSureSelect (selected) {
+      // 因为点击历史列表时候需要获取临时的select保存起来
+      this.momentSelect = selected
     },
     request (data) {
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then((list) => {
