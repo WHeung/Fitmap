@@ -1,12 +1,18 @@
 #!/usr/bin/python
 #coding:utf-8
-from fabric.api import *
+from fabric.api import run, env, local, put
+from fabric import context_managers
 import sys
 import os
-sys.path.append('./build')
+sys.path.append(os.path.join(os.getcwd(), 'build'))
 
-env.hosts = ['ftpuser@120.24.154.176']
+env.warn_only = True
+env.hosts = ['120.24.154.176']
+env.user = 'ftpuser'
 env.password = '123456'
+
+def mock():
+  run('ls')
 
 def hello():
   print("Hello world!")

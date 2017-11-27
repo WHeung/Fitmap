@@ -102,10 +102,7 @@ export default {
     firstRequest () {
       if (this.map && this.userLoc) {
         this.initRequset = false
-        this.$store.dispatch(Types.UPDATE_MAP_SEARCH).then(() => {
-          const markers = this.map.getAllOverlays('marker')
-          this.map.setFitView(markers)
-        })
+        this.$store.dispatch(Types.UPDATE_MAP_SEARCH)
       }
     }
   }

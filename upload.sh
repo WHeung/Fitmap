@@ -3,7 +3,7 @@ ftp -n<<!
 open 120.24.154.176
 user ftpuser 123456
 binary
-cd /
+cd /qmap
 ls
 lcd /code/codeGit/Fitmap/dist
 prompt
