@@ -14,9 +14,9 @@ export function weixinConfig (config) {
   }
 }
 
-export function weixinReady (apiLsit) { // Array
+export function weixinReady (apiLsit, callback) { // Array
   wx.ready(function () {
-    apiLsit
+    callback && callback()
   })
 }
 
@@ -63,6 +63,41 @@ export function weixinGetLocation (data, callback) {
           })
         }
       })
+    })
+  }
+}
+
+export function onlyLoacation (data, callback) {
+  if (isWeixin()) {
+    wx.checkJsApi({
+      jsApiList: ['getLocation'],
+      success: function ({ checkResult, errMsg }) {
+        const result = JSON.parse(checkResult)
+        if (result && result.geoLocation === true) {
+          wx.getLocation({
+            type: data.type || 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+              callback && callback({
+                lat: res.latitude, // 纬度，浮点数，范围为90 ~ -90
+                lng: res.longitude // 经度，浮点数，范围为180 ~ -180。
+              })
+            }
+          })
+        } else {
+          console.warn(errMsg)
+          weixinReady(function () {
+            wx.getLocation({
+              type: data.type || 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+              success: function (res) {
+                callback && callback({
+                  lat: res.latitude, // 纬度，浮点数，范围为90 ~ -90
+                  lng: res.longitude // 经度，浮点数，范围为180 ~ -180。
+                })
+              }
+            })
+          })
+        }
+      }
     })
   }
 }

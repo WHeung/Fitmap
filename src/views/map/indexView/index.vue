@@ -22,6 +22,9 @@ import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
 import PostItem from '../components/postItem.vue'
 import * as Types from '~src/store/types'
+import { onlyLoacation } from '~src/store/api/weixinApi'
+import { LngLat, Point, Size } from '~src/tool/mapBase'
+import QMap from 'QMap'
 
 export default {
   name: 'map-index-view',
@@ -30,7 +33,8 @@ export default {
     return {
       type: '',
       updateForm: 0,
-      locateBtn: 'no'
+      locateBtn: 'no',
+      selfMarker: null
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -92,8 +96,10 @@ export default {
     locateClick (isLocate) {
       if (isLocate) {
         this.locateBtn = 'loading'
+        this.getLocate()
       } else {
         this.locateBtn = 'no'
+        this.selfMarker.getVisible(false)
       }
     },
     toListView () {
@@ -129,6 +135,28 @@ export default {
           })
           this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
         }
+      })
+    },
+    getLocate () {
+      onlyLoacation({}, ({ lat, lng }) => {
+        this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
+        if (!this.selfMarker) {
+          // this.selfMarker = new QMap.Circle({
+          //   center: LngLat(lng, lat),
+          //   map: this.map,
+          //   visible: true,
+          //   title: 'selfMarker',
+          //   radius: 40,
+          //   fillColor: '#0f89f5',
+          //   strokeColor: '#fff',
+          //   strokeWeight: 2
+          // })
+        } else {
+          this.selfMarker.setCenter(LngLat(lng, lat))
+          this.selfMarker.getVisible(true)
+        }
+        this.map.panTo(new QMap.LatLng(lat, lng))
+        this.locateBtn = 'yes'
       })
     }
   }
