@@ -43,6 +43,7 @@ export default {
     aroundMsg () {
       let msg = null
       if (this.data) {
+        const locationObj = this.data.location_obj
         if (this.data.label === '场地租赁' || this.data.label === '转让信息') {
           msg = [
             {
@@ -54,7 +55,7 @@ export default {
               color: 'red'
             }, {
               name: '位置',
-              value: this.data.position_content
+              value: `${locationObj.city}-${locationObj.area}`
             }
           ]
         }
@@ -65,7 +66,7 @@ export default {
               value: this.data.area
             }, {
               name: '位置',
-              value: this.data.position_content
+              value: `${locationObj.city}-${locationObj.area}`
             }
           ]
         }
@@ -77,7 +78,7 @@ export default {
               color: 'red'
             }, {
               name: '位置',
-              value: this.data.position_content
+              value: `${locationObj.city}-${locationObj.area}`
             }
           ]
         }

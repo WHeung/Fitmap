@@ -2,7 +2,7 @@
   <div :class="$style.main">
     <div :class="$style.item" v-for="item in aroundMsg" :key="item.name">
       <div :class="$style.name">{{item.name}}</div>
-      <div :class="[$style.con,{[$style.red]: item.color === 'red'}]">{{item.value}}</div>
+      <div :class="[$style.con,{[$style.red]: item.color === 'red'}]" v-html="item.value"></div>
     </div>
   </div>
 </template>
