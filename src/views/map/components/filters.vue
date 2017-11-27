@@ -23,7 +23,7 @@
       </div>
       <div :class="$style.classify">
         <div
-        :class="[$style.classItem, {[$style.activeItem]: cate === originSelectedCate}]"
+        :class="[$style.classItem, {[$style.activeItem]: (noSureData[1] === index) && (noSureData[0] === selected[0]) }]"
         v-for="(cate,index) in categorys" :key="cate.data"
         @click="choiceCate(index, cate)">{{cate.name}}</div>
       </div>
@@ -89,15 +89,18 @@ export default {
       input: '',
       selected: [0, 0],
       classTypes,
-      classCategorys
+      classCategorys,
+      noSureData: []
     }
   },
   props: ['origin', 'updateForm', 'form'],
   watch: {
     updateForm: {
       handler (val) {
+        this.mask = false
         this.input = this.form.input
         this.selected = [].concat(this.form.selected)
+        this.noSureData = [].concat(this.form.selected)
         if (this.$parent.$route.name === 'mapSearchView') {
           if (this.$refs.input) {
             setTimeout(() => {
@@ -169,11 +172,13 @@ export default {
       this.selected = [index, 0]
     },
     choiceCate (index, cate) {
-      if (this.originSelectedCate === cate) {
+      this.mask = false
+      const oldSelect = this.form.selected
+      const oldCate = this.classCategorys[this.classTypes[oldSelect[0]].data][oldSelect[1]]
+      if (oldCate === cate) {
         return
       }
       this.$set(this.selected, 1, index)
-      this.mask = false
       if (this.origin !== 'search') {
         const form = {
           input: this.input,
@@ -184,6 +189,8 @@ export default {
       } else {
         this.$emit('noSureSelect', this.selected)
       }
+      // 无论是否需要请求都要保存以选中临时数据
+      this.noSureData = [].concat(this.selected)
     }
   }
 }
