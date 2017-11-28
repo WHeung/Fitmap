@@ -134,6 +134,7 @@ export default {
   components: { Item },
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `关于我们` })
   }
 }
 </script>

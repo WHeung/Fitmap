@@ -63,6 +63,14 @@ const cooperateView = resolve => require.ensure(
   [], () => resolve(require('~src/views/cooperate/index.vue')),
   'co'
 )
+const noSurePlanView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/noSureView/noPlan.vue')),
+  'no'
+)
+const noSureReportView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/noSureView/noReport.vue')),
+  'no'
+)
 
 Vue.use(Router)
 
@@ -107,6 +115,8 @@ const router = new Router({
     },
     { path: '/about', component: aboutUsView, name: 'aboutUsView', meta: { noLogin: true }},
     { path: '/cooperate', component: cooperateView, name: 'cooperateView', meta: { noLogin: true }},
+    { path: '/plan', component: noSurePlanView, name: 'noSurePlanView', meta: { noLogin: true }},
+    { path: '/report', component: noSureReportView, name: 'noSureReportView', meta: { noLogin: true }},
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]

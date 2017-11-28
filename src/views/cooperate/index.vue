@@ -29,6 +29,7 @@ export default {
   name: 'cooperate-view',
   created () {
     this.$store.dispatch(Types.CLOSE_LOADING)
+    this.$store.dispatch(Types.CHANGE_NAV, { title: `商务合作` })
   }
 }
 </script>
