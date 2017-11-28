@@ -59,20 +59,15 @@ const aboutUsView = resolve => require.ensure(
   [], () => resolve(require('~src/views/about/index.vue')),
   'au'
 )
-const testAMapView = resolve => require.ensure(
-  [], () => resolve(require('~src/views/test/amap.vue')),
-  'test'
+const cooperateView = resolve => require.ensure(
+  [], () => resolve(require('~src/views/cooperate/index.vue')),
+  'co'
 )
 
 Vue.use(Router)
 
 const router = new Router({
   routes: [
-    {
-      path: '/amap',
-      component: testAMapView,
-      name: 'testAMapView'
-    },
     { path: '/user', component: userView, name: 'userView' },
     { path: '/user/info', component: userInfoView, name: 'userInfoView' },
     { path: '/user/favor/:type', component: userfavoritesView, name: 'userfavoritesView' },
@@ -110,7 +105,8 @@ const router = new Router({
         { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' }
       ]
     },
-    { path: '/about', component: aboutUsView, name: 'aboutUsView' },
+    { path: '/about', component: aboutUsView, name: 'aboutUsView', meta: { noLogin: true }},
+    { path: '/cooperate', component: cooperateView, name: 'cooperateView', meta: { noLogin: true }},
     { path: '/', component: RedirectView },
     { path: '*', component: NoFoundView }
   ]
@@ -120,9 +116,7 @@ router.beforeEach((to, from, next) => {
   /*
   * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
   */
-  const loginType = window.sessionStorage.getItem('login') // 判断主动跳授权登录还是回退跳的
-  if (loginType === 'oauth') {}
-  if (isWeixin()) {
+  if (isWeixin() && !to.meta.noLogin) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {
       const outQuery = outRouteParams(window.location.search)
