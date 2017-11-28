@@ -110,7 +110,7 @@ $white = #FFFFFF
   margin-top 6px
 .tag
   position absolute
-  top 0px
+  top -2px
   right -19px
   font-size 12px
   line-height 21px
@@ -122,6 +122,7 @@ $white = #FFFFFF
 .star
   margin-top 8px
 .address
+  max-width 90%
   bottom 16px
   font-size 12px
   color $assistText
