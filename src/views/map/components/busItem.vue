@@ -5,6 +5,10 @@
     </div>
     <div :class="$style.content">
       <div :class="$style.title">{{item.title}}</div>
+      <div :class="$style.star">
+        <i :class="[$style.starIcon, {[$style.actIcon]: item.star >= index}, {[$style.halfIcon]: isHalfStar(index)}]"
+        v-for="index in 5" :key="index"></i>
+      </div>
       <div :class="$style.tag">
         <span v-if="item.label">{{item.label}}</span>
       </div>
@@ -50,13 +54,21 @@ export default {
     }
   },
   methods: {
+    isHalfStar (index) {
+      const starArr = String(this.item.star).split('.')
+      if (starArr[0] === String(index - 1) && starArr[1] === '5') {
+        return true
+      } else {
+        return false
+      }
+    },
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
       // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
     },
     imgLoad (e) {
       const img = e.path[0]
-      if (img.height < img.width * 140 / 187.5) {
+      if (img.height < img.width * 96 / 128) {
         this.imgStyle = {
           width: 'auto',
           height: '100%',
@@ -81,9 +93,10 @@ $white = #FFFFFF
   background $white
 
 .img
-  width 50%
+  margin 16px 0 16px 16px
+  width (128/20)rem
   flex-shrink 0
-  height (140/20)rem
+  height (96/20)rem
   overflow hidden
   img
     position relative
@@ -120,8 +133,24 @@ $white = #FFFFFF
     
 .address
   position absolute
+  max-width (200/20)rem
+  overflow hidden
+  text-overflow ellipsis
+  white-space nowrap
   bottom 16px
   font-size 12px
   color $assistText
+
+.star
+  display flex
+.starIcon
+  width 12px
+  height 12px
+  background url('~public/fm_score_empty.svg') no-repeat
+  background-size 100% 100%
+.actIcon
+  background-image url('~public/fm_score_full.svg')
+.halfIcon
+  background-image url('~public/fm_score_half.svg')
 
 </style>

@@ -8,19 +8,23 @@
         <div :class="$style.title">{{item.title}}</div>
         <i :class="{[$style.active]: item.is_collected}" @click.stop="collectClick"></i>
       </div>
+      <Star :class="$style.star" :star="item.star"></Star>
       <div :class="$style.conWrap">
         <div :class="$style.tag">
           <span v-if="item.label">{{item.label}}</span>
         </div>
-        <div :class="$style.address">{{item.distance}} {{item.location_obj.address}}</div>
+        <div :class="$style.address"><template v-if="item.distance">{{item.distance}} </template>{{item.location_obj.address}}</div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import Star from './star.vue'
+
 export default {
   name: 'map-bus-item',
+  components: { Star },
   props: ['item'],
   data () {
     return {
@@ -100,23 +104,25 @@ $white = #FFFFFF
   font-size 15px
 
 .conWrap
+  position relative
   display flex
   align-items center
   margin-top 6px
 .tag
-  display inline-flex
+  position absolute
+  top 0px
+  right -19px
   font-size 12px
+  line-height 21px
   span
     padding 1px 8px
-    margin-right 6px
     background $mainText
     color $white
-    white-space nowrap
-    border-radius 10px
-    
+    border-radius 10px 0 0 10px
+.star
+  margin-top 8px
 .address
   bottom 16px
-  margin-left 16px
   font-size 12px
   color $assistText
 

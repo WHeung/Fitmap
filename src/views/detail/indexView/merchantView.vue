@@ -5,7 +5,10 @@
         <img :src="data.cover || data.images[0].url" @load="imgLoad">
         <div :class="$style.moreImg" v-if="data.label !== '健身器材'" @click="seeMorePic">更多</div>
       </div>
-      <div :class="$style.title">{{data.title}}</div>
+      <div :class="$style.titWrap">
+        <div :class="$style.title">{{data.title}}</div>
+        <Star :class="$style.star" :star="data.star"></Star>
+      </div>
     </div>
     <ContactItem :class="$style.item" @toMap="toMap"
     :location="data.location" :locationObj="data.location_obj" :telephones="data.telephones"></ContactItem>
@@ -40,10 +43,11 @@
 <script>
 import * as Types from '~src/store/types'
 import ContactItem from '../components/contactItem.vue'
+import Star from '../../map/components/star.vue'
 
 export default {
   name: 'merchant-View',
-  components: { ContactItem },
+  components: { ContactItem, Star },
   props: ['data'],
   data () {
     return {
@@ -134,9 +138,11 @@ export default {
     height 16px
     background url('~public/fm_img.svg') no-repeat
     background-size 100% 100%
-.title
+.titWrap
   padding 18px
   font-size 16px
+.star
+  margin-top 8px
 
 .productsTop
   padding 12px 18px
