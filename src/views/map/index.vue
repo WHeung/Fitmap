@@ -56,6 +56,22 @@ export default {
       // }
       // this.initRequset = false
     } else {
+      if (this.$route.query.cate) {
+        switch (this.$route.query.cate) {
+        case 'lease':
+          this.$store.commit(Types.SET_MAP_FILTERS_FORM, { selected: [1, 0] })
+          break
+        case 'design':
+          this.$store.commit(Types.SET_MAP_FILTERS_FORM, { selected: [0, 1] })
+          break
+        case 'train':
+          this.$store.commit(Types.SET_MAP_FILTERS_FORM, { selected: [0, 2] })
+          break
+        case 'equip':
+          this.$store.commit(Types.SET_MAP_FILTERS_FORM, { selected: [0, 3] })
+          break
+        }
+      }
       weixinLocation(this)
     }
   },
