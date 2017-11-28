@@ -113,6 +113,15 @@ const router = new Router({
         { path: '/detail/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' }
       ]
     },
+    {
+      path: '/preview-test/:type/:id(\\d+)',
+      component: detailView,
+      name: 'detailView',
+      meta: { noLogin: true },
+      children: [
+        { path: '/preview-test/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' }
+      ]
+    },
     { path: '/about', component: aboutUsView, name: 'aboutUsView', meta: { noLogin: true }},
     { path: '/cooperate', component: cooperateView, name: 'cooperateView', meta: { noLogin: true }},
     { path: '/plan', component: noSurePlanView, name: 'noSurePlanView', meta: { noLogin: true }},
