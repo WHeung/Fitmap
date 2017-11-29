@@ -116,10 +116,10 @@ const router = new Router({
     {
       path: '/preview-test/:type/:id(\\d+)',
       component: detailView,
-      name: 'detailView',
+      name: 'detailTestView',
       meta: { noLogin: true },
       children: [
-        { path: '/preview-test/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailPicView' }
+        { path: '/preview-test/:type/:id(\\d+)/pic', component: detailPicView, name: 'detailTestPicView' }
       ]
     },
     { path: '/about', component: aboutUsView, name: 'aboutUsView', meta: { noLogin: true }},
