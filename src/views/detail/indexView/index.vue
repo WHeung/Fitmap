@@ -46,6 +46,12 @@ export default {
   components: { MerchantView, PostView, ProductView, Btn },
   created () {
     const toRoute = JSON.stringify({ name: this.$route.name, params: this.$route.params })
+    // 不验证用户信息，测试用
+    if (this.$route.name === 'detailTestView') {
+      this.fetchData({ type: this.$route.params.type, id: this.$route.params.id })
+      return
+    }
+    //
     this.$store.dispatch(Types.USER_LOGIN, {}).then(user => {
       if (!user.is_cellphone_checked) {
         routerReplace(this, { name: 'registerPhoneView', query: { toRoute: toRoute }})

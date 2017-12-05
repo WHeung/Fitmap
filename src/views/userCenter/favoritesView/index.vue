@@ -8,6 +8,7 @@
       </div>
     </div>
     <div v-else>
+      <!-- <IScroll @handleBottomBounce="getMore"> -->
       <template v-if="type === 'item'">
         <StoreItem :class="$style.item"
           v-for="data in dataList" :key="data.id"
@@ -23,6 +24,7 @@
           v-for="data in dataList" :key="data.id"
           :data="data" @toDetail="toDetail"></PostItem>
       </template>
+      <!-- </IScroll> -->
     </div>
   </div>
 </template>
@@ -39,7 +41,8 @@ export default {
   data () {
     return {
       type: '',
-      dataList: []
+      dataList: [],
+      pagination: {}
     }
   },
   computed: {
@@ -62,12 +65,16 @@ export default {
     this.$store.dispatch(Types.CHANGE_NAV, { title: `${typeName} Fit-map` })
     this.$store.dispatch(Types.UPDATE_USERS_COLLECTS, { type: this.type }).then(dataList => {
       this.dataList = dataList.list
+      this.pagination = dataList.pagination
       this.$store.dispatch(Types.CLOSE_LOADING)
     })
   },
   methods: {
     toDetail (id) {
       this.$router.push({ name: 'detailView', params: { type: this.type, id: parseInt(id) }})
+    },
+    getMore () {
+      this.$store.dispatch(Types.UPDATE_MAP_SEARCH, { page: this.pagination.current_page + 1 })
     },
     toIndex () {
       this.$router.push({ name: 'mapIndexView' })
