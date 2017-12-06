@@ -1,6 +1,7 @@
 import QMap from 'QMap'
 import icon from '~src/public/fm_map_pin@2x.png'
 import onIcon from '~src/public/fm_map_pin_on@2x.png'
+import locateIcon from '~src/public/loc.png'
 
 export function initMap () {
   return new Promise(resolve => {
@@ -35,6 +36,14 @@ export function LngLat (lng, lat) {
 
 export function LatLngBounds (ne, sw) { // 以东北方位，西南两个坐标点获得地图显示横截面
   return new QMap.LatLngBounds(ne, sw)
+}
+
+export function locIcon () {
+  const size = Size(23, 23)
+  const scaleSize = size
+  const origin = Point(0, 0)
+  const anchor = Point(17, 17)
+  return new QMap.MarkerImage(locateIcon, size, origin, anchor, scaleSize)
 }
 
 export function normalIcon () {

@@ -55,10 +55,10 @@ $breakline = #E1E5EB
   .locateIcon
     height 100%
     display block
-    background url('~public/map_icon.png') no-repeat 6px -246px
+    background url('~public/map_icon.png') no-repeat 6px -245px
     background-size 48px 329px
   .activeLoacte
-    background-position 6px -131px
+    background-position 6px -133px
 .locateGroup
 .sacleGroup
   background #fff
