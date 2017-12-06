@@ -1,8 +1,7 @@
 import * as Types from '~src/store/types'
 import CallApi from '~src/store/api'
+import { LngLat, normalIcon, activeIcon, LatLngBounds } from '~src/tool/mapBase'
 import QMap from 'QMap'
-import icon from '~src/public/fm_map_pin@2x.png'
-import onIcon from '~src/public/fm_map_pin_on@2x.png'
 
 const State = {
   map: null, // Object
@@ -157,7 +156,7 @@ const Actions = {
     }
     const sw = LngLat(maxLng, maxLat)
     const ne = LngLat(minLng, minLat)
-    const latlngBounds = new QMap.LatLngBounds(ne, sw)
+    const latlngBounds = LatLngBounds(ne, sw)
     state.map.fitBounds(latlngBounds)
   },
   [Types.UPDATE_MAP_SELECTITEM] ({ state, commit }, marker) {
@@ -189,8 +188,8 @@ const Actions = {
     //   position: LngLat(location.lng, location.lat),
     //   extData: { id: location.id }
     // })
-    state.map.setCenter(marker.getPosition())
-    commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
+    // state.map.setCenter(marker.getPosition())
+    // commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   },
   [Types.UPDATE_WEIXIN_CONFIG] ({ state, commit }, data) {
     return new Promise(resolve => {
@@ -205,41 +204,4 @@ export default {
   state: State,
   actions: Actions,
   mutations: Mutations
-}
-
-function normalIcon () {
-  const size = Size(28, 30)
-  const scaleSize = size
-  const origin = Point(0, 0)
-  const anchor = Point(14, 15)
-  return new QMap.MarkerImage(icon, size, origin, anchor, scaleSize)
-}
-function activeIcon () {
-  const size = Size(44, 62)
-  const scaleSize = size
-  const origin = Point(0, 0)
-  const anchor = Point(22, 50)
-  return new QMap.MarkerImage(onIcon, size, origin, anchor, scaleSize)
-}
-
-function Icon ({ icon, size }) {
-  return new AMap.Icon({
-    image: icon,
-    size: size,
-    imageSize: size
-  })
-}
-function Size (width, height) {
-  return new QMap.Size(width, height)
-}
-
-function Point (x, y) {
-  return new QMap.Point(x, y)
-}
-function pixel (left, right) {
-  return new AMap.Pixel(left, right)
-}
-
-function LngLat (lng, lat) {
-  return new QMap.LatLng(lat, lng)
 }

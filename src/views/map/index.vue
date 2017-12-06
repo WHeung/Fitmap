@@ -11,7 +11,7 @@
 <script>
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
-import { initMap } from '~src/tool/initMap.js'
+import { initMap } from '~src/tool/mapBase.js'
 
 export default {
   name: 'map',

@@ -2,7 +2,26 @@ import QMap from 'QMap'
 import icon from '~src/public/fm_map_pin@2x.png'
 import onIcon from '~src/public/fm_map_pin_on@2x.png'
 
-function Size (width, height) {
+export function initMap () {
+  return new Promise(resolve => {
+    const map = new QMap.Map(document.getElementById('allmap'), {
+      // 地图的中心地理坐标。
+      zoom: 10,
+      mapTypeId: QMap.MapTypeId.ROADMAP,
+      mapTypeControl: false,
+      zoomControl: false, // true,
+      zoomControlOptions: {
+        position: QMap.ControlPosition.BOTTOM_RIGHT,
+        style: QMap.ZoomControlStyle.DEFAULT
+      }
+    })
+    map.markers = []
+    resolve(map)
+    window.map = map
+  })
+}
+
+export function Size (width, height) {
   return new QMap.Size(width, height)
 }
 
@@ -12,6 +31,10 @@ export function Point (x, y) {
 
 export function LngLat (lng, lat) {
   return new QMap.LatLng(lat, lng)
+}
+
+export function LatLngBounds (ne, sw) { // 以东北方位，西南两个坐标点获得地图显示横截面
+  return new QMap.LatLngBounds(ne, sw)
 }
 
 export function normalIcon () {

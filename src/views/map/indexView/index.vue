@@ -74,24 +74,6 @@ export default {
       }
     }
   },
-  watch: {
-    selectedItem (val) {
-      // let pixel
-      // if (val && val.marker && this.map && this.map.toolBar) {
-      //   pixel = new AMap.Pixel(10, 300)
-      // } else {
-      //   pixel = new AMap.Pixel(10, 100)
-      // }
-      // this.map.toolBar.setOffset(pixel)
-    },
-    userLoc: { // fixe 第一次进入页面获取定位过慢
-      handler (val) {
-      },
-      deep: true
-    }
-  },
-  mounted () {
-  },
   methods: {
     locateClick (isLocate) {
       if (isLocate) {

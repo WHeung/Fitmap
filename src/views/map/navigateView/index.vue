@@ -1,6 +1,5 @@
 <template>
   <div :class="$style.main">
-    <AMapComponent v-model="map"></AMapComponent>
     <div :class="$style.bottom">
       <div :class="$style.location">
         <div :class="$style.locCon">
@@ -17,14 +16,12 @@
 </template>
 
 <script>
-import AMapComponent from '~src/components/AMap.vue'
-import AMap from 'AMap'
 import * as Types from '~src/store/types'
 import onIcon from '~src/public/fm_map_pin_on@2x.png'
 
 export default {
   name: 'navigate-view',
-  components: { AMapComponent },
+  components: {  },
   data () {
     return {
       item: {},
@@ -62,22 +59,22 @@ export default {
       if (data) {
         this.item = data
         // this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
-        const location = data.location_obj
-        this.marker = new AMap.Marker({
-          map: this.map,
-          icon: Icon({
-            icon: onIcon,
-            size: size(44, 62)
-          }),
-          clickable: true,
-          topWhenClick: true,
-          offset: pixel(-22, -57),
-          position: LngLat(location.lng, location.lat),
-          extData: { id: location.id }
-        })
-        this.map.toolBar.doLocation()
-        this.map.setCenter(this.marker.getPosition())
-        this.map.toolBar.setOffset(pixel(10, 200))
+        // const location = data.location_obj
+        // this.marker = new AMap.Marker({
+        //   map: this.map,
+        //   icon: Icon({
+        //     icon: onIcon,
+        //     size: size(44, 62)
+        //   }),
+        //   clickable: true,
+        //   topWhenClick: true,
+        //   offset: pixel(-22, -57),
+        //   position: LngLat(location.lng, location.lat),
+        //   extData: { id: location.id }
+        // })
+        // this.map.toolBar.doLocation()
+        // this.map.setCenter(this.marker.getPosition())
+        // this.map.toolBar.setOffset(pixel(10, 200))
       } else {
         this.$router.back()
       }
@@ -94,24 +91,24 @@ export default {
   }
 }
 
-function Icon ({ icon, size }) {
-  return new AMap.Icon({
-    image: icon,
-    size: size,
-    imageSize: size
-  })
-}
-function size (width, height) {
-  return new AMap.Size(width, height)
-}
+// function Icon ({ icon, size }) {
+//   return new AMap.Icon({
+//     image: icon,
+//     size: size,
+//     imageSize: size
+//   })
+// }
+// function size (width, height) {
+//   return new AMap.Size(width, height)
+// }
 
-function pixel (left, right) {
-  return new AMap.Pixel(left, right)
-}
+// function pixel (left, right) {
+//   return new AMap.Pixel(left, right)
+// }
 
-function LngLat (lng, lat) {
-  return new AMap.LngLat(lng, lat)
-}
+// function LngLat (lng, lat) {
+//   return new AMap.LngLat(lng, lat)
+// }
 
 </script>
 
