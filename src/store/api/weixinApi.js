@@ -72,6 +72,7 @@ export function onlyLoacation (data, callback) {
     wx.checkJsApi({
       jsApiList: ['getLocation'],
       success: function ({ checkResult, errMsg }) {
+        console.info(checkResult)
         const result = JSON.parse(checkResult)
         if (result && result.geoLocation === true) {
           wx.getLocation({
