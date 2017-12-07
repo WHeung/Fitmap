@@ -73,8 +73,17 @@ export function onlyLoacation (data, callback) {
       jsApiList: ['getLocation'],
       success: function ({ checkResult, errMsg }) {
         console.info(checkResult)
-        const result = JSON.parse(checkResult)
-        if (result && result.geoLocation === true) {
+        let sure = ''
+        // 微信模拟器的数据 "{"geoLocation":true}"
+        if (typeof checkResult === 'string') {
+          const result = JSON.parse(checkResult)
+          sure = result && result.geoLocation === true
+        }
+        // 微信上的数据 {getLocation: true}
+        if (typeof checkResult === 'object') {
+          sure = checkResult.getLocation === true
+        }
+        if (sure) {
           wx.getLocation({
             type: data.type || 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function (res) {
