@@ -153,7 +153,6 @@ router.beforeEach((to, from, next) => {
       } else {
         to.path !== '/' && getOauth({ to })
       }
-      return
     } else {
       const originToken = Store.state.user.user.token
       if (token !== originToken) {
