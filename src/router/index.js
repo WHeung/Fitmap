@@ -147,10 +147,11 @@ router.beforeEach((to, from, next) => {
           }
           router.replace(route)
         }).catch(() => {
-          getOauth({ to })
+          to.path !== '/' && getOauth({ to })
         })
+        return
       } else {
-        getOauth({ to })
+        to.path !== '/' && getOauth({ to })
       }
       return
     } else {
