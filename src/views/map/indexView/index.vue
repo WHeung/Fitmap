@@ -43,6 +43,9 @@ export default {
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
     })
   },
+  destroyed () {
+    this.selfMarker && this.selfMarker.setMap(null)
+  },
   computed: {
     map: {
       get () {
