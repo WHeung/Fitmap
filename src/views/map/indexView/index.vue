@@ -34,7 +34,8 @@ export default {
       type: '',
       updateForm: 0,
       locateBtn: 'no',
-      selfMarker: null
+      selfMarker: null,
+      firstLocation: true
     }
   },
   beforeRouteEnter (to, from, next) {
@@ -45,6 +46,28 @@ export default {
   },
   destroyed () {
     this.selfMarker && this.selfMarker.setMap(null)
+  },
+  watch: {
+    userLoc: {
+      handler (val) {
+        if (val.lat && val.lng && this.firstLocation) { // 初始定位默认打开
+          this.firstLocation = false
+          if (!this.selfMarker) {
+            this.selfMarker = new QMap.Marker({
+              position: LngLat(val.lng, val.lat),
+              map: this.map,
+              title: '',
+              icon: locIcon()
+            })
+          } else {
+            this.map.setCenter(LngLat(val.lng, val.lat))
+            this.selfMarker.setVisible(true)
+          }
+          this.locateBtn = 'yes'
+        }
+      },
+      deep: true
+    }
   },
   computed: {
     map: {
@@ -71,10 +94,7 @@ export default {
       return this.$store.state.user.user
     },
     userLoc () {
-      const userLoc = this.$store.state.map.userLoc
-      if (userLoc.lat && userLoc.lng) {
-        return userLoc
-      }
+      return this.$store.state.map.userLoc
     }
   },
   methods: {
