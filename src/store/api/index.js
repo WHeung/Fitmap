@@ -30,7 +30,7 @@ export default function callApi (apiName, params, closeLoading) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
         const location = window.location
         const hash = location.hash.replace(/[\?|\&]redirected\=1/, '')
-        location.replace(location.origin + location.pathname + '?redirect=' + hash)
+        location.replace(location.origin + location.pathname + hash)
         // weixinReload()
         return
       }

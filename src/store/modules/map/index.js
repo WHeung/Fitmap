@@ -176,20 +176,22 @@ const Actions = {
   },
   [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
     const location = data.location_obj
-    // const marker = new AMap.Marker({
-    //   map: state.map,
-    //   icon: Icon({
-    //     icon: onIcon,
-    //     size: size(44, 62)
-    //   }),
-    //   clickable: true,
-    //   topWhenClick: true,
-    //   offset: pixel(-22, -57),
-    //   position: LngLat(location.lng, location.lat),
-    //   extData: { id: location.id }
-    // })
-    // state.map.setCenter(marker.getPosition())
-    // commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
+    if (state.map && state.map.markers && state.map.markers.length) {
+      for (let i = 0; i < state.map.markers.length; i++) {
+        const marker = state.map.markers[i]
+        marker.setMap(null)
+      }
+    }
+    state.map.markers = []
+    const marker = new QMap.Marker({
+      position: LngLat(location.lng, location.lat),
+      map: state.map,
+      title: 'markerPoint',
+      icon: activeIcon()
+    })
+    marker.itemId = location.id
+    state.map.markers.push(marker)
+    state.map.setCenter(marker.getPosition())
   },
   [Types.UPDATE_WEIXIN_CONFIG] ({ state, commit }, data) {
     return new Promise(resolve => {

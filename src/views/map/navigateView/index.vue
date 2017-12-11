@@ -17,21 +17,28 @@
 
 <script>
 import * as Types from '~src/store/types'
-import onIcon from '~src/public/fm_map_pin_on@2x.png'
+import { initMap } from '~src/tool/mapBase.js'
+import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 
 export default {
   name: 'navigate-view',
-  components: {  },
   data () {
     return {
-      item: {},
-      map: {},
-      marker: {}
+      item: {}
     }
   },
   computed: {
     userLoc () {
-      return this.$store.state.map.userLoc
+      const userLoc = this.$store.state.map.userLoc
+      if (userLoc.lat && userLoc.lng) {
+        return userLoc
+      }
+    },
+    map () {
+      const map = this.$store.state.map.map
+      if (map) {
+        return this.$store.state.map.map
+      }
     }
   },
   methods: {
@@ -51,71 +58,51 @@ export default {
           leftMsg: '确定'
         })
       }
+    },
+    fallBucket () {
+      this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
+        if (data) {
+          this.item = data
+          this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
+          if (!this.userLoc) {
+            weixinLocation(this)
+          }
+        } else {
+          this.$router.back()
+        }
+      })
     }
   },
   mounted () {
     this.$store.dispatch(Types.CHANGE_NAV, { title: '地图定位' })
-    this.$store.dispatch(Types.FALL_BUCKET, { id: 'MAP_LOCATION' }).then(data => {
-      if (data) {
-        this.item = data
-        // this.$store.dispatch(Types.UPDATE_MAP_LOCATION, data)
-        // const location = data.location_obj
-        // this.marker = new AMap.Marker({
-        //   map: this.map,
-        //   icon: Icon({
-        //     icon: onIcon,
-        //     size: size(44, 62)
-        //   }),
-        //   clickable: true,
-        //   topWhenClick: true,
-        //   offset: pixel(-22, -57),
-        //   position: LngLat(location.lng, location.lat),
-        //   extData: { id: location.id }
-        // })
-        // this.map.toolBar.doLocation()
-        // this.map.setCenter(this.marker.getPosition())
-        // this.map.toolBar.setOffset(pixel(10, 200))
-      } else {
-        this.$router.back()
-      }
-    })
-  },
-  watch: {
-    userLoc: { // fixe 第一次进入页面获取定位过慢
-      handler (val) {
-        this.map.setCenter(this.marker.getPosition())
-        this.map.setZoom(10)
-      },
-      deep: true
+    if (!this.map) {
+      initMap().then(map => {
+        this.$store.commit(Types.SET_MAP, map)
+        this.fallBucket()
+      })
+    } else {
+      this.fallBucket()
     }
   }
 }
 
-// function Icon ({ icon, size }) {
-//   return new AMap.Icon({
-//     image: icon,
-//     size: size,
-//     imageSize: size
-//   })
-// }
-// function size (width, height) {
-//   return new AMap.Size(width, height)
-// }
-
-// function pixel (left, right) {
-//   return new AMap.Pixel(left, right)
-// }
-
-// function LngLat (lng, lat) {
-//   return new AMap.LngLat(lng, lat)
-// }
-
+function weixinLocation (self) {
+  self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
+    weixinConfig(data.data)
+    weixinGetLocation({}, ({ lat, lng }) => {
+      self.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
+    })
+  })
+}
 </script>
 
 <style lang="stylus" module>
 @import '~tool/vendor'
 
+.main
+  pointer-events none !important// 点击穿透属性，使地图可以拖到
 .bottom
+  pointer-events visible // 之后的容器不需要继承点击穿透
   position absolute
   bottom 0
   width 100%
