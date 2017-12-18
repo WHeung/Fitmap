@@ -22,8 +22,8 @@ import Sacle from '../components/sacle.vue'
 import BusItem from '../components/busItem.vue'
 import PostItem from '../components/postItem.vue'
 import * as Types from '~src/store/types'
-import { onlyLoacation } from '~src/store/api/weixinApi'
-import { LngLat, Point, Size, locIcon } from '~src/tool/mapBase'
+// import { onlyLoacation } from '~src/store/api/weixinApi'
+import { LngLat, getLocation, locIcon } from '~src/tool/mapBase'
 import QMap from 'QMap'
 
 export default {
@@ -143,22 +143,41 @@ export default {
       })
     },
     getLocate () {
-      onlyLoacation({}, ({ lat, lng }) => {
-        this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
+      getLocation().then(position => {
+        this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat: position.lat, lng: position.lng })
+        const lnglat = LngLat(position.lng, position.lat)
         if (!this.selfMarker) {
           this.selfMarker = new QMap.Marker({
-            position: LngLat(lng, lat),
+            position: lnglat,
             map: this.map,
             title: '',
             icon: locIcon()
           })
         } else {
-          this.map.setCenter(LngLat(lng, lat))
+          this.map.setCenter(lnglat)
           this.selfMarker.setVisible(true)
         }
-        this.map.panTo(new QMap.LatLng(lat, lng))
+        this.map.panTo(lnglat)
         this.locateBtn = 'yes'
+      }).catch(() => {
+        this.locateBtn = 'no'
       })
+      // onlyLoacation({}, ({ lat, lng }) => {
+      //   this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat, lng })
+      //   if (!this.selfMarker) {
+      //     this.selfMarker = new QMap.Marker({
+      //       position: LngLat(lng, lat),
+      //       map: this.map,
+      //       title: '',
+      //       icon: locIcon()
+      //     })
+      //   } else {
+      //     this.map.setCenter(LngLat(lng, lat))
+      //     this.selfMarker.setVisible(true)
+      //   }
+      //   this.map.panTo(new QMap.LatLng(lat, lng))
+      //   this.locateBtn = 'yes'
+      // })
     }
   }
 }

@@ -11,7 +11,7 @@
 <script>
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
-import { initMap } from '~src/tool/mapBase.js'
+import { initMap, getLocation } from '~src/tool/mapBase.js'
 
 export default {
   name: 'map',
@@ -70,7 +70,13 @@ export default {
           break
         }
       }
-      weixinLocation(this)
+      // weixinLocation(this)
+      getLocation().then(position => {
+        this.$store.commit(Types.SET_MAP_USER_LOCATION, { lat: position.lat, lng: position.lng })
+        if (this.initRequset) {
+          this.firstRequest()
+        }
+      })
     }
   },
   computed: {
