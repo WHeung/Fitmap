@@ -1,11 +1,11 @@
 #!/bin/bash
 ftp -n<<!
-open 120.24.154.176
+open 120.79.66.69
 user ftpuser 123456
 binary
-cd /qmap
+cd /
 ls
-lcd /code/codeGit/Fitmap/dist
+lcd /code/codeGit/Fitmap/static
 prompt
 # mdelete *.*
 mput *.*
