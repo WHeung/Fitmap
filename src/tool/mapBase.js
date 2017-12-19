@@ -61,3 +61,18 @@ export function activeIcon () {
   const anchor = Point(22, 50)
   return new QMap.MarkerImage(onIcon, size, origin, anchor, scaleSize)
 }
+
+export function getLocation () {
+  const geo = new QMap.Geolocation()
+  return new Promise((resolve, reject) => {
+    geo.getLocation(function (position) {
+      console.log('succ', position)
+      resolve(position)
+    }, function (err) {
+      console.log(err)
+      reject()
+    }, {
+      timeout: 9000
+    })
+  })
+}
