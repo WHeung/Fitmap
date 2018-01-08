@@ -70,7 +70,9 @@ export default {
           break
         }
       }
-      weixinLocation(this)
+      setTimeout(() => {
+        weixinLocation(this)
+      }, 1000)
     }
   },
   computed: {
