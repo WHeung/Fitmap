@@ -6,11 +6,6 @@ import sys
 import os
 sys.path.append(os.path.join(os.getcwd(), 'build'))
 
-env.warn_only = True
-env.hosts = ['120.24.154.176']
-env.user = 'ftpuser'
-env.password = '123456'
-
 def mock():
   run('ls')
 
@@ -24,7 +19,7 @@ def hello2(name):
 
 def prod(time):
   if isinstance(time, str):
-    os.system('yarn run build-pro-static -- --define process.env.dwfversion="\'%s\'"' % time)
+    os.system('')
     os.system("rename 's/dist\/vendor\..+.js/dist\/vendor\.js/s' dist/vendor.*.js")
 
 def testPro():
@@ -33,7 +28,7 @@ def testPro():
   uploadTestProEnv()
 
 def test():
-  os.system('yarn run build-test')
+  os.system('yarn run build')
   uploadTestEnv()
 
 def removeTestEnv():
@@ -43,4 +38,4 @@ def uploadTestEnv():
   put('./dist/*')
 
 def uploadTestProEnv():
-  put('./static/*', '/home/dev/h5/admin')
+  put('./static/*', '/')

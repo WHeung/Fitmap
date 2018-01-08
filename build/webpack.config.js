@@ -118,10 +118,6 @@ if (process.env.NODE_ENV === 'test') {
 // production start
 if (process.env.NODE_ENV === 'production') {
   delete config.devtool
-  // 在 yarn run 后面加 -- 就能将参数传递给webapck
-  // yarn run build-pro-static -- --define dwfversion="h5/05121"
-  // cross-env NODE_ENV=production webpack --config build/webpack.config.js -d --define dwfversion="h5/05121"
-  // 如果打包配置中不存在 dwfversion 那么会默认使用 ./ 路径
   let version = null
   console.log('=========', JSON.stringify(process.argv), '===========')
   if (process.argv && process.argv.length > 0) {
