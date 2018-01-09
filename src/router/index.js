@@ -132,9 +132,6 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  /*
-  * 平时最好不使用code 或者state来作为参数，微信授权登陆会自带
-  */
   if (isWeixin() && !to.meta.noLogin) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
     if (!token) {

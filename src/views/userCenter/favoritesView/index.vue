@@ -8,7 +8,6 @@
       </div>
     </div>
     <div v-else>
-      <!-- <IScroll @handleBottomBounce="getMore"> -->
       <template v-if="type === 'item'">
         <StoreItem :class="$style.item"
           v-for="data in dataList" :key="data.id"
@@ -24,7 +23,6 @@
           v-for="data in dataList" :key="data.id"
           :data="data" @toDetail="toDetail"></PostItem>
       </template>
-      <!-- </IScroll> -->
     </div>
   </div>
 </template>
