@@ -66,7 +66,6 @@ export function onlyLoacation (data, callback) {
     wx.checkJsApi({
       jsApiList: ['getLocation'],
       success: function ({ checkResult, errMsg }) {
-        console.info(checkResult)
         let sure = ''
         if (typeof checkResult === 'string') {
           const result = JSON.parse(checkResult)
@@ -86,7 +85,6 @@ export function onlyLoacation (data, callback) {
             }
           })
         } else {
-          console.warn(errMsg)
           weixinReady(function () {
             wx.getLocation({
               type: data.type || 'gcj02',

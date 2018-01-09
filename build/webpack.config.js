@@ -105,7 +105,6 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV === 'production') {
   delete config.devtool
   let version = null
-  console.log('=========', JSON.stringify(process.argv), '===========')
   if (process.argv && process.argv.length > 0) {
     for (let i = 0; i < process.argv.length; i++) {
       if (process.argv[i].indexOf('FitMapversion=') > -1) {
@@ -114,7 +113,6 @@ if (process.env.NODE_ENV === 'production') {
       }
     }
   }
-  console.log('=========version=', version, '===========')
   config.output.publicPath = './'
   config.output.path = path.resolve(__dirname, '../static/')
   config.plugins.push(

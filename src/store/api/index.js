@@ -23,7 +23,6 @@ export default function callApi (apiName, params, closeLoading) {
     }
     apiMap[apiName](params).then(res => {
       store.dispatch(Types.CLOSE_API_LOADING)
-      console.log(res.data)
       if (res.data.code === 4000) {
         document.cookie = 'token=;expires=Tue, 08 Aug 2017 00:00:00 GMT;'
         const location = window.location

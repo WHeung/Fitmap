@@ -65,27 +65,21 @@ const State = {
 }
 const Mutations = {
   [Types.SET_MAP] (state, data) {
-    console.log('mutation: set map')
     state.map = data
   },
   [Types.SET_MAP_LIST] (state, data) {
-    console.log('mutation: set selected list')
     state.list = data
   },
   [Types.SET_MAP_SELECTED_MARKER] (state, data) {
-    console.log('mutation: set selected marker')
     state.selectedItem = data
   },
   [Types.SET_MAP_FILTERS_FORM] (state, data) {
-    console.log('mutation: set filtersForm')
     Object.assign(state.filtersForm, data)
   },
   [Types.SET_MAP_USER_LOCATION] (state, data) {
-    console.log('mutation: set userLoc')
     Object.assign(state.userLoc, data)
   },
   [Types.SET_MAP_PAGINATION] (state, data) {
-    console.log('mutation: set pagination')
     state.pagination = data
   }
 }

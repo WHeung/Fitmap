@@ -1,7 +1,6 @@
 import Vue from 'vue'
 Vue.directive('i-scroll', {
   bind: function (el, binding, vnode) {
-    console.log('bind')
     let options = { preventDefault: false }
     if (binding.value) {
       options = Object.assign({}, options, binding.value)
@@ -12,7 +11,6 @@ Vue.directive('i-scroll', {
       this.scrollTo(0, height, 300)
     }
     el.iScrollRefresh = function () {
-      console.log('iScrollRefresh')
       setWindowScrollTop()
       el.iscroll && el.iscroll.refresh()
     }

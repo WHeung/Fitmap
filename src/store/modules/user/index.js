@@ -7,7 +7,6 @@ const State = {
 }
 const Mutations = {
   [Types.SET_USER] (state, data) {
-    console.log('mutation: set user info')
     state.user = Object.assign({}, state.user, data)
   }
 }
