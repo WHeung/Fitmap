@@ -121,7 +121,7 @@ const Actions = {
       })
     })
   },
-  [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) { // query: Array
+  [Types.UPDATE_MAP_MARKERS] ({ state, commit, dispatch }, list) {
     if (state.pagination && state.pagination.current_page === 1) {
       for (let i = 0; i < state.map.markers.length; i++) {
         const marker = state.map.markers[i]
@@ -174,7 +174,7 @@ const Actions = {
     state.map.panTo(marker.getPosition())
     commit(Types.SET_MAP_SELECTED_MARKER, { item: data, marker })
   },
-  [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) { // query: object
+  [Types.UPDATE_MAP_LOCATION] ({ state, commit }, data) {
     const location = data.location_obj
     if (state.map && state.map.markers && state.map.markers.length) {
       for (let i = 0; i < state.map.markers.length; i++) {

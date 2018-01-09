@@ -42,17 +42,6 @@ export default {
   },
   mounted () {
     if (this.map && this.list && this.list.length) {
-      // this.$store.dispatch(Types.UPDATE_MAP_MARKERS, this.list)
-      // const markers = this.map.getAllOverlays('marker')
-      // this.map.setFitView(markers)
-      // if (this.selectedItem && this.selectedItem.item) {
-      //   const itemId = this.selectedItem.item.location_obj.id
-      //   const marker = markers.find(item => {
-      //     return item.itemId === itemId
-      //   })
-      //   this.$store.dispatch(Types.UPDATE_MAP_SELECTITEM, marker)
-      // }
-      // this.initRequset = false
     } else {
       if (this.$route.query.cate) {
         switch (this.$route.query.cate) {

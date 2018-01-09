@@ -1,7 +1,6 @@
 const path = require('path')
 const vueConfig = require('./vue-loader.config')
 const HTMLPlugin = require('html-webpack-plugin')
-// const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 const WebpackShellPlugin = require('webpack-shell-plugin')
 const timeStamp = ((new Date()).getTime() + '').substring(8)
@@ -32,17 +31,14 @@ const config = {
   },
   resolve: {
     alias: {
-      // for img tag use
       'public': path.resolve(__dirname, '../src/public'),
-      // for css use
       '~public': path.resolve(__dirname, '../src/public'),
-      // for import use
       '~src': path.resolve(__dirname, '../src'),
       'tool': path.resolve(__dirname, '../src/tool')
     }
   },
   module: {
-    noParse: /es6-promise\.js$/, // avoid webpack shimming process
+    noParse: /es6-promise\.js$/,
     rules: [
       {
         test: /\.vue$/,
@@ -71,7 +67,6 @@ const config = {
     hints: process.env.NODE_ENV === 'production' ? 'warning' : false
   },
   plugins: [
-    // extract vendor chunks for better caching
     new webpack.optimize.CommonsChunkPlugin({
       names: 'vendor'
     })
@@ -86,7 +81,6 @@ if (process.env.NODE_ENV === 'development') {
         NODE_ENV: '"development"'
       }
     }),
-    // generate output HTML
     new HTMLPlugin({
       template: 'src/index.html',
       title: timeStamp,
@@ -97,7 +91,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 if (process.env.NODE_ENV === 'test') {
-  // delete config.devtool
   config.output.path = path.resolve(__dirname, '../dist/')
   config.output.publicPath = './'
 
@@ -105,7 +98,6 @@ if (process.env.NODE_ENV === 'test') {
     new webpack.LoaderOptionsPlugin({
       minimize: true
     }),
-    // generate output HTML
     new HTMLPlugin({
       template: 'src/index.html',
       title: timeStamp,
@@ -115,7 +107,6 @@ if (process.env.NODE_ENV === 'test') {
   )
 }
 
-// production start
 if (process.env.NODE_ENV === 'production') {
   delete config.devtool
   let version = null
@@ -160,6 +151,5 @@ if (process.env.NODE_ENV === 'production') {
     })
   )
 }
-// production end
 
 module.exports = config

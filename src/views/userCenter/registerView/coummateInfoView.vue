@@ -99,7 +99,7 @@ export default {
     clickBtn () {
       this.$store.dispatch(Types.UPDATE_USER, { data: this.user }).then(() => {
         this.$store.commit(Types.SET_USER, { 'is_company_checked': true })
-        if (this.$route.query.toRoute) { // toRoute
+        if (this.$route.query.toRoute) {
           const toRoute = JSON.parse(this.$route.query.toRoute)
           routerReplace(this, toRoute)
           return

@@ -31,7 +31,6 @@ export default function callApi (apiName, params, closeLoading) {
         const location = window.location
         const hash = location.hash.replace(/[\?|\&]redirected\=1/, '')
         location.replace(location.origin + location.pathname + hash)
-        // weixinReload()
         return
       }
       const codeResult = checkResponseCode(res.data.code)

@@ -107,7 +107,7 @@ export default {
           this.$store.dispatch(Types.UPDATE_USER, { data: { cellphone: this.cellphone }}).then(() => {
             this.$store.commit(Types.SET_USER, { 'is_cellphone_checked': true })
             const query = {}
-            if (this.$route.query.toRoute) { // toRoute
+            if (this.$route.query.toRoute) {
               query.toRoute = this.$route.query.toRoute
             }
             if (!this.user.is_company_checked) {

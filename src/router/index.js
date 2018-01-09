@@ -8,11 +8,11 @@ import NoFoundView from '~src/views/NoFoundView.vue'
 import RedirectView from '~src/views/RedirectView.vue'
 
 const userView = resolve => require.ensure(
-  [], () => resolve(require('~src//views/userCenter/indexView/index.vue')),
+  [], () => resolve(require('~src/views/userCenter/indexView/index.vue')),
   'u'
 )
 const userInfoView = resolve => require.ensure(
-  [], () => resolve(require('~src//views/userCenter/baseInfoView/index.vue')),
+  [], () => resolve(require('~src/views/userCenter/baseInfoView/index.vue')),
   'u'
 )
 const userfavoritesView = resolve => require.ensure(
@@ -163,7 +163,6 @@ router.beforeEach((to, from, next) => {
       }
     }
   }
-  // 去掉继承会有其他问题,比如地址重定向会在每次刷新后回到初始页
   if (to.query.type === Types.ROUTE_TYPE_REPLACE) {
     const route = inRouteParamsInherit({ toRoute: to, fromRoute: from })
     if (route) {
@@ -181,7 +180,6 @@ router.beforeEach((to, from, next) => {
   } else {
     const route = inRouteParamsInherit({ toRoute: to, fromRoute: from })
     if (route) {
-      // 如果路径相等则使用replace
       if (to.path === from.path) {
         next({
           ...route,
@@ -198,10 +196,8 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, next) => {
   window.document.body.scrollTop = 0
-  // 进入内路由状态
   if (from.query.redirected || to.query.redirected) {
   } else {
-    // 外路由进入内路由
     const result = outRoute2inRoute({
       inRoute: to,
       urlSearch: window.location.search
@@ -224,14 +220,13 @@ function setSearch (result) {
   }
 }
 
-function getOauth ({ to }) { // 跳转微信授权
+function getOauth ({ to }) {
   const outQuery = inRoute2outRoute({
     inRoute: to,
     urlSearch: window.location.search
   })
   const callbackURL = window.location.origin + window.location.pathname + outQuery
-  // https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
-  window.sessionStorage.setItem('login', 'oauth') // 判断主动跳授权登录还是回退跳的
+  window.sessionStorage.setItem('login', 'oauth')
   window.location.href =
     'https://open.weixin.qq.com/connect/oauth2/authorize?' +
     'appid=wx232406f650474f6a' +

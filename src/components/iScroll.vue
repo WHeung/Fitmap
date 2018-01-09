@@ -45,9 +45,7 @@ export default {
     }
   },
   mounted () {
-    /* 因爲在組件掛載時，頂部導航欄還沒掛載上DOM，因此會出現元素offsetTop爲0，需要在DOM刷新時再調用得出頁面高度
-    */
-    this.$nextTick(function () { // nextTick在全局VUE DOM結點更新是會調用
+    this.$nextTick(function () {
       const scrollWrap = this.$refs.scrollWrap
       const self = this
       if (scrollWrap) {
@@ -58,10 +56,10 @@ export default {
             self.downFresh(this.y)
           }
         })
-        scrollWrap.iscroll.on('bottomBounce', function () { // 需要在 下拉超过底部并松手一瞬间监控刷新，scrollEnd则是滑动结束后再执行, 因此不使用scrollEnd
+        scrollWrap.iscroll.on('bottomBounce', function () {
           self.$emit('handleBottomBounce', this)
         })
-        scrollWrap.iscroll.on('topBounce', function (exceedHeight) { // 需要在 下拉超过底部并松手一瞬间监控刷新，scrollEnd则是滑动结束后再执行, 因此不使用scrollEnd
+        scrollWrap.iscroll.on('topBounce', function (exceedHeight) {
           if (self.downRefreshabled && exceedHeight > DOWN_REFRESH_EXCCED_HEIGHT) {
             window.location.reload()
           }
@@ -103,18 +101,4 @@ export default {
   width 100%
   position absolute
   bottom -40px
-//   i
-//     display inline-block
-//     width 20px
-//     height 20px
-//     background url('~src\public\back_icon_grey@3x.png') no-repeat
-//     background-size 100% 100%
-//     vertical-align text-bottom
-//     margin-right 15px
-//     transform rotate(-90deg)
-//     transition transform .3s linear
-
-// .readyFresh i
-//   transform rotate(90deg)
-
 </style>

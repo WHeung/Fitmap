@@ -66,7 +66,7 @@ export default {
     }
   },
   created () {
-    this.swiperOption = { // swiper option
+    this.swiperOption = {
       notNextTick: true,
       initialSlide: 0,
       direction: 'vertical',
