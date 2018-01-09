@@ -14,12 +14,10 @@
     </div>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import { initMap } from '~src/tool/mapBase.js'
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
-
 export default {
   name: 'navigate-view',
   data () {
@@ -85,7 +83,6 @@ export default {
     }
   }
 }
-
 function weixinLocation (self) {
   self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
     weixinConfig(data.data)
@@ -95,10 +92,8 @@ function weixinLocation (self) {
   })
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   pointer-events none !important
 .bottom
@@ -107,10 +102,8 @@ function weixinLocation (self) {
   bottom 0
   width 100%
   background $white
-
 .location
   display flex
-
 .locCon
   padding 18px 0
   padding-left 18px

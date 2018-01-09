@@ -17,14 +17,12 @@
     </div>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import Item from './components/item.vue'
 import valid from '~src/tool/verification'
 import Btn from '~src/components/Btn.vue'
 import routerReplace from '~src/tool/routerReplace.js'
-
 const mobileConfig = [
   {
     case: 'noBlank',
@@ -37,7 +35,6 @@ const mobileConfig = [
     errorMsg: ['手机号码格式错误']
   }
 ]
-
 export default {
   name: 'vaildPhone-view',
   components: { Item, Btn },
@@ -127,18 +124,14 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   background $mainBg
-
 .line
   height 1px
   margin-left 18px
   background $breakline
-
 .formGroup
   background $white
   width 100%
@@ -162,13 +155,10 @@ export default {
     border-radius 100px
 .notClick
   opacity .3
-
 .tips
   margin 18px (24/20)rem 0
   font-size 13px
   color $assistText
-
 .btn
   margin-top 36px
-
 </style>

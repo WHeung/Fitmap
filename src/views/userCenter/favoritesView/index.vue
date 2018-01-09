@@ -26,13 +26,11 @@
     </div>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import StoreItem from './components/storeItem.vue'
 import BusItem from './components/busItem.vue'
 import PostItem from './components/postItem.vue'
-
 export default {
   name: 'favorites-View',
   components: { StoreItem, BusItem, PostItem },
@@ -80,15 +78,12 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   background $mainBg
 .item
   margin-bottom 12px
-
 .img
   padding-top 120px
   margin 0 auto
@@ -96,14 +91,12 @@ export default {
   height (88/20)rem
   background url('~src/public/fm_empty_fav.svg') no-repeat
   background-size 100% 100%
-
 .title
   margin 12px auto 0
   font-size 14px
   color #9DA2AB
   text-align center
   line-height 24px
-
 .btn
   margin-top 36px
   text-align center
@@ -112,7 +105,4 @@ export default {
     border 1px solid #474C54
     border-radius 18px
     padding 8px 30px
-
-
 </style>
-

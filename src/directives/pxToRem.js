@@ -1,5 +1,4 @@
 import Vue from 'vue'
-
 Vue.directive('pxtorem', {
   bind: function (el, binding, vnode) {
     let width = window.innerWidth

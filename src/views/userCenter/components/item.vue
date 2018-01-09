@@ -6,7 +6,6 @@
     </div>
   </div> 
 </template>
-
 <script>
 export default {
   name: 'item',
@@ -15,7 +14,6 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
 .main
@@ -24,12 +22,10 @@ export default {
   padding 10px 18px
   font-size 16px
   line-height 28px
-
 .title
   flex 0 0 70px
   white-space nowrap
   color $assistText
-
 .content
   flex 1 1 auto
   white-space nowrap

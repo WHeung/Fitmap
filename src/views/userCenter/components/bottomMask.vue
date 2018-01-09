@@ -24,11 +24,9 @@
     </div>
   </transition>
 </template>
-
 <script>
 import area from 'china-area-data'
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
 export default {
   name: 'bottom-mask',
   components: { swiper, swiperSlide },
@@ -140,10 +138,8 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .maskLayer
   position fixed
   top 0
@@ -197,18 +193,13 @@ export default {
   color $assistText
 .slideActiveClass
   color $mainText
-
 </style>
-
 <style lang="stylus">
 .mask-layer-enter-active
   transition all .3s ease
-
 .mask-layer-leave-active
   transition all .3s ease
-
 .mask-layer-enter,
 .mask-layer-leave-active
   opacity 0
 </style>
-

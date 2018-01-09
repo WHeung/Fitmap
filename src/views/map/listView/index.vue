@@ -19,7 +19,6 @@
     </IScroll>
   </div>
 </template>
-
 <script>
 import Filters from '../components/filters.vue'
 import MerchantItem from '../components/merchantItem.vue'
@@ -27,7 +26,6 @@ import PostItem from '../components/postItem.vue'
 import IScroll from '~src/components/iScroll.vue'
 import * as Types from '~src/store/types'
 import routerReplace from '~src/tool/routerReplace'
-
 export default {
   name: 'map-list-view',
   components: { Filters, MerchantItem, PostItem, IScroll },
@@ -78,7 +76,6 @@ export default {
     }
   },
   created () {
-
   },
   methods: {
     toDetail ({ id, type }) {
@@ -133,13 +130,11 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
 $mainBg = #F5F7FA
-
 .main
   position absolute
   top 0
@@ -150,13 +145,10 @@ $mainBg = #F5F7FA
   box-sizing border-box
   background $mainBg
   overflow-y scroll
-
 .item
   margin-top 10px
-
 .noMoreTips
   margin-top 12px
   text-align center
   font-size 12px
-
 </style>

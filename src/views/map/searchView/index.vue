@@ -18,14 +18,11 @@
     </div>
   </div>
 </template>
-
 <script>
 import Filters from '../components/filters.vue'
 import * as Types from '~src/store/types'
 import routerReplace from '~src/tool/routerReplace'
-
 const storageKey = 'search_history'
-
 export default {
   name: 'map-search-view',
   components: { Filters },
@@ -103,19 +100,15 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
-
 .main
   background #F5F7FA
   padding-top 60px
-
 .histroy
   margin-top 18px
-
 .hisTop
   margin 0 12px
   display flex
@@ -136,7 +129,6 @@ $mainText = #474C54
     transform translateY(-50%)
     background url('~src/public/fm_delete.svg') no-repeat
     background-size 100% 100%
-
 .hisCon
   margin 12px
   display flex

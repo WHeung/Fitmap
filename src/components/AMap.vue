@@ -2,11 +2,9 @@
   <div id="allmap" :style="mapStyle">
   </div>
 </template>
-
 <script>
 import AMap from 'AMap'
 import * as Types from '~src/store/types'
-
 export default {
   name: 'A-Map',
   data () {
@@ -50,13 +48,9 @@ export default {
 .amap-copyright
 .anchorBL
   display none !important
-
 .amap-geo
   display block !important
-
 #allmap
   transform translateZ(0)
   opacity 1
-
-
 </style>

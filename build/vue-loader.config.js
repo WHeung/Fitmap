@@ -1,6 +1,5 @@
 const path = require('path')
 const cssnext = require('postcss-cssnext')
-
 module.exports = {
   preserveWhitespace: false,
   cssModules: {

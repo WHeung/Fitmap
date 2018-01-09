@@ -1,6 +1,5 @@
 import wx from 'weixin-js-sdk'
 import { isWeixin } from '~src/tool/containerDetect'
-
 export function weixinConfig (config) {
   if (isWeixin()) {
     wx.config({
@@ -12,13 +11,11 @@ export function weixinConfig (config) {
     })
   }
 }
-
 export function weixinReady (apiLsit, callback) {
   wx.ready(function () {
     callback && callback()
   })
 }
-
 export function weixinShare (shareData, callback) {
   if (isWeixin()) {
     if (typeof shareData.txtIndex !== 'number') {
@@ -49,7 +46,6 @@ export function weixinShare (shareData, callback) {
     })
   }
 }
-
 export function weixinGetLocation (data, callback) {
   if (isWeixin()) {
     wx.ready(function () {
@@ -65,7 +61,6 @@ export function weixinGetLocation (data, callback) {
     })
   }
 }
-
 export function onlyLoacation (data, callback) {
   if (isWeixin()) {
     wx.checkJsApi({

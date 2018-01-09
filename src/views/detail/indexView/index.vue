@@ -13,7 +13,6 @@
     <router-view :data="data" mode="in-out"></router-view>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import MerchantView from './merchantView.vue'
@@ -21,7 +20,6 @@ import PostView from './postView.vue'
 import ProductView from './productView.vue'
 import Btn from '~src/components/Btn.vue'
 import routerReplace from '~src/tool/routerReplace'
-
 export default {
   name: 'detail',
   data () {
@@ -102,20 +100,16 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   position relative
   background $mainBg
   min-height 100%
-
 .detail
   padding-bottom 72px
   box-sizing border-box
   overflow-y scroll
-
 .bottom
   position absolute
   bottom 0

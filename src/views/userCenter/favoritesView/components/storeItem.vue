@@ -9,7 +9,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'user-favor-item',
@@ -25,14 +24,11 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   display flex
   background $white
-
 .img
   width (128/20)rem
   height (128/20)rem
@@ -44,7 +40,6 @@ export default {
     height 100%
     left 50%
     transform translateX(-50%)
-
 .content
   position relative
   display flex
@@ -52,7 +47,6 @@ export default {
   justify-content space-between
   padding 18px
   box-sizing border-box
-
 .title
   font-size 13px
   line-height 20px
@@ -63,9 +57,7 @@ export default {
   text-overflow ellipsis
   -webkit-line-clamp 3
   -webkit-box-orient vertical
-
 .price
   font-size 15px
   color $price
-
 </style>

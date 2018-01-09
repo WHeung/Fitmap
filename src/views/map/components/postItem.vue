@@ -14,7 +14,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'map-post-item',
@@ -26,27 +25,22 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
 $white = #FFFFFF
-
 .main
   position relative
   padding 18px
   background $white
-
 .top
   white-space nowrap
-
 .title
   margin-right 65px
   font-size 15px
   overflow hidden
   text-overflow ellipsis
-
 .tag
   position absolute
   top 18px
@@ -58,19 +52,16 @@ $white = #FFFFFF
     background $mainText
     color $white
     border-radius 10px 0 0 10px
-
 .sub
   margin-top 6px
   overflow hidden
   text-overflow ellipsis
   white-space nowrap
   color $assistText
-
 .msg
   margin-top 18px
   display flex
   justify-content space-between
   font-size 12px
   color $assistText
-
 </style>

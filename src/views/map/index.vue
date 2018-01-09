@@ -7,12 +7,10 @@
     </transition>
   </div>
 </template>
-
 <script>
 import { weixinConfig, weixinGetLocation } from '~src/store/api/weixinApi'
 import * as Types from '~src/store/types'
 import { initMap } from '~src/tool/mapBase.js'
-
 export default {
   name: 'map',
   components: {},
@@ -98,7 +96,6 @@ export default {
     }
   }
 }
-
 function weixinLocation (self) {
   self.$store.dispatch(Types.UPDATE_WEIXIN_CONFIG).then(data => {
     weixinConfig(data.data)
@@ -111,14 +108,12 @@ function weixinLocation (self) {
   })
 }
 </script>
-
 <style lang="stylus" module>
 .main
   position relative
   pointer-events none !important
   div
     pointer-events visible
-
 .mapView
   position absolute
   top 0

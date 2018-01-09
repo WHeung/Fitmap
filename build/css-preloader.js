@@ -1,5 +1,4 @@
 var webpackConfig = require('./webpack.config.js')
-
 module.exports = function (source) {
   var alias = webpackConfig.resolve.alias
   source = source.replace(/url\([^\)]+\)/g, function (whole) {

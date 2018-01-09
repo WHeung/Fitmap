@@ -1,19 +1,16 @@
 import * as Types from '~src/store/types'
 import CallApi from '~src/store/api'
-
 const State = {
   user: {
     token: ''
   }
 }
-
 const Mutations = {
   [Types.SET_USER] (state, data) {
     console.log('mutation: set user info')
     state.user = Object.assign({}, state.user, data)
   }
 }
-
 const Actions = {
   [Types.USER_LOGIN] ({ commit, state, dispatch }, { callback }) {
     return new Promise(resolve => {
@@ -76,7 +73,6 @@ const Actions = {
     })
   }
 }
-
 export default {
   state: State,
   actions: Actions,

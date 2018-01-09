@@ -16,7 +16,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'map-bus-item',
@@ -80,17 +79,14 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
 $white = #FFFFFF
-
 .main
   display flex
   background $white
-
 .img
   margin 16px 0 16px 16px
   width (128/20)rem
@@ -103,12 +99,10 @@ $white = #FFFFFF
     width 100%
     top 50%
     transform translateY(-50%)
-
 .content
   position relative
   padding 16px
   flex 1 1 auto
-
 .title
   display -webkit-box
   font-size 15px
@@ -118,7 +112,6 @@ $white = #FFFFFF
   text-overflow ellipsis
   -webkit-line-clamp 2
   -webkit-box-orient vertical
-
 .tag
   margin-top 6px
   display flex
@@ -139,7 +132,6 @@ $white = #FFFFFF
   bottom 16px
   font-size 12px
   color $assistText
-
 .star
   display flex
 .starIcon
@@ -151,5 +143,4 @@ $white = #FFFFFF
   background-image url('~public/fm_score_full.svg')
 .halfIcon
   background-image url('~public/fm_score_half.svg')
-
 </style>

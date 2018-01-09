@@ -39,12 +39,10 @@
     <div :class="[$style.item, $style.intr]" v-if="data.content" v-html="data.content"></div>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import ContactItem from '../components/contactItem.vue'
 import Star from '../../map/components/star.vue'
-
 export default {
   name: 'merchant-View',
   components: { ContactItem, Star },
@@ -101,14 +99,11 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .item
   margin-bottom 12px
   background $white
-
 .avatar
   position relative
   height (250/20)rem
@@ -143,7 +138,6 @@ export default {
   font-size 16px
 .star
   margin-top 8px
-
 .productsTop
   padding 12px 18px
   display flex
@@ -182,7 +176,6 @@ export default {
 .productPrice
   font-size 15px
   color $price
-
 .msgArrow
   flex 0 0 auto
   height 16px

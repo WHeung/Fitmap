@@ -15,7 +15,6 @@
       </div>
   </div>
 </template>
-
 <script>
 import Filters from '../components/filters.vue'
 import Sacle from '../components/sacle.vue'
@@ -25,7 +24,6 @@ import * as Types from '~src/store/types'
 import { onlyLoacation } from '~src/store/api/weixinApi'
 import { LngLat, Point, Size, locIcon } from '~src/tool/mapBase'
 import QMap from 'QMap'
-
 export default {
   name: 'map-index-view',
   components: { Filters, Sacle, BusItem, PostItem },
@@ -150,21 +148,17 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
-
 .main
   pointer-events none !important
   div
     pointer-events visible
-
 .bottom
   position absolute
   bottom 0
   width 100%
-
 .showList
   box-sizing border-box
   padding 12px 0
@@ -175,11 +169,8 @@ $assistText = #9DA2AB
   border-top 1px solid $breakline
   &:active
     opacity .6
-
 .transTop
   transform translateY(-300px)
-
 .item
   box-shadow 0 0 6px 0 rgba(0,0,0,0.10)
-
 </style>

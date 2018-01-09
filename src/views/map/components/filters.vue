@@ -31,7 +31,6 @@
     <div :class="$style.maskLayer" v-if="mask === true" @click="closeClassify"></div>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 export default {
@@ -193,10 +192,8 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .maskLayer
   position fixed
   top 0
@@ -204,7 +201,6 @@ export default {
   height 100%
   background rgba(0, 0, 0, .5)
   z-index 3
-
 .container
   position relative
   padding 12px
@@ -230,7 +226,6 @@ export default {
   .searchGroup
     box-shadow none
     border 1px solid $border
-
 .classifyGroup
   flex-shrink 0
   position relative
@@ -254,7 +249,6 @@ export default {
     transition all .3s ease
   &.dropUp:after
     transform translateY(-50%) rotate(180deg)
-
 .searchGroup
   position relative
   margin-left 6px
@@ -290,8 +284,6 @@ export default {
   >input
     line-height 21px
     width 100%
-
-
 .mapIcon
   margin-left 12px
   width 28px
@@ -305,7 +297,6 @@ export default {
   font-weight 600
   &:active
     opacity .6
-
 .maskContent
   position relative
   margin 12px
@@ -321,7 +312,6 @@ export default {
     height 100%
     width 1px
     background $breakline
-
 .classify
   display inline-block
   box-sizing border-box
@@ -331,7 +321,6 @@ export default {
   vertical-align top
   &:last-child
     overflow-y scroll
-
 .classItem
   padding-left 18px
   height 48px
@@ -353,7 +342,6 @@ export default {
     background #fff
     right -2px
     z-index 4
-
 .activeItem
   color $mainText
 </style>

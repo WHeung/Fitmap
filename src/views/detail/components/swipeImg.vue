@@ -9,10 +9,8 @@
     </swiper>
   </div> 
 </template>
-
 <script>
 import { swiper, swiperSlide } from 'vue-awesome-swiper'
-
 export default {
   name: 'swipe-img',
   components: { swiper, swiperSlide },
@@ -53,7 +51,6 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus">
 .swiper-pagination-bullet.swiper-pagination-bullet-active
   border-width 2px
@@ -82,7 +79,6 @@ export default {
     left 50%
     transform translateX(-50%)
     z-index 1
-
 .swiperPagination
   display flex
   align-items center
@@ -97,10 +93,8 @@ export default {
     border 1px solid $white
     &:not(:first-child)
       margin-left 6px
-
 .currentPagination
   border-width 2px
-
 .shadow
   position absolute
   width 100%

@@ -2,7 +2,6 @@ import * as Types from '~src/store/types'
 import CallApi from '~src/store/api'
 import { LngLat, normalIcon, activeIcon, LatLngBounds } from '~src/tool/mapBase'
 import QMap from 'QMap'
-
 const State = {
   map: null,
   selectedItem: null,
@@ -64,7 +63,6 @@ const State = {
     ]
   }
 }
-
 const Mutations = {
   [Types.SET_MAP] (state, data) {
     console.log('mutation: set map')
@@ -91,7 +89,6 @@ const Mutations = {
     state.pagination = data
   }
 }
-
 const Actions = {
   [Types.UPDATE_MAP_SEARCH] ({ state, commit, dispatch }, data) {
     return new Promise(resolve => {
@@ -201,7 +198,6 @@ const Actions = {
     })
   }
 }
-
 export default {
   state: State,
   actions: Actions,

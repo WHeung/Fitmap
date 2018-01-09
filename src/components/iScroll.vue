@@ -13,11 +13,9 @@
     </div>
   </div>
 </template>
-
 <script>
 import getOffsetTop from '~src/tool/getOffsetTop'
 const DOWN_REFRESH_EXCCED_HEIGHT = 70
-
 export default {
   props: ['contentStyle', 'options', 'disabled', 'downRefreshabled'],
   data () {
@@ -79,24 +77,20 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 .main
   position relative
 .scrollWrap
   overflow hidden
-
 .scrollContent
   position relative
   min-height 100%
-
 .downFresh
   position absolute
   top -40px
   height 40px
   line-height 41px
   text-align center
-
 .waitFresh,.readyFresh
   width 100%
   position absolute

@@ -21,7 +21,6 @@
     </template>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import TextItem from '../components/textItem.vue'
@@ -29,7 +28,6 @@ import CompanyCard from '../components/companyCard.vue'
 import SwipeImg from '../components/swipeImg.vue'
 import AroundMsg from '../components/aroundItem.vue'
 import ContactItem from '../components/contactItem.vue'
-
 export default {
   name: 'bid-View',
   components: { TextItem, CompanyCard, SwipeImg, AroundMsg, ContactItem },
@@ -100,14 +98,11 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .item
   background $white
   margin-bottom 12px
-
 .avatar
   position relative
   height (250/20)rem
@@ -145,7 +140,6 @@ export default {
   margin-top 12px
   font-size 12px
   color $assistText
-
 .productMsg
   margin-bottom 12px
   padding 18px 0
@@ -165,13 +159,10 @@ export default {
   color $assistText
 .productCon
   font-size 14px
-
 .textItem
   margin-bottom 12px
-
 .intr
   background $white
   padding 36px (24/20)rem
-
 </style>
     

@@ -2,11 +2,9 @@
   <div id="allmap" :style="mapStyle">
   </div>
 </template>
-
 <script>
 import BMap from 'BMap'
 import * as Types from '~src/store/types'
-
 export default {
   data () {
     return {
@@ -47,9 +45,7 @@ export default {
     }
   }
 }
-
 </script>
-
 <style lang="stylus">
 .map-point
   position absolute
@@ -84,9 +80,6 @@ export default {
     &:after
       background #32c47c
       border 1px solid #32c47c
-
 .anchorBL
   display none
-
-
 </style>

@@ -18,13 +18,11 @@ export default {
 </script>
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   background #fff
   position absolute
   width 100%
   height 100%
-
 .loading
   top 50%
   left 0
@@ -33,12 +31,10 @@ export default {
   text-align center
   position fixed
   z-index 100
-
 .circular
   width 60px
   height 60px
   animation loading-rotate 2s linear infinite
-
 .path
   animation loading-dash 1.5s ease-in-out infinite
   stroke-dasharray 90,150
@@ -46,7 +42,6 @@ export default {
   stroke-width 2
   stroke $blueBtn
   stroke-linecap round
-
 @keyframes loading-dash
   0%
     stroke-dasharray 1,200
@@ -57,7 +52,6 @@ export default {
   to
     stroke-dasharray 90,150
     stroke-dashoffset -120px
-
 @keyframes loading-rotate
   to
     transform rotate(1turn)

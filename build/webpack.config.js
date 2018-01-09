@@ -4,7 +4,6 @@ const HTMLPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const WebpackShellPlugin = require('webpack-shell-plugin')
 const timeStamp = ((new Date()).getTime() + '').substring(8)
-
 const config = {
   devtool: '#source-map',
   entry: {
@@ -72,7 +71,6 @@ const config = {
     })
   ]
 }
-
 if (process.env.NODE_ENV === 'development') {
   config.entry.app = ['./src/env-mock/index.js', './src/app.js']
   config.plugins.push(
@@ -89,11 +87,9 @@ if (process.env.NODE_ENV === 'development') {
     })
   )
 }
-
 if (process.env.NODE_ENV === 'test') {
   config.output.path = path.resolve(__dirname, '../dist/')
   config.output.publicPath = './'
-
   config.plugins.push(
     new webpack.LoaderOptionsPlugin({
       minimize: true
@@ -106,7 +102,6 @@ if (process.env.NODE_ENV === 'test') {
     })
   )
 }
-
 if (process.env.NODE_ENV === 'production') {
   delete config.devtool
   let version = null
@@ -151,5 +146,4 @@ if (process.env.NODE_ENV === 'production') {
     })
   )
 }
-
 module.exports = config

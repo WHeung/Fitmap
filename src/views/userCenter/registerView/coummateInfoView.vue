@@ -39,14 +39,12 @@
       @maskEnsure="maskEnsure"></BottomMask>
   </div>
 </template>
-
 <script>
 import * as Types from '~src/store/types'
 import Item from './components/item.vue'
 import Btn from '~src/components/Btn.vue'
 import routerReplace from '~src/tool/routerReplace.js'
 import BottomMask from '../components/bottomMask.vue'
-
 export default {
   name: 'coummateInfo-view',
   components: { Item, Btn, BottomMask },
@@ -110,17 +108,14 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 @import '~tool/vendor'
-
 .main
   background $mainBg
 .line
   height 1px
   margin-left 18px
   background $breakline
-
 .infoGroup
   background $white
   margin-bottom 12px
@@ -152,7 +147,6 @@ export default {
   opacity .3
 .btn
   margin-top 36px !important
-
 .maskLayer
   position fixed
   top 0
@@ -206,5 +200,4 @@ export default {
   color $assistText
 .slideActiveClass
   color $mainText
-
 </style>

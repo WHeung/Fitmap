@@ -6,7 +6,6 @@ import Store from '~src/store/index.js'
 import { isWeixin } from '~src/tool/containerDetect.js'
 import NoFoundView from '~src/views/NoFoundView.vue'
 import RedirectView from '~src/views/RedirectView.vue'
-
 const userView = resolve => require.ensure(
   [], () => resolve(require('~src/views/userCenter/indexView/index.vue')),
   'u'
@@ -71,9 +70,7 @@ const noSureReportView = resolve => require.ensure(
   [], () => resolve(require('~src/views/noSureView/noReport.vue')),
   'no'
 )
-
 Vue.use(Router)
-
 const router = new Router({
   routes: [
     { path: '/user', component: userView, name: 'userView' },
@@ -130,7 +127,6 @@ const router = new Router({
     { path: '*', component: NoFoundView }
   ]
 })
-
 router.beforeEach((to, from, next) => {
   if (isWeixin() && !to.meta.noLogin) {
     const token = window.document.cookie.replace(/(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/, '$1')
@@ -190,7 +186,6 @@ router.beforeEach((to, from, next) => {
     }
   }
 })
-
 router.afterEach((to, from, next) => {
   window.document.body.scrollTop = 0
   if (from.query.redirected || to.query.redirected) {
@@ -203,20 +198,17 @@ router.afterEach((to, from, next) => {
     setSearch(result)
   }
 })
-
 function delCode (result) {
   if (result && result.query && result.query.code && result.query.state) {
     delete result.query.code
     delete result.query.state
   }
 }
-
 function setSearch (result) {
   if (result) {
     router.replace(result)
   }
 }
-
 function getOauth ({ to }) {
   const outQuery = inRoute2outRoute({
     inRoute: to,
@@ -233,5 +225,4 @@ function getOauth ({ to }) {
     '&state=STATE#wechat_redirect'
   return
 }
-
 export default router

@@ -18,10 +18,8 @@
     </div>
   </div>
 </template>
-
 <script>
 import Star from './star.vue'
-
 export default {
   name: 'map-bus-item',
   components: { Star },
@@ -54,16 +52,13 @@ export default {
   }
 }
 </script>
-
 <style lang="stylus" module>
 $breakline = #E1E5EB
 $assistText = #9DA2AB
 $mainText = #474C54
 $white = #FFFFFF
-
 .main
   background $white
-
 .img
   position relative
   width 100%
@@ -76,11 +71,9 @@ $white = #FFFFFF
     width 100%
     top 50%
     transform translateY(-50%)
-
 .content
   position relative
   padding 16px
-
 .titleWrap
   line-height 20px
   position relative
@@ -94,14 +87,12 @@ $white = #FFFFFF
     background-size 100% 100%
   .active
     background-image url('~public/fm_fav_on.svg')
-
 .title
   width 90%
   overflow hidden
   text-overflow ellipsis
   white-space nowrap
   font-size 15px
-
 .conWrap
   position relative
   display flex
@@ -125,5 +116,4 @@ $white = #FFFFFF
   bottom 16px
   font-size 12px
   color $assistText
-
 </style>

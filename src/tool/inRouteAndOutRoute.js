@@ -42,15 +42,12 @@ export function inRouteParamsInherit ({ toRoute, fromRoute }) {
   }
   const path = toRoute.path
   const query = Object.assign({}, toRoute.query)
-
   if (fromRoute.query.redirected) {
     query[REDIRECTED] = 1
   }
-
   if (JSON.stringify(query) === JSON.stringify(toRoute.query)) {
     return null
   }
-
   return { path, query }
 }
 export function outRouteParams (urlSearch) {

@@ -4,7 +4,6 @@ import weixinReload from '~src/tool/weixinReload.js'
 import * as Types from '../types'
 import Axios from 'axios'
 import store from '../'
-
 const axiosRequest = Axios.create({
   headers: {
     'Content-Type': 'application/json'
@@ -12,7 +11,6 @@ const axiosRequest = Axios.create({
 })
 const apiMap = {
 }
-
 export default function callApi (apiName, params, closeLoading) {
   return new Promise((resolve, reject) => {
     if (!closeLoading) {
@@ -49,17 +47,13 @@ export default function callApi (apiName, params, closeLoading) {
     })
   })
 }
-
 let HTTP = 'http://api.fitmap.cn'
-
 apiMap[Types.FETCH_CODE_GET] = function (data) {
   return axiosRequest.get(`${HTTP}/api/code?cellphone=${data.cellphone}&token=${data.token}t=${getTimeStampId()}`)
 }
-
 apiMap[Types.FETCH_USERS_GET] = function (data) {
   return axiosRequest.get(`${HTTP}/api/users?token=${data.token}&t=${getTimeStampId()}`)
 }
-
 apiMap[Types.FETCH_USERS_UPDATE] = function ({ data, token }) {
   return axiosRequest.post(`${HTTP}/api/users`,
     JSON.stringify({
@@ -69,11 +63,9 @@ apiMap[Types.FETCH_USERS_UPDATE] = function ({ data, token }) {
     })
   )
 }
-
 apiMap[Types.FETCH_USERS_OAUTH] = function (data) {
   return axiosRequest.get(`${HTTP}/api/users/oauth?code=${data.code}&t=${getTimeStampId()}`)
 }
-
 apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data, token }) {
   const params = {
     ...data,
@@ -84,7 +76,6 @@ apiMap[Types.FETCH_USERS_COLLECTS_GET] = function ({ data, token }) {
     params: params
   })
 }
-
 apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
   return axiosRequest.post(`${HTTP}/api/users/collect`,
     JSON.stringify({
@@ -95,7 +86,6 @@ apiMap[Types.FETCH_USERS_COLLECTS_POST] = function (data) {
     })
   )
 }
-
 apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
   return axiosRequest.post(`${HTTP}/api/users/un_collect`,
     JSON.stringify({
@@ -106,7 +96,6 @@ apiMap[Types.FETCH_USERS_COLLECTS_DEL] = function (data) {
     })
   )
 }
-
 apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
   return axiosRequest.get(
     `${HTTP}/api/map/search?t=${getTimeStampId()}` +
@@ -119,11 +108,9 @@ apiMap[Types.FETCH_MAP_SEARCH] = function (data) {
     `&page=${data.page}`
   )
 }
-
 apiMap[Types.FETCH_DETAIL] = function ({ type, id, token }) {
   return axiosRequest.get(`${HTTP}/api/${type}/${id}?token=${token}&t=${getTimeStampId()}`)
 }
-
 apiMap[Types.FETCH_VAILD_CODE] = function ({ data, token }) {
   return axiosRequest.post(`${HTTP}/api/code`,
     JSON.stringify({
@@ -133,7 +120,6 @@ apiMap[Types.FETCH_VAILD_CODE] = function ({ data, token }) {
     })
   )
 }
-
 apiMap[Types.FETCH_WEIXIN_CONFIG] = function (data) {
   return axiosRequest.get(`${HTTP}/api/wechat_config?token=${data.token}&t=${getTimeStampId()}`)
 }
