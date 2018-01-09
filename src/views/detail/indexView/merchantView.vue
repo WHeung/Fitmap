@@ -51,7 +51,7 @@ export default {
   props: ['data'],
   data () {
     return {
-      merchantType: '' // gym, design, train, equip
+      merchantType: ''
     }
   },
   created () {

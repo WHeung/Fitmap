@@ -37,7 +37,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
+    next(vm => {
       vm.updateForm++
       vm.$store.dispatch(Types.CHANGE_NAV, { title: '搜索 Fit-map' })
       vm.momentSelect = ''
@@ -62,7 +62,6 @@ export default {
         this.history.unshift(data.keyword)
         window.localStorage[storageKey] = JSON.stringify(this.history)
       }
-      // 请求
       this.request()
     },
     cleanHistory () {
@@ -70,7 +69,6 @@ export default {
       window.localStorage[storageKey] = '[]'
     },
     useHistory (item) {
-      // 请求
       const form = {
         input: item
       }
@@ -81,7 +79,6 @@ export default {
       this.request()
     },
     noSureSelect (selected) {
-      // 因为点击历史列表时候需要获取临时的select保存起来
       this.momentSelect = selected
     },
     request (data) {

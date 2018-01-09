@@ -6,11 +6,10 @@ import locateIcon from '~src/public/loc.png'
 export function initMap () {
   return new Promise(resolve => {
     const map = new QMap.Map(document.getElementById('allmap'), {
-      // 地图的中心地理坐标。
       zoom: 10,
       mapTypeId: QMap.MapTypeId.ROADMAP,
       mapTypeControl: false,
-      zoomControl: false, // true,
+      zoomControl: false,
       zoomControlOptions: {
         position: QMap.ControlPosition.BOTTOM_RIGHT,
         style: QMap.ZoomControlStyle.DEFAULT
@@ -34,7 +33,7 @@ export function LngLat (lng, lat) {
   return new QMap.LatLng(lat, lng)
 }
 
-export function LatLngBounds (ne, sw) { // 以东北方位，西南两个坐标点获得地图显示横截面
+export function LatLngBounds (ne, sw) {
   return new QMap.LatLngBounds(ne, sw)
 }
 

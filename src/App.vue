@@ -150,10 +150,6 @@ a
 
 .amap-geo
   display block !important
-// #app .amap-zoomcontrol
-//   position fixed
-//   right 10px
-//   bottom 10px
 
 #allmap
   width 100%

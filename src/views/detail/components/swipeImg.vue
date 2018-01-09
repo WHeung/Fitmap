@@ -27,7 +27,7 @@ export default {
     }
   },
   created () {
-    Object.assign(this.swiperOption, { // 需要用到this的属性
+    Object.assign(this.swiperOption, {
       slideClass: this.$style.slideClass,
       wrapperClass: this.$style.swiperWrapper,
       paginationCurrentClass: this.$style.currentPagination

@@ -39,17 +39,10 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
+    next(vm => {
       vm.updateForm++
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
       if (vm.iScroll) {
-      //   if (vm.list && vm.selectedItem) {
-      //     const item = vm.selectedItem.item
-      //     const selectItem = vm.$refs.items.find(val => {
-      //       return val.item.id === item.id
-      //     })
-      //     vm.iScroll.scrollToElement(selectItem.$el, 300, 100)
-      //   } else {
         vm.iScroll.scrollTo(0, 0)
       }
     })
@@ -90,18 +83,6 @@ export default {
   methods: {
     toDetail ({ id, type }) {
       this.$router.push({ name: 'detailView', params: { id, type }})
-      /** 换成先跳转详情页再检查登录
-      const toRoute = JSON.stringify({ name: 'detailView', params: { id, type }})
-      this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
-        if (this.user.is_cellphone_checked && this.user.is_company_checked) {
-          this.$router.push({ name: 'detailView', params: { id, type }})
-        } else if (!this.user.is_cellphone_checked) {
-          this.$router.push({ name: 'registerPhoneView', query: { toRoute: toRoute }})
-        } else {
-          this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
-        }
-      })
-      */
     },
     collect ({ id, method }) {
       if (method === 'del') {
@@ -138,7 +119,6 @@ export default {
       this.$router.push({ name: 'mapSearchView' })
     },
     request (data) {
-      // 请求
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then((list) => {
         if (list && list.length) {
           const itemId = this.list[0].location_obj.id

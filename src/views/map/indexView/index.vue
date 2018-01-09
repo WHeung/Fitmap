@@ -39,7 +39,7 @@ export default {
     }
   },
   beforeRouteEnter (to, from, next) {
-    next(vm => { // 子组件没有这个路由钩子，使用了keepalive组件不会从新加载，改变updateForm使子组件从新赋值
+    next(vm => {
       vm.updateForm++
       vm.$store.dispatch(Types.CHANGE_NAV, { title: 'Fit-map' })
     })
@@ -50,7 +50,7 @@ export default {
   watch: {
     userLoc: {
       handler (val) {
-        if (val.lat && val.lng && this.firstLocation) { // 初始定位默认打开
+        if (val.lat && val.lng && this.firstLocation) {
           this.firstLocation = false
           if (!this.selfMarker) {
             this.selfMarker = new QMap.Marker({
@@ -112,24 +112,11 @@ export default {
     },
     toDetail ({ id, type }) {
       this.$router.push({ name: 'detailView', params: { id, type }})
-      /** 换成先跳转详情页再检查登录
-      const toRoute = JSON.stringify({ name: 'detailView', params: { id, type }})
-      this.$store.dispatch(Types.USER_LOGIN, {}).then(() => {
-        if (this.user.is_cellphone_checked && this.user.is_company_checked) {
-          this.$router.push({ name: 'detailView', params: { id, type }})
-        } else if (!this.user.is_cellphone_checked) {
-          this.$router.push({ name: 'registerPhoneView', query: { toRoute: toRoute }})
-        } else {
-          this.$router.push({ name: 'coummateInfoView', query: { toRoute: toRoute }})
-        }
-      })
-      */
     },
     searchClick () {
       this.$router.push({ name: 'mapSearchView' })
     },
     request (data) {
-      // 请求
       this.$store.commit(Types.SET_MAP_SELECTED_MARKER, null)
       this.$store.dispatch(Types.UPDATE_MAP_SEARCH, data).then(() => {
         if (this.list && this.list.length) {
@@ -169,9 +156,9 @@ $breakline = #E1E5EB
 $assistText = #9DA2AB
 
 .main
-  pointer-events none !important// 点击穿透属性，使地图可以拖到
+  pointer-events none !important
   div
-    pointer-events visible // 之后的容器不需要继承点击穿透
+    pointer-events visible
 
 .bottom
   position absolute

@@ -56,12 +56,12 @@ export default {
 .title
   font-size 13px
   line-height 20px
-  display -webkit-box    //1.设置display类型为-webkit-box
+  display -webkit-box
   line-height 18px
   max-height 60px
-  overflow hidden        //2.设置元素超出隐藏
-  text-overflow ellipsis //3.设置超出样式为省略号
-  -webkit-line-clamp 3   //4.设置2行应用省略
+  overflow hidden
+  text-overflow ellipsis
+  -webkit-line-clamp 3
   -webkit-box-orient vertical
 
 .price

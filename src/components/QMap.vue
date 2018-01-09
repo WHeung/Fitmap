@@ -14,13 +14,12 @@ export default {
       mapStyle: {
         width: window.innerWidth + 'px',
         height: window.innerHeight + 'px',
-        '-webkit-overflow-scrolling': 'touch' // 加上这个IOS顺滑的实现
+        '-webkit-overflow-scrolling': 'touch'
       }
     }
   },
   mounted () {
     const map = new QMap.Map(document.getElementById('allmap'), {
-      // 地图的中心地理坐标。
       zoom: 10,
       mapTypeId: QMap.MapTypeId.ROADMAP,
       mapTypeControl: false,
@@ -48,10 +47,6 @@ export default {
 
 .amap-geo
   display block !important
-// #app .amap-zoomcontrol
-//   position fixed
-//   right 10px
-//   bottom 10px
 
 #allmap
   transform translateZ(0)

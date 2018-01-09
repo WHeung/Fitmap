@@ -57,7 +57,7 @@ const Actions = {
   },
   [Types.UPDATE_USER] ({ state, commit }, { data }) {
     return new Promise(resolve => {
-      const user = Object.assign({}, data) // Object.assign(state.user, data)
+      const user = Object.assign({}, data)
       CallApi(Types.FETCH_USERS_UPDATE, { data: user }).then(res => {
         commit(Types.SET_USER, data)
         resolve(res.data.data)

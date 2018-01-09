@@ -26,17 +26,17 @@ export default {
   created () {
   },
   mounted () {
-    const map = new BMap.Map('allmap') // 创建Map实例
-    map.setCurrentCity('广州')          // 设置地图显示的城市 此项是必须设置的
-    map.centerAndZoom('广州', 14)  // 初始化地图,设置中心点坐标和地图级别
+    const map = new BMap.Map('allmap')
+    map.setCurrentCity('广州')
+    map.centerAndZoom('广州', 14)
     map.setMapStyle({ style: 'normal' })
     this.$emit('input', map)
-    var pt = new BMap.Point(113.270712,23.131547)
+    var pt = new BMap.Point(113.270712, 23.131547)
     const iconImg = 'http://wx.qlogo.cn/mmopen/vi_32/NXlA6XJzx5Lr36UEw5h9vM6wLkyCjO0YyZ3Fs0bRglF9y8JFqhNxcMomDkdiarLVWAIhu9cAkXPGTTic9THTiaCfQ/0'
-    var myIcon = new BMap.Icon(iconImg, new BMap.Size(25,25), {
-      imageSize: new BMap.Size(25,25)
+    var myIcon = new BMap.Icon(iconImg, new BMap.Size(25, 25), {
+      imageSize: new BMap.Size(25, 25)
     })
-    var marker = new BMap.Marker(pt, { icon: myIcon });  // 创建标注
+    var marker = new BMap.Marker(pt, { icon: myIcon });
     var self = this
     marker.addEventListener("click", function (e) {self.handleClick(e, this)})
     map.addOverlay(marker)

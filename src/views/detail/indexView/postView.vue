@@ -36,7 +36,7 @@ export default {
   props: ['data'],
   data () {
     return {
-      postType: '' // lease, transfer, recruit, bid
+      postType: ''
     }
   },
   computed: {

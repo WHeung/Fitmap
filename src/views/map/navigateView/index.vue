@@ -100,9 +100,9 @@ function weixinLocation (self) {
 @import '~tool/vendor'
 
 .main
-  pointer-events none !important// 点击穿透属性，使地图可以拖到
+  pointer-events none !important
 .bottom
-  pointer-events visible // 之后的容器不需要继承点击穿透
+  pointer-events visible
   position absolute
   bottom 0
   width 100%

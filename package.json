@@ -4,7 +4,6 @@
   "description": "a vue project about Fitness Map",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node server",
     "build": "rimraf dist && yarn run build:dev",
     "build-test": "rimraf dist && yarn run build:test",
     "build-pro": "rimraf static && yarn run build:pro",
@@ -16,7 +15,6 @@
     "node": ">=6.0",
     "npm": ">=3.0"
   },
-  "repository": "git@github.com:WHeung/Fitmap.git",
   "author": "heung <L_WHeung@163.com>",
   "license": "none",
   "private": true,

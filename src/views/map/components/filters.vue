@@ -161,7 +161,6 @@ export default {
       this.input = ''
       this.$store.commit(Types.SET_MAP_FILTERS_FORM, { input: this.input })
       if (this.origin !== 'search') {
-        // 请求
         this.$emit('request')
       }
     },
@@ -189,7 +188,6 @@ export default {
       } else {
         this.$emit('noSureSelect', this.selected)
       }
-      // 无论是否需要请求都要保存以选中临时数据
       this.noSureData = [].concat(this.selected)
     }
   }

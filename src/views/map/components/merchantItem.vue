@@ -34,7 +34,6 @@ export default {
   methods: {
     toDetailView () {
       this.$emit('toDetail', { type: 'merchant', id: this.item.id })
-      // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'merchant' }})
     },
     imgLoad (e) {
       const img = e.path[0]

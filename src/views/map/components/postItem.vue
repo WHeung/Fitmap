@@ -22,7 +22,6 @@ export default {
   methods: {
     toDetailView () {
       this.$emit('toDetail', { type: 'post', id: this.item.id })
-      // this.$router.push({ name: 'detailView', params: { id: this.item.id, type: 'post' }})
     }
   }
 }

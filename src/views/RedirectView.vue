@@ -13,10 +13,6 @@ export default {
   name: 'redirect',
   beforeMount () {
     this.$store.dispatch(Types.CLOSE_LOADING)
-    // this.$store.dispatch(Types.OPEN_TOAST, {
-    //   content: window.location.href,
-    //   type: 'white-toast'
-    // })
   }
 }
 </script>

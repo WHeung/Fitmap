@@ -4,9 +4,9 @@ import { LngLat, normalIcon, activeIcon, LatLngBounds } from '~src/tool/mapBase'
 import QMap from 'QMap'
 
 const State = {
-  map: null, // Object
-  selectedItem: null, // Object
-  list: null, // Array
+  map: null,
+  selectedItem: null,
+  list: null,
   pagination: {},
   userLoc: {
     lat: '',
@@ -82,11 +82,11 @@ const Mutations = {
     console.log('mutation: set filtersForm')
     Object.assign(state.filtersForm, data)
   },
-  [Types.SET_MAP_USER_LOCATION] (state, data) { // data: {lat, lng}
+  [Types.SET_MAP_USER_LOCATION] (state, data) {
     console.log('mutation: set userLoc')
     Object.assign(state.userLoc, data)
   },
-  [Types.SET_MAP_PAGINATION] (state, data) { // data: {lat, lng}
+  [Types.SET_MAP_PAGINATION] (state, data) {
     console.log('mutation: set pagination')
     state.pagination = data
   }
